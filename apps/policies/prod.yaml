@@ -1,0 +1,77 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: prod
+  namespace: clusters
+  annotations:
+    policy.open-cluster-management.io/categories: SC System and Communications Protection
+    policy.open-cluster-management.io/controls: SC-28 Protection Of Information At Rest
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+spec:
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: enable-etcd-encryption
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: config.openshift.io/v1
+                kind: APIServer
+                metadata:
+                  name: cluster
+                spec:
+                  encryption:
+                    type: aescbc
+          remediationAction: inform
+          severity: low
+  remediationAction: enforce
+status:
+  compliant: Compliant
+  placement:
+    - placementBinding: prod-placement
+      placementRule: prod-placement
+  status:
+    - clustername: vrutkovs-prod-eu
+      clusternamespace: vrutkovs-prod-eu
+      compliant: Compliant
+    - clustername: vrutkovs-prod-us
+      clusternamespace: vrutkovs-prod-us
+      compliant: Compliant
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: prod-placement
+  namespace: clusters
+spec:
+  clusterConditions: []
+  clusterSelector:
+    matchExpressions:
+      - key: cluster.open-cluster-management.io/clusterset
+        operator: In
+        values:
+          - prod
+status:
+  decisions:
+    - clusterName: vrutkovs-prod-us
+      clusterNamespace: vrutkovs-prod-us
+    - clusterName: vrutkovs-prod-eu
+      clusterNamespace: vrutkovs-prod-eu
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: prod-placement
+  namespace: clusters
+placementRef:
+  name: prod-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: prod
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy

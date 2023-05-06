@@ -1,0 +1,86 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: stage-policy
+  namespace: clusters
+  annotations:
+    policy.open-cluster-management.io/categories: SC System and Communications Protection
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+    policy.open-cluster-management.io/controls: SC-28 Protection Of Information At
+      Rest, SC-6 Resource Availability, SC-8 Transmission Confidentiality and
+      Integrity
+spec:
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-limitrange
+        spec:
+          remediationAction: enforce
+          severity: medium
+          namespaceSelector:
+            exclude:
+              - kube-*
+            include:
+              - workload
+          object-templates:
+            - complianceType: mustonlyhave
+              objectDefinition:
+                apiVersion: v1
+                kind: LimitRange
+                metadata:
+                  name: mem-limit-range
+                spec:
+                  limits:
+                    - default:
+                        memory: 512Mi
+                      defaultRequest:
+                        memory: 256Mi
+                      type: Container
+          pruneObjectBehavior: DeleteIfCreated
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: CertificatePolicy
+        metadata:
+          name: policy-certificate
+        spec:
+          namespaceSelector:
+            include:
+              - default
+            exclude:
+              - kube-*
+          remediationAction: inform
+          severity: low
+          minimumDuration: 300h
+  remediationAction: inform
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: stage-policy-placement
+  namespace: clusters
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: cluster.open-cluster-management.io/clusterset
+        operator: In
+        values:
+          - prod
+          - stage
+  clusterConditions: []
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: stage-policy-placement
+  namespace: clusters
+placementRef:
+  name: stage-policy-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: stage-policy
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy
