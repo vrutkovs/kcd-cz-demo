@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: clusters
+  name: acm
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: argocd
@@ -11,9 +11,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    directory:
-      recurse: true
-    path: clusters
+    path: apps/acm
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
   syncPolicy:
