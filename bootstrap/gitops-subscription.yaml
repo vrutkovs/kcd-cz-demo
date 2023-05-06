@@ -5,6 +5,8 @@ metadata:
     operators.coreos.com/openshift-gitops-operator.openshift-operators: ''
   name: openshift-gitops-operator
   namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   channel: latest
   installPlanApproval: Automatic
