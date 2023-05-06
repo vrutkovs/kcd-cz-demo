@@ -1,0 +1,9 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: vrutkovs-prod-us
+  labels:
+    cluster.open-cluster-management.io/clusterset: prod
+spec:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
