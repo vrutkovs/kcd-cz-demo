@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cluster-config
+  name: bootstrap
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: argocd

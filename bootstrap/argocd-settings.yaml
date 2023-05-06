@@ -17,23 +17,23 @@ spec:
       wildcardPolicy: None
     insecure: false
     resources: {}
-  dex:
-    openShiftOAuth: true
+  sso:
+    dex:
+      openShiftOAuth: true
   rbac:
     defaultPolicy: 'role:readonly'
     policy: |
       g, system:cluster-admins, role:admin
     scopes: '[groups]'
-  resourceCustomizations: |
-    route.openshift.io/Route:
-      ignoreDifferences: |
-        jsonPointers:
-        - /spec/host
-  resourceExclusions: |
-    - apiGroups:
-      - tekton.dev
-      clusters:
-      - '*'
-      kinds:
-      - PipelineRun
-      - TaskRun
+  resourceIgnoreDifferences:
+    all:
+      jsonPointers:
+        - /spec/replicas
+      managedFieldsManagers:
+        - kube-controller-manager
+    resourceIdentifiers:
+      - group: route.openshift.io
+        kind: Route
+        customization:
+          jsonPointers:
+          - /spec/host
