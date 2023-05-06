@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: workload
+  name: workload-stage
   namespace: clusters
 spec:
   generators:
