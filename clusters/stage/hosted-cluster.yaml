@@ -86,3 +86,10 @@ spec:
     - service: OVNSbDb
       servicePublishingStrategy:
         type: Route
+---
+apiVersion: internal.open-cluster-management.io/v1beta1
+kind: ManagedClusterInfo
+metadata:
+  name: vrutkovs-stage
+  namespace: vrutkovs-stage
+spec: {}
