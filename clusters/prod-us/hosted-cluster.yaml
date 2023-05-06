@@ -4,7 +4,6 @@ metadata:
   annotations:
     cluster.open-cluster-management.io/hypershiftdeployment: clusters/vrutkovs-prod-us
     cluster.open-cluster-management.io/managedcluster-name: vrutkovs-prod-us
-  resourceVersion: '236526'
   name: vrutkovs-prod-us
   namespace: clusters
   finalizers:
