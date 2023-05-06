@@ -4,7 +4,7 @@ metadata:
   name: openshift-gitops
   namespace: openshift-gitops
   labels:
-    app.kubernetes.io/instance: openshift-gitops
+    app.kubernetes.io/instance: bootstrap
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:

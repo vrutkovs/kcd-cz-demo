@@ -4,7 +4,7 @@ metadata:
   name: hub-settings
   namespace: openshift-gitops
   labels:
-    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/instance: bootstrap
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
