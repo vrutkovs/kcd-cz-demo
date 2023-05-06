@@ -13,8 +13,6 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      labels:
-        velero.io/exclude-from-backup: 'true'
       name: 'workload-{{name}}'
     spec:
       destination:
@@ -22,8 +20,8 @@ spec:
         server: '{{server}}'
       project: default
       source:
-        path: /
-        repoURL: 'https://github.com/vrutkovs/workload'
+        path: app/overlays/default/
+        repoURL: 'https://github.com/vrutkovs/bdg'
         targetRevision: HEAD
       syncPolicy:
         automated:
