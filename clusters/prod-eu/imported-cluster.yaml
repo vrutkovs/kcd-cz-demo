@@ -7,3 +7,10 @@ metadata:
 spec:
   hubAcceptsClient: true
   leaseDurationSeconds: 60
+---
+apiVersion: internal.open-cluster-management.io/v1beta1
+kind: ManagedClusterInfo
+metadata:
+  name: vrutkovs-prod-eu
+  namespace: vrutkovs-prod-eu
+spec: {}
