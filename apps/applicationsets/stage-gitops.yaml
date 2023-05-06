@@ -4,7 +4,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
   name: stage
-  namespace: clusters
+  namespace: openshift-gitops
 spec:
   clusterSet: stage
 ---
@@ -12,7 +12,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: stage-cluster
-  namespace: clusters
+  namespace: openshift-gitops
 spec:
   predicates:
   - requiredClusterSelector:
@@ -27,7 +27,7 @@ apiVersion: apps.open-cluster-management.io/v1beta1
 kind: GitOpsCluster
 metadata:
   name: stage
-  namespace: clusters
+  namespace: openshift-gitops
 spec:
   argoServer:
     cluster: local-cluster
@@ -36,4 +36,4 @@ spec:
     kind: Placement
     apiVersion: cluster.open-cluster-management.io/v1beta1
     name: stage-cluster
-    namespace: clusters
+    namespace: openshift-gitops

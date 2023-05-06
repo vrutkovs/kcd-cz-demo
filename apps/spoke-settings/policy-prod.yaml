@@ -32,8 +32,8 @@ spec:
 status:
   compliant: Compliant
   placement:
-    - placementBinding: prod-placement
-      placementRule: prod-placement
+    - placementBinding: prod-policy-placement
+      placementRule: prod-policy-placement
   status:
     - clustername: vrutkovs-prod-eu
       clusternamespace: vrutkovs-prod-eu
@@ -45,7 +45,7 @@ status:
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: prod-placement
+  name: prod-policy-placement
   namespace: clusters
 spec:
   clusterConditions: []
@@ -55,20 +55,14 @@ spec:
         operator: In
         values:
           - prod
-status:
-  decisions:
-    - clusterName: vrutkovs-prod-us
-      clusterNamespace: vrutkovs-prod-us
-    - clusterName: vrutkovs-prod-eu
-      clusterNamespace: vrutkovs-prod-eu
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: prod-placement
+  name: prod-policy-placement
   namespace: clusters
 placementRef:
-  name: prod-placement
+  name: prod-policy-placement
   apiGroup: apps.open-cluster-management.io
   kind: PlacementRule
 subjects:

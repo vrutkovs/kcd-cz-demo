@@ -2,14 +2,14 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: workload-stage
-  namespace: clusters
+  namespace: openshift-gitops
 spec:
   generators:
     - clusterDecisionResource:
         configMapRef: acm-placement
         labelSelector:
           matchLabels:
-            cluster.open-cluster-management.io/placement: stage
+            cluster.open-cluster-management.io/placement: stage-cluster
         requeueAfterSeconds: 180
   template:
     metadata:

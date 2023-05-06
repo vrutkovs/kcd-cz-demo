@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: stage-policy
+  name: stage
   namespace: clusters
   annotations:
     policy.open-cluster-management.io/categories: SC System and Communications Protection
@@ -67,7 +67,6 @@ spec:
       - key: cluster.open-cluster-management.io/clusterset
         operator: In
         values:
-          - prod
           - stage
   clusterConditions: []
 ---
@@ -81,6 +80,6 @@ placementRef:
   apiGroup: apps.open-cluster-management.io
   kind: PlacementRule
 subjects:
-  - name: stage-policy
+  - name: stage
     apiGroup: policy.open-cluster-management.io
     kind: Policy
