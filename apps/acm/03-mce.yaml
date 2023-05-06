@@ -31,4 +31,3 @@ spec:
       name: app-lifecycle
     - enabled: false
       name: cluster-backup
-  targetNamespace: multicluster-engine
