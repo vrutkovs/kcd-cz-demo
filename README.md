@@ -9,6 +9,7 @@
 * [x] Prod clusters use custom overlay
 * [x] Autoscale pods on production via KEDA
 * [ ] Rollout changes to production via Blue/Green
+* [ ] Add [Cost Management](https://github.com/rhthsa/openshift-demo/blob/main/acm-observability.md)
 
 ## Howto
 
