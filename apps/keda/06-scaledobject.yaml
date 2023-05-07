@@ -3,6 +3,9 @@ kind: ScaledObject
 metadata:
   name: scaled-deployment
   namespace: workload
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
