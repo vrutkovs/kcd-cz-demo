@@ -7,8 +7,8 @@
 * [x] Add global load balancer
 * [x] Rollout latest repo changes to stage
 * [x] Prod clusters use custom overlay
+* [x] Autoscale pods on production via KEDA
 * [ ] Rollout changes to production via Blue/Green
-* [ ] Autoscale pods on production via KEDA
 
 ## Howto
 

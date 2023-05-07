@@ -15,9 +15,9 @@ spec:
   - type: prometheus
     metadata:
       serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
-      metricName: http_requests_total
-      threshold: "0.5"
-      query: cluster:usage:workload:ingress_request_total:irate5m
+      metricName: haproxy_backend_connections_total
+      threshold: "5"
+      query: sum(rate(haproxy_backend_connections_total{exported_namespace="workload"}[5m]))
       authModes: "bearer"
       metricType: Value
       namespace: workload
