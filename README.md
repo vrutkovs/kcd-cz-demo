@@ -3,8 +3,9 @@
 * [x] Install ACM
 * [x] Install Hypershift
 * [x] Create two prod clusters in different regions, stage and dev cluster
-* [ ] Dev cluster should tests github PRs
-* [ ] Rollout latest repo changes to stage
+* [x] Dev cluster should tests github PRs
+* [x] Add global load balancer
+* [x] Rollout latest repo changes to stage
 * [ ] Rollout changes to production via Blue/Green
 
 ## Howto
