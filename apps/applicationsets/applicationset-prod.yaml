@@ -13,7 +13,7 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'workload-{{name}}'
+      name: 'production-{{name}}'
     spec:
       destination:
         namespace: workload

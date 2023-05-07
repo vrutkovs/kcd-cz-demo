@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: workload-dev
+  namespace: openshift-gitops
+spec:
+  generators:
+    - matrix:
+        generators:
+        - pullRequest:
+            github:
+              owner: vrutkovs
+              repo: bgd
+              labels:
+              - preview
+              tokenRef:
+                secretName: github-token
+                key: token
+            requeueAfterSeconds: 5
+        - clusterDecisionResource:
+            configMapRef: acm-placement
+            labelSelector:
+              matchLabels:
+                cluster.open-cluster-management.io/placement: dev-cluster
+            requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: 'dev-{{branch}}-{{number}}'
+    spec:
+      destination:
+        namespace: 'workload-{{branch}}-{{number}}'
+        server: '{{server}}'
+      project: default
+      source:
+        path: app/overlays/default/
+        repoURL: https://github.com/vrutkovs/bgd
+        targetRevision: '{{head_sha}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
+          - Validate=false
+          - Replace=false
+          - PrunePropagationPolicy=background
