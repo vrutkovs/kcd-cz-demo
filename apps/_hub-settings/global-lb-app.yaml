@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: global-lb
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/instance: argocd
+spec:
+  destination:
+    namespace: openshift-gitops
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: apps/global-lb
+    repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
+    targetRevision: HEAD
+  syncPolicy:
+    automated: {}
