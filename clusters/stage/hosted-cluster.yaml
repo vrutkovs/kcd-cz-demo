@@ -3,6 +3,9 @@ kind: HostedCluster
 metadata:
   name: vrutkovs-stage
   namespace: clusters
+  annotations:
+    cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-stage
+    cluster.open-cluster-management.io/managedcluster-name: vrutkovs-stage
   finalizers:
     - hypershift.openshift.io/finalizer
     - hypershift.io/aws-oidc-discovery

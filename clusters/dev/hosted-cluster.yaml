@@ -5,6 +5,9 @@ metadata:
   namespace: clusters
   finalizers:
     - hypershift.openshift.io/finalizer
+  annotations:
+    cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-dev
+    cluster.open-cluster-management.io/managedcluster-name: vrutkovs-dev
   labels:
     hypershift.openshift.io/auto-created-for-infra: vrutkovs-dev
 spec:

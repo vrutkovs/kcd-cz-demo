@@ -4,9 +4,35 @@ metadata:
   name: vrutkovs-prod-eu
   labels:
     cluster.open-cluster-management.io/clusterset: prod
+  annotations:
+    import.open-cluster-management.io/hosting-cluster-name: local-cluster
+    import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
+    open-cluster-management/created-via: other
 spec:
   hubAcceptsClient: true
   leaseDurationSeconds: 60
+---
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: vrutkovs-prod-eu
+  namespace: vrutkovs-prod-eu
+spec:
+  clusterName: vrutkovs-prod-eu
+  clusterNamespace: vrutkovs-prod-eu
+  clusterLabels:
+    cloud: auto-detect
+    vendor: auto-detect
+  applicationManager:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: false
 ---
 apiVersion: internal.open-cluster-management.io/v1beta1
 kind: ManagedClusterInfo
