@@ -1,0 +1,17 @@
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: vrutkovs-dev
+  labels:
+    cluster.open-cluster-management.io/clusterset: dev
+spec:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
+---
+apiVersion: internal.open-cluster-management.io/v1beta1
+kind: ManagedClusterInfo
+metadata:
+  name: vrutkovs-dev
+  namespace: vrutkovs-dev
+spec: {}
