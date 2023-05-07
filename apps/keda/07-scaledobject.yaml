@@ -1,0 +1,25 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: scaled-deployment
+  namespace: workload
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    name: bgd
+    kind: Deployment
+  maxReplicaCount: 10
+  minReplicaCount: 2
+  pollingInterval: 30
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
+      metricName: http_requests_total
+      threshold: "0.5"
+      query: cluster:usage:workload:ingress_request_total:irate5m
+      authModes: "bearer"
+      metricType: Value
+      namespace: workload
+    authenticationRef:
+      name: keda-trigger-auth-prometheus
