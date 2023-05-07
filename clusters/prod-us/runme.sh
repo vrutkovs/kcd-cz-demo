@@ -14,4 +14,4 @@ hypershift create cluster aws \
     --generate-ssh \
     --node-pool-replicas 1 \
     --namespace clusters \
-    --release-image quay.io/openshift-release-dev/ocp-release:4.12.16-x86_64
+    --release-image quay.io/openshift-release-dev/ocp-release:4.12.10-x86_64
