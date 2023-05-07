@@ -6,3 +6,12 @@
 * [ ] Dev cluster should tests github PRs
 * [ ] Rollout latest repo changes to stage
 * [ ] Rollout changes to production via Blue/Green
+
+## Howto
+
+* Run `create-s3-bucket`, enable ACL in the bucket
+* `oc apply -f bootstrap` until all objects are created
+* `oc apply -f secrets` to create AWS creds and OIDC secret
+* `bash runme.sh` for each folder in `clusters` to create Hypershift clusters
+* Update manifests to match new `HostedCluster`s
+* Sync remaining apps
