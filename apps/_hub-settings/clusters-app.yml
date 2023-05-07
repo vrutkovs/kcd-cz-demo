@@ -16,5 +16,4 @@ spec:
     path: clusters
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
-  syncPolicy:
-    automated: {}
+  syncPolicy: {}
