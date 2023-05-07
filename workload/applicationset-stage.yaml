@@ -13,7 +13,7 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'stage-{{name}}'
+      name: 'workload-stage-{{name}}'
     spec:
       destination:
         namespace: workload

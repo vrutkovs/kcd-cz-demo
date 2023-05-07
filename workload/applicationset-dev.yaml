@@ -25,7 +25,7 @@ spec:
             requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'dev-{{branch}}-{{number}}'
+      name: 'workload-dev-{{branch}}-{{number}}'
     spec:
       destination:
         namespace: 'workload-{{branch}}-{{number}}'
