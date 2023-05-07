@@ -17,7 +17,7 @@ spec:
     image: 'quay.io/openshift-release-dev/ocp-release:4.12.16-x86_64'
   dns:
     baseDomain: devcluster.openshift.com
-    privateZoneID: Z09028995ODXNFLUQ80B
+    privateZoneID: Z077619237PT0NZOPWUIY
     publicZoneID: Z3URY6TWQ91KVV
   controllerAvailabilityPolicy: SingleReplica
   infraID: vrutkovs-prod-us
@@ -34,8 +34,8 @@ spec:
     aws:
       cloudProviderConfig:
         subnet:
-          id: subnet-0ce29c7f8f91b375d
-        vpc: vpc-0377ba0ab3e96ae88
+          id: subnet-0656251aa17951182
+        vpc: vpc-0796af200bdbfa664
         zone: us-west-2a
       endpointAccess: Public
       region: us-west-2
@@ -67,10 +67,10 @@ spec:
     networkType: OVNKubernetes
     serviceNetwork:
       - cidr: 172.31.0.0/16
-  clusterID: 11979788-b9ca-42a0-9718-9d7917271984
+  clusterID: 455a9846-cd67-4c64-9c06-6f6ed1b0ac6c
   pullSecret:
     name: vrutkovs-prod-us-pull-secret
-  issuerURL: 'https://vrutkovs-hypershift-demo.s3.us-east-2.amazonaws.com/vrutkovs-prod-us'
+  issuerURL: 'https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-prod-us'
   sshKey:
     name: vrutkovs-prod-us-ssh-key
   autoscaling: {}
