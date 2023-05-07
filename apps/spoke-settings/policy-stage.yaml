@@ -14,41 +14,13 @@ spec:
   policy-templates:
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: policy-limitrange
-        spec:
-          remediationAction: enforce
-          severity: medium
-          namespaceSelector:
-            exclude:
-              - kube-*
-            include:
-              - workload
-          object-templates:
-            - complianceType: mustonlyhave
-              objectDefinition:
-                apiVersion: v1
-                kind: LimitRange
-                metadata:
-                  name: mem-limit-range
-                spec:
-                  limits:
-                    - default:
-                        memory: 512Mi
-                      defaultRequest:
-                        memory: 256Mi
-                      type: Container
-          pruneObjectBehavior: DeleteIfCreated
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
         kind: CertificatePolicy
         metadata:
           name: policy-certificate
         spec:
           namespaceSelector:
             include:
-              - default
+              - openshift-ingress
             exclude:
               - kube-*
           remediationAction: inform
@@ -68,6 +40,7 @@ spec:
         operator: In
         values:
           - stage
+          - prod
   clusterConditions: []
 ---
 apiVersion: policy.open-cluster-management.io/v1
