@@ -1,7 +1,8 @@
 # KCD CZ 2023 booth demo
 
-* [ ] Install ACM
-* [ ] Install Hypershift
-* [ ] Create two prod clusters in different regions and a stage cluster
-* [ ] Rollout an app on stage, run tests
-* [ ] Start rolling out to production clusters
+* [x] Install ACM
+* [x] Install Hypershift
+* [x] Create two prod clusters in different regions, stage and dev cluster
+* [ ] Dev cluster should tests github PRs
+* [ ] Rollout latest repo changes to stage
+* [ ] Rollout changes to production via Blue/Green
