@@ -4,6 +4,7 @@ metadata:
   name: vrutkovs-dev
   namespace: clusters
   finalizers:
+    - hypershift.io/aws-oidc-discovery
     - hypershift.openshift.io/finalizer
   annotations:
     cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-dev
