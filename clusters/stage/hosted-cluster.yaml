@@ -14,11 +14,9 @@ metadata:
 spec:
   fips: false
   release:
-    image: 'quay.io/openshift-release-dev/ocp-release:4.12.16-x86_64'
+    image: 'quay.io/openshift-release-dev/ocp-release:4.12.12-x86_64'
   dns:
     baseDomain: devcluster.openshift.com
-    privateZoneID: Z077093214489DGJFQHKL
-    publicZoneID: Z3URY6TWQ91KVV
   controllerAvailabilityPolicy: SingleReplica
   infraID: vrutkovs-stage
   etcd:
@@ -33,25 +31,12 @@ spec:
   platform:
     aws:
       cloudProviderConfig:
-        subnet:
-          id: subnet-00c88a0d2862db40d
-        vpc: vpc-082505ffac00079e2
         zone: us-east-2a
       endpointAccess: Public
       region: us-east-2
       resourceTags:
         - key: kubernetes.io/cluster/vrutkovs-stage
           value: owned
-      rolesRef:
-        controlPlaneOperatorARN: 'arn:aws:iam::269733383066:role/vrutkovs-stage-control-plane-operator'
-        imageRegistryARN: 'arn:aws:iam::269733383066:role/vrutkovs-stage-openshift-image-registry'
-        ingressARN: 'arn:aws:iam::269733383066:role/vrutkovs-stage-openshift-ingress'
-        kubeCloudControllerARN: 'arn:aws:iam::269733383066:role/vrutkovs-stage-cloud-controller'
-        networkARN: >-
-          arn:aws:iam::269733383066:role/vrutkovs-stage-cloud-network-config-controller
-        nodePoolManagementARN: 'arn:aws:iam::269733383066:role/vrutkovs-stage-node-pool'
-        storageARN: >-
-          arn:aws:iam::269733383066:role/vrutkovs-stage-aws-ebs-csi-driver-controller
     type: AWS
   secretEncryption:
     aescbc:
@@ -66,7 +51,7 @@ spec:
     networkType: OVNKubernetes
     serviceNetwork:
       - cidr: 172.31.0.0/16
-  clusterID: 69ffa4f7-7b82-471b-8f2d-283d7b30f0f4
+  clusterID: bac770e1-02bd-420a-9434-6e16509bb378
   pullSecret:
     name: vrutkovs-stage-pull-secret
   issuerURL: 'https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-stage'

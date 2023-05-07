@@ -18,5 +18,4 @@
 * Wait for `acm` app to sync
 * `oc apply -f secrets` to create AWS creds and OIDC secret
 * `bash runme.sh` for each folder in `clusters` to create Hypershift clusters
-* Update manifests to match new `HostedCluster`s
 * Sync remaining apps
