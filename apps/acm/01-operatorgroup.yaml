@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: >-
+      MultiClusterHub.v1.operator.open-cluster-management.io,MultiClusterObservability.v1beta1.observability.open-cluster-management.io,MultiClusterObservability.v1beta2.observability.open-cluster-management.io,ObservabilityAddon.v1beta1.observability.open-cluster-management.io,Observatorium.v1alpha1.core.observatorium.io,SubmarinerConfig.v1alpha1.submarineraddon.open-cluster-management.io,SubmarinerDiagnoseConfig.v1alpha1.submarineraddon.open-cluster-management.io
+  name: open-cluster-management
+  namespace: open-cluster-management
+spec:
+  targetNamespaces:
+    - open-cluster-management
+  upgradeStrategy: Default
