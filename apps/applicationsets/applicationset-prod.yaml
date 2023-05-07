@@ -22,7 +22,7 @@ spec:
       source:
         path: app/overlays/default/
         repoURL: https://github.com/vrutkovs/bgd
-        targetRevision: main
+        targetRevision: cbf3411f948c4f424c79243714fc89590f64e7f5
       syncPolicy:
         automated:
           prune: true
