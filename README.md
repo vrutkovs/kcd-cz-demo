@@ -6,6 +6,7 @@
 * [x] Dev cluster should tests github PRs
 * [x] Add global load balancer
 * [x] Rollout latest repo changes to stage
+* [ ] Prod clusters use custom overlay
 * [ ] Rollout changes to production via Blue/Green
 
 ## Howto
