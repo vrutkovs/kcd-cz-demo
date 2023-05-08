@@ -14,7 +14,7 @@
 * [ ] dev pipeline: comment in PR
 * [ ] stage pipeline: push image to ghcr.io
 * [ ] Rollout changes to production via Blue/Green
-* [ ] Add [Cost Management](https://github.com/rhthsa/openshift-demo/blob/main/acm-observability.md)
+* [ ] Describe what these pieces do
 
 ## Howto
 
