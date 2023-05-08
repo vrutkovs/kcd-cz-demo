@@ -8,6 +8,9 @@
 * [x] Rollout latest repo changes to stage
 * [x] Prod clusters use custom overlay
 * [x] Autoscale pods on production via KEDA
+* [ ] dev pipeline: go vet and other checks
+* [ ] dev pipeline: comment in PR
+* [ ] stage pipeline: push image to ghcr.io
 * [ ] Rollout changes to production via Blue/Green
 * [ ] Add [Cost Management](https://github.com/rhthsa/openshift-demo/blob/main/acm-observability.md)
 
