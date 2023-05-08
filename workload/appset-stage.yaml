@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: autoscaler-prod
+  name: cluster-stage
   namespace: openshift-gitops
 spec:
   generators:
@@ -9,18 +9,18 @@ spec:
         configMapRef: acm-placement
         labelSelector:
           matchLabels:
-            cluster.open-cluster-management.io/placement: prod-cluster
+            cluster.open-cluster-management.io/placement: stage-cluster
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'autoscaler-prod-{{name}}'
+      name: 'cluster-{{name}}'
     spec:
       destination:
         namespace: workload
         server: '{{server}}'
       project: default
       source:
-        path: 'apps/keda'
+        path: 'clusters/stage'
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
       syncPolicy:

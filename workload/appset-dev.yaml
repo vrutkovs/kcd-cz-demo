@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: tekton-dev
+  name: cluster-dev
   namespace: openshift-gitops
 spec:
   generators:
@@ -13,14 +13,14 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'tekton-dev-{{name}}'
+      name: 'cluster-{{name}}'
     spec:
       destination:
         namespace: workload
         server: '{{server}}'
       project: default
       source:
-        path: 'apps/tekton'
+        path: 'clusters/dev'
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
       syncPolicy:

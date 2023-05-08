@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: spoke-settings
+  name: spoke-clusters
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: argocd
@@ -13,7 +13,7 @@ spec:
   source:
     directory:
       recurse: true
-    path: apps/spoke-settings
+    path: apps/spoke-clusters
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
   syncPolicy:

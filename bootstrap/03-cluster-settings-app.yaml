@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hub-settings
+  name: hub
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: bootstrap
@@ -13,7 +13,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: apps/hub-settings
+    path: apps/hub
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
   syncPolicy:

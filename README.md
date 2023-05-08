@@ -18,7 +18,7 @@
 
 ## Howto
 
-* Run `create-s3-bucket`, enable ACL in the bucket
+* Run `create-s3-bucket`, enable ACL in the bucket manually
 * `oc apply -f bootstrap` until all objects are created
 * Wait for `acm` app to sync
 * `oc apply -f secrets` to create AWS creds and OIDC secret

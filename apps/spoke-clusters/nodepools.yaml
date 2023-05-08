@@ -1,0 +1,36 @@
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: vrutkovs-prod-eu-eu-west-3a
+  namespace: clusters
+spec:
+  clusterName: vrutkovs-prod-eu
+  management:
+    autoRepair: false
+    replace:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      strategy: RollingUpdate
+    upgradeType: Replace
+  nodeDrainTimeout: 0s
+  replicas: 2
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: vrutkovs-prod-us-us-west-2a
+  namespace: clusters
+spec:
+  clusterName: vrutkovs-prod-us
+  management:
+    autoRepair: false
+    replace:
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
+      strategy: RollingUpdate
+    upgradeType: Replace
+  nodeDrainTimeout: 0s
+  replicas: 2
