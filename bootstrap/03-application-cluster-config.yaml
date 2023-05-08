@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootstrap
+  name: argocd
   namespace: openshift-gitops
   labels:
-    app.kubernetes.io/instance: bootstrap
+    app.kubernetes.io/instance: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:

@@ -8,6 +8,8 @@
 * [x] Rollout latest repo changes to stage
 * [x] Prod clusters use custom overlay
 * [x] Autoscale pods on production via KEDA
+  * [ ] KEDA scaling may be broken?
+* [ ] Store secrets via External Secrets
 * [ ] dev pipeline: go vet and other checks
 * [ ] dev pipeline: comment in PR
 * [ ] stage pipeline: push image to ghcr.io
