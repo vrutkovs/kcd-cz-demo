@@ -15,9 +15,9 @@ spec:
         image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
         env:
         - name: REPO_URL
-          value: https://github.com/vrutkovs/color-demo
+          value: "{{ .Values.repo_url }}"
         - name: REPO_SHA
-          value: main
+          value: "{{ .Values.repo_sha }}"
         command:
         - bash
         - -c

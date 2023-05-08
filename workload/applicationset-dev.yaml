@@ -35,11 +35,12 @@ spec:
         path: pipelines/dev
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
-        directory:
-          jsonnet:
-            extVars:
-            - name: head_sha
-              value: '{{head_sha}}'
+        helm:
+          parameters:
+           - name: repo_url
+             value: 'https://github.com/vrutkovs/color-demo'
+           - name: repo_sha
+             value: '{{head_sha}}'
       syncPolicy:
         automated:
           prune: true
