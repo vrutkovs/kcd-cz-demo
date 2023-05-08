@@ -13,7 +13,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: apps/_hub-settings
+    path: apps/hub-settings
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
   syncPolicy:
