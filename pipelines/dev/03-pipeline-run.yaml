@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: dev-run
+  namespace: workload
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  params:
+    - name: repo-url
+      value: 'https://github.com/vrutkovs/color-demo'
+    - name: repo-revision
+      value: main
+  pipelineRef:
+    name: clone-build-push
+  timeout: 1h0m0s
+  workspaces:
+    - name: app-source
+      volumeClaimTemplate:
+        metadata:
+          creationTimestamp: null
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+          storageClassName: gp3-csi
+          volumeMode: Filesystem
