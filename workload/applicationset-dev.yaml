@@ -10,7 +10,7 @@ spec:
         - pullRequest:
             github:
               owner: vrutkovs
-              repo: bgd
+              repo: color-demo
               labels:
               - preview
               tokenRef:
@@ -32,9 +32,14 @@ spec:
         server: '{{server}}'
       project: default
       source:
-        path: manifests/overlays/default/
-        repoURL: https://github.com/vrutkovs/color-demo
-        targetRevision: '{{head_sha}}'
+        path: pipelines/dev
+        repoURL: https://github.com/vrutkovs/kcd-cz-demo
+        targetRevision: HEAD
+        directory:
+          jsonnet:
+            extVars:
+            - name: head_sha
+              value: '{{head_sha}}'
       syncPolicy:
         automated:
           prune: true
