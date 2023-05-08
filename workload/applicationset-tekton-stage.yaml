@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tekton-stage
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: stage-cluster
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: 'tekton-stage-{{name}}'
+    spec:
+      destination:
+        namespace: workload
+        server: '{{server}}'
+      project: default
+      source:
+        path: 'apps/tekton'
+        repoURL: https://github.com/vrutkovs/kcd-cz-demo
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
+          - Validate=false
+          - Replace=false
+          - PrunePropagationPolicy=background

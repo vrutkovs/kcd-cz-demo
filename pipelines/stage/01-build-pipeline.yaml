@@ -1,21 +1,11 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: deploy-preview-from-pr
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: deploy-to-stage
 spec:
   description: |
     This pipeline clones a git repo, builds a Docker image with Buildah,
     pushes it to a registry and deploys this image from manifests
-  params:
-  - name: repo-url
-    type: string
-    default: https://github.com/vrutkovs/color-demo
-  - name: repo-revision
-    type: string
-    default: main
   workspaces:
   - name: app-source
   tasks:
@@ -28,9 +18,9 @@ spec:
       workspace: app-source
     params:
     - name: url
-      value: $(params.repo-url)
+      value: https://github.com/vrutkovs/color-demo
     - name: revision
-      value: $(params.repo-revision)
+      value: main
   - name: build-image
     taskRef:
       kind: ClusterTask

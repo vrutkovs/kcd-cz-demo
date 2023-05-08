@@ -13,11 +13,6 @@ spec:
       containers:
       - name: start-pipeline
         image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
-        env:
-        - name: REPO_URL
-          value: "{{ .Values.repo_url }}"
-        - name: REPO_SHA
-          value: "{{ .Values.repo_sha }}"
         command:
         - bash
         - -c
@@ -28,13 +23,8 @@ spec:
           metadata:
             name: dev-run
           spec:
-            params:
-              - name: repo-url
-                value: "${REPO_URL}"
-              - name: repo-revision
-                value: "${REPO_SHA}"
             pipelineRef:
-              name: deploy-preview-from-pr
+              name: deploy-to-stage
             timeout: 1h0m0s
             workspaces:
               - name: app-source
@@ -46,7 +36,7 @@ spec:
                       - ReadWriteOnce
                     resources:
                       requests:
-                        storage: 100Mi
+                        storage: 1Gi
                     storageClassName: gp3-csi
                     volumeMode: Filesystem
           EOF

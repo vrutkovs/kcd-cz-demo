@@ -13,16 +13,16 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'workload-stage-{{name}}'
+      name: 'workload-stage'
     spec:
       destination:
-        namespace: workload
+        namespace: 'workload'
         server: '{{server}}'
       project: default
       source:
-        path: app/overlays/default/
-        repoURL: https://github.com/vrutkovs/bgd
-        targetRevision: main
+        path: pipelines/stage
+        repoURL: https://github.com/vrutkovs/kcd-cz-demo
+        targetRevision: HEAD
       syncPolicy:
         automated:
           prune: true
