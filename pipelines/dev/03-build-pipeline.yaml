@@ -58,7 +58,7 @@ spec:
           IMAGE_NAME="image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/color-demo"
           echo "Deploying ${IMAGE_NAME}"
           echo "images:" >> kustomization.yaml
-          echo "- name: IMAGE_STUB" >> kustomization.yaml
+          echo "- name: ghcr.io/vrutkovs/color-demo:latest" >> kustomization.yaml
           echo "  newName: ${IMAGE_NAME}" >> kustomization.yaml
           echo "  newTag: latest" >> kustomization.yaml
           oc apply -k .
