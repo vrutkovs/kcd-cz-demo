@@ -3,15 +3,17 @@ kind: TektonConfig
 metadata:
   name: config
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "2"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   addon:
     params:
       - name: clusterTasks
         value: 'true'
+      - name: communityClusterTasks
+        value: 'false'
       - name: pipelineTemplates
-        value: 'true'
+        value: 'false'
   pipeline:
     params:
       - name: enableMetrics

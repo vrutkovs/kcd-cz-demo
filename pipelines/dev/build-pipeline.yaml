@@ -1,0 +1,73 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: clone-build-push
+  namespace: workload
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  description: |
+    This pipeline clones a git repo, builds a Docker image with Kaniko and
+    pushes it to a registry
+  params:
+  - name: repo-url
+    type: string
+    default: https://github.com/vrutkovs/color-demo
+  - name: repo-revision
+    type: string
+    default: main
+  workspaces:
+  - name: app-source
+  tasks:
+  - name: fetch-source
+    taskRef:
+      kind: ClusterTask
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: app-source
+    params:
+    - name: url
+      value: $(params.repo-url)
+    - name: revision
+      value: $(params.repo-revision)
+  - name: build-image
+    taskRef:
+      kind: ClusterTask
+      name: buildah
+    runAfter:
+      - fetch-source
+    params:
+      - name: IMAGE
+        value: image-registry.openshift-image-registry.svc:5000/$(context.pipelineRun.namespace)/color-demo:latest
+      - name: TLSVERIFY
+        value: 'false'
+      - name: CONTEXT
+        value: $(workspaces.source.path)
+    workspaces:
+      - name: source
+        workspace: app-source
+  - name: deploy
+    params:
+      - name: SCRIPT
+        value: |
+          cd $(workspaces.manifest-dir.path)/manifests/overlays/default
+          NAMESPACE="$(context.pipelineRun.namespace)"
+          echo "Namespace: ${NAMESPACE}"
+          IMAGE_NAME="image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/color-demo"
+          echo "Deploying ${IMAGE_NAME}"
+          echo "images:" >> kustomization.yaml
+          echo "- name: IMAGE_STUB" >> kustomization.yaml
+          echo "  newName: ${IMAGE_NAME}" >> kustomization.yaml
+          echo "  newTag: latest" >> kustomization.yaml
+          oc apply -k .
+          oc rollout status deploy/colors -w
+    runAfter:
+      - build-image
+    taskRef:
+      kind: ClusterTask
+      name: openshift-client
+    workspaces:
+      - name: manifest-dir
+        workspace: app-source
