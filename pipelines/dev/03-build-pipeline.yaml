@@ -19,16 +19,6 @@ spec:
     default: main
   workspaces:
   - name: app-source
-    default:
-      volumeClaimTemplate:
-        metadata:
-          creationTimestamp: null
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 100Mi
   tasks:
   - name: fetch-source
     taskRef:
