@@ -29,9 +29,7 @@ spec:
       - fetch-source
     params:
       - name: IMAGE
-        value: image-registry.openshift-image-registry.svc:5000/$(context.pipelineRun.namespace)/color-demo:latest
-      - name: TLSVERIFY
-        value: 'false'
+        value: ghcr.io/vrutkovs/color-demo:$(results.fetch-source.commit)
       - name: CONTEXT
         value: $(workspaces.source.path)
     workspaces:
@@ -44,12 +42,11 @@ spec:
           cd $(workspaces.manifest-dir.path)/manifests/overlays/default
           NAMESPACE="$(context.pipelineRun.namespace)"
           echo "Namespace: ${NAMESPACE}"
-          IMAGE_NAME="image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/color-demo"
-          echo "Deploying ${IMAGE_NAME}"
+          echo "Deploying commit $(results.fetch-source.commit)"
           echo "images:" >> kustomization.yaml
           echo "- name: ghcr.io/vrutkovs/color-demo:latest" >> kustomization.yaml
-          echo "  newName: ${IMAGE_NAME}" >> kustomization.yaml
-          echo "  newTag: latest" >> kustomization.yaml
+          echo "  newName: ghcr.io/vrutkovs/color-demo" >> kustomization.yaml
+          echo "  newTag: $(results.fetch-source.commit)" >> kustomization.yaml
           oc apply -k .
           oc rollout status deploy/colors -w
     runAfter:
@@ -60,3 +57,14 @@ spec:
     workspaces:
       - name: manifest-dir
         workspace: app-source
+  - name: tag-as-latest
+    taskRef:
+      kind: ClusterTask
+      name: skopeo-copy
+    runAfter:
+      - deploy
+    params:
+      - name: srcImageURL
+        value: 'docker://ghcr.io/vrutkovs/color-demo:$(results.fetch-source.commit)'
+      - name: destImageURL
+        value: 'docker://ghcr.io/vrutkovs/color-demo:latest'

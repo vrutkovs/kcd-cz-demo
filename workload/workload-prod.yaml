@@ -20,9 +20,14 @@ spec:
         server: '{{server}}'
       project: default
       source:
-        path: 'app/overlays/{{name}}/'
-        repoURL: https://github.com/vrutkovs/bgd
-        targetRevision: 233efbb
+        path: 'manifests/overlays/{{name}}/'
+        repoURL: https://github.com/vrutkovs/color-demo
+        targetRevision: 6d7f0da66f5a8be964d6107bf1c58546c0c0f71e
+        kustomize:
+          images:
+          - name: ghcr.io/vrutkovs/color-demo:latest
+            newName: ghcr.io/vrutkovs/color-demo
+            newTag: 6d7f0da66f5a8be964d6107bf1c58546c0c0f71e
       syncPolicy:
         automated:
           prune: true
