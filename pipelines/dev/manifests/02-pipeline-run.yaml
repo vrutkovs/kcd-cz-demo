@@ -13,6 +13,11 @@ spec:
       containers:
       - name: start-pipeline
         image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+        env:
+        - name: REPO_URL
+          value: https://github.com/vrutkovs/color-demo
+        - name: REPO_SHA
+          value: main
         command:
         - bash
         - -c
@@ -22,16 +27,12 @@ spec:
           kind: PipelineRun
           metadata:
             name: dev-run
-            namespace: workload
-            annotations:
-              argocd.argoproj.io/sync-wave: "3"
-              argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
           spec:
             params:
               - name: repo-url
-                value: 'https://github.com/vrutkovs/color-demo'
+                value: "${REPO_URL}"
               - name: repo-revision
-                value: main
+                value: "${REPO_SHA}"
             pipelineRef:
               name: clone-build-push
             timeout: 1h0m0s
