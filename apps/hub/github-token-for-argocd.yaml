@@ -1,0 +1,17 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: github-token
+  namespace: openshift-gitops
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: fake
+    kind: ClusterSecretStore
+  target:
+    name: github-token
+  data:
+  - secretKey: token
+    remoteRef:
+      key: /openshift-gitops/github-token
+      version: v1
