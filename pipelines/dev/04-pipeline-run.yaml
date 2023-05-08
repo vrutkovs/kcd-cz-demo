@@ -1,30 +1,51 @@
-apiVersion: tekton.dev/v1beta1
-kind: PipelineRun
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: dev-run
-  namespace: workload
+  generateName: start-pipeline
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
-  params:
-    - name: repo-url
-      value: 'https://github.com/vrutkovs/color-demo'
-    - name: repo-revision
-      value: main
-  pipelineRef:
-    name: clone-build-push
-  timeout: 1h0m0s
-  workspaces:
-    - name: app-source
-      volumeClaimTemplate:
-        metadata:
-          creationTimestamp: null
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 1Gi
-          storageClassName: gp3-csi
-          volumeMode: Filesystem
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: pipeline
+      containers:
+      - name: start-pipeline
+        image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+        command:
+        - bash
+        - -c
+        - |
+          oc apply -f - <<EOF
+          apiVersion: tekton.dev/v1beta1
+          kind: PipelineRun
+          metadata:
+            name: dev-run
+            namespace: workload
+            annotations:
+              argocd.argoproj.io/sync-wave: "3"
+              argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+          spec:
+            params:
+              - name: repo-url
+                value: 'https://github.com/vrutkovs/color-demo'
+              - name: repo-revision
+                value: main
+            pipelineRef:
+              name: clone-build-push
+            timeout: 1h0m0s
+            workspaces:
+              - name: app-source
+                volumeClaimTemplate:
+                  metadata:
+                    creationTimestamp: null
+                  spec:
+                    accessModes:
+                      - ReadWriteOnce
+                    resources:
+                      requests:
+                        storage: 1Gi
+                    storageClassName: gp3-csi
+                    volumeMode: Filesystem
+          EOF
