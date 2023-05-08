@@ -32,8 +32,8 @@ spec:
         server: '{{server}}'
       project: default
       source:
-        path: app/overlays/default/
-        repoURL: https://github.com/vrutkovs/bgd
+        path: manifests/overlays/default/
+        repoURL: https://github.com/vrutkovs/color-demo
         targetRevision: '{{head_sha}}'
       syncPolicy:
         automated:
