@@ -1,10 +1,3 @@
-apiVersion: cluster.open-cluster-management.io/v1beta2
-kind: ManagedClusterSet
-metadata:
-  name: stage
-spec:
-  clusterSelector:
-    selectorType: ExclusiveClusterSetLabel
 ---
 apiVersion: hypershift.openshift.io/v1beta1
 kind: HostedCluster
@@ -14,6 +7,7 @@ metadata:
   annotations:
     cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-stage
     cluster.open-cluster-management.io/managedcluster-name: vrutkovs-stage
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - hypershift.openshift.io/finalizer
     - hypershift.io/aws-oidc-discovery
@@ -94,6 +88,7 @@ metadata:
     import.open-cluster-management.io/hosting-cluster-name: local-cluster
     import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
     open-cluster-management/created-via: other
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   hubAcceptsClient: true
   leaseDurationSeconds: 60
@@ -103,6 +98,8 @@ kind: KlusterletAddonConfig
 metadata:
   name: vrutkovs-stage
   namespace: vrutkovs-stage
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   clusterName: vrutkovs-stage
   clusterNamespace: vrutkovs-stage
@@ -125,4 +122,16 @@ kind: ManagedClusterInfo
 metadata:
   name: vrutkovs-stage
   namespace: vrutkovs-stage
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 spec: {}
+---
+apiVersion: cluster.open-cluster-management.io/v1beta2
+kind: ManagedClusterSet
+metadata:
+  name: stage
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  clusterSelector:
+    selectorType: ExclusiveClusterSetLabel

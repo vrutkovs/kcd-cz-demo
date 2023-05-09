@@ -5,6 +5,7 @@ metadata:
   annotations:
     cluster.open-cluster-management.io/hypershiftdeployment: clusters/vrutkovs-prod-us
     cluster.open-cluster-management.io/managedcluster-name: vrutkovs-prod-us
+    argocd.argoproj.io/sync-wave: "1"
   name: vrutkovs-prod-us
   namespace: clusters
   finalizers:
@@ -86,6 +87,7 @@ metadata:
     import.open-cluster-management.io/hosting-cluster-name: local-cluster
     import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
     open-cluster-management/created-via: other
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   hubAcceptsClient: true
   leaseDurationSeconds: 60
@@ -95,6 +97,8 @@ kind: KlusterletAddonConfig
 metadata:
   name: vrutkovs-prod-us
   namespace: vrutkovs-prod-us
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   clusterName: vrutkovs-prod-us
   clusterNamespace: vrutkovs-prod-us
@@ -117,4 +121,6 @@ kind: ManagedClusterInfo
 metadata:
   name: vrutkovs-prod-us
   namespace: vrutkovs-prod-us
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 spec: {}
