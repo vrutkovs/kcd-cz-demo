@@ -60,14 +60,3 @@ spec:
     workspaces:
       - name: manifest-dir
         workspace: app-source
-  - name: tag-as-latest
-    taskRef:
-      kind: ClusterTask
-      name: skopeo-copy
-    runAfter:
-      - deploy
-    params:
-      - name: srcImageURL
-        value: 'docker://ghcr.io/vrutkovs/color-demo:$(results.fetch-source.commit)'
-      - name: destImageURL
-        value: 'docker://ghcr.io/vrutkovs/color-demo:latest'
