@@ -8,9 +8,9 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
-    name: bgd
-    kind: Deployment
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: color-demo
   maxReplicaCount: 10
   minReplicaCount: 2
   pollingInterval: 30
