@@ -25,9 +25,7 @@ spec:
         targetRevision: 6d7f0da66f5a8be964d6107bf1c58546c0c0f71e
         kustomize:
           images:
-          - name: ghcr.io/vrutkovs/color-demo:latest
-            newName: ghcr.io/vrutkovs/color-demo
-            newTag: 6d7f0da66f5a8be964d6107bf1c58546c0c0f71e
+          - ghcr.io/vrutkovs/color-demo:6d7f0da66f5a8be964d6107bf1c58546c0c0f71e
       syncPolicy:
         automated:
           prune: true
