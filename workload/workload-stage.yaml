@@ -20,8 +20,8 @@ spec:
         server: '{{server}}'
       project: default
       source:
-        path: pipelines/stage
-        repoURL: https://github.com/vrutkovs/kcd-cz-demo
+        path: manifests/pipeline
+        repoURL: https://github.com/vrutkovs/color-demo
         targetRevision: HEAD
       syncPolicy:
         automated:

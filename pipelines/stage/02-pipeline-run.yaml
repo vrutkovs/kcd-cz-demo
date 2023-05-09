@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: start-pipeline
+  name: start-pipeline
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
@@ -17,11 +17,11 @@ spec:
         - bash
         - -c
         - |
-          oc apply -f - <<EOF
+          oc create -f - <<EOF
           apiVersion: tekton.dev/v1beta1
           kind: PipelineRun
           metadata:
-            name: deploy-to-stage
+            generateName: deploy-to-stage
           spec:
             pipelineRef:
               name: deploy-to-stage
