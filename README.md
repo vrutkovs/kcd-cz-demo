@@ -13,7 +13,7 @@
 * [ ] dev pipeline: go vet and other checks
 * [ ] dev pipeline: comment in PR
 * [x] stage pipeline: push image to ghcr.io
-* [ ] Rollout changes to production via Blue/Green
+* [x] Rollout changes to production via Blue/Green
 * [ ] Describe what these pieces do
 
 ## Howto
