@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-stage
+  name: cluster-prod-keda
   namespace: openshift-gitops
 spec:
   generators:
@@ -9,18 +9,18 @@ spec:
         configMapRef: acm-placement
         labelSelector:
           matchLabels:
-            cluster.open-cluster-management.io/placement: stage-cluster
+            cluster.open-cluster-management.io/placement: prod-cluster
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'cluster-{{name}}'
+      name: 'cluster-{{name}}-keda'
     spec:
       destination:
         namespace: workload
         server: '{{server}}'
       project: default
       source:
-        path: 'clusters/stage'
+        path: 'apps/keda'
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
         directory:

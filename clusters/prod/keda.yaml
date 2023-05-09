@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-prod-keda
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/instance: argocd
+spec:
+  destination:
+    namespace: openshift-operators
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: apps/keda
+    repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
+    targetRevision: HEAD
+  syncPolicy:
+    automated: {}
