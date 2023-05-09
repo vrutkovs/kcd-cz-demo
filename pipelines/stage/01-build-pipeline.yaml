@@ -8,6 +8,7 @@ spec:
     pushes it to a registry and deploys this image from manifests
   workspaces:
   - name: app-source
+  - name: dockerconfig-ws
   tasks:
   - name: fetch-source
     taskRef:
@@ -35,6 +36,8 @@ spec:
     workspaces:
       - name: source
         workspace: app-source
+      - name: dockerconfig
+        workspace: dockerconfig-ws
   - name: deploy
     params:
       - name: SCRIPT
