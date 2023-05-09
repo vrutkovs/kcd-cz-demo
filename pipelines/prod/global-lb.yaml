@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: colors-global
+  labels:
+    app: colors
+spec:
+  host: kcd-vrutkovs-demo.devcluster.openshift.com
+  to:
+    kind: Service
+    name: colors
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: 8080
