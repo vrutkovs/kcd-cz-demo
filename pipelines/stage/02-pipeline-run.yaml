@@ -21,7 +21,7 @@ spec:
           apiVersion: tekton.dev/v1beta1
           kind: PipelineRun
           metadata:
-            generateName: deploy-to-stage
+            name: deploy-to-stage
           spec:
             pipelineRef:
               name: deploy-to-stage
@@ -40,5 +40,5 @@ spec:
                     volumeMode: Filesystem
               - name: dockerconfig-ws
                 secret:
-                  secretName: dockerconfig-secret
+                  secretName: github-token
           EOF

@@ -13,6 +13,7 @@
 * [ ] dev pipeline: go vet and other checks
 * [ ] dev pipeline: comment in PR
 * [ ] stage pipeline: push image to ghcr.io
+* [ ] stage pipeline: convert into helm chart to generate unique pipelineruns
 * [ ] Rollout changes to production via Blue/Green
 * [ ] Describe what these pieces do
 
