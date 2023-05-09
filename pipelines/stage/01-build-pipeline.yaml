@@ -29,9 +29,9 @@ spec:
       - fetch-source
     params:
       - name: IMAGE
-        value: ghcr.io/vrutkovs/color-demo:$(results.fetch-source.commit)
+        value: "ghcr.io/vrutkovs/color-demo:$(tasks.fetch-source.results.commit)"
       - name: CONTEXT
-        value: $(workspaces.source.path)
+        value: "$(workspaces.source.path)"
     workspaces:
       - name: source
         workspace: app-source
