@@ -16,4 +16,3 @@ spec:
   - secretKey: config.json
     remoteRef:
       key: /stage-cluster/github-token
-      version: v1
