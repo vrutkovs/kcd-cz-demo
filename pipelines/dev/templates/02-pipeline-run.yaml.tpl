@@ -26,7 +26,7 @@ spec:
           apiVersion: tekton.dev/v1beta1
           kind: PipelineRun
           metadata:
-            name: dev-run
+            generateName: dev-run
           spec:
             params:
               - name: repo-url
