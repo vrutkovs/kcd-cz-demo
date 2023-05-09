@@ -21,6 +21,6 @@
 * Run `create-s3-bucket`, enable ACL in the bucket manually
 * `oc apply -f bootstrap` until all objects are created
 * Wait for `acm` app to sync
-* `oc apply -f secrets` to create AWS creds and OIDC secret
+* `oc apply -f secrets/secret-store.yaml` to create secret store
 * `bash runme.sh` for each folder in `clusters` to create Hypershift clusters
 * Sync remaining apps
