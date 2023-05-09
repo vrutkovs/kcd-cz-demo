@@ -16,7 +16,7 @@ spec:
       name: 'cluster-{{name}}-rollouts'
     spec:
       destination:
-        namespace: workload
+        namespace: argo-rollouts
         server: '{{server}}'
       project: default
       source:

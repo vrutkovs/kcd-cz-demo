@@ -15072,7 +15072,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: argo-rollouts
-  namespace: openshift-gitops
+  namespace: argo-rollouts
 ---
 apiVersion: v1
 kind: ConfigMap
