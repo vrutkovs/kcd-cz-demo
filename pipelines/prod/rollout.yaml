@@ -7,7 +7,8 @@ spec:
   strategy:
     canary:
       antiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution: {}
+        preferredDuringSchedulingIgnoredDuringExecution:
+          weight: 50
       steps:
       - setWeight: 20
       - pause: {duration: 60}
