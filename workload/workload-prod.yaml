@@ -22,7 +22,7 @@ spec:
       source:
         path: 'manifests/overlays/{{name}}/'
         repoURL: https://github.com/vrutkovs/color-demo
-        targetRevision: f7f34db
+        targetRevision: 88cc40f
         kustomize:
           images:
           - ghcr.io/vrutkovs/color-demo:f7f34dba445a6d8c3c82dc4a2772ab16a511eb42
