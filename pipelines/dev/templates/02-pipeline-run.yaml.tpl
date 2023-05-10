@@ -26,7 +26,7 @@ spec:
           apiVersion: tekton.dev/v1beta1
           kind: PipelineRun
           metadata:
-            name: dev-run-"{{ .Values.repo_sha }}"
+            name: "dev-run-{{ .Values.repo_sha }}"
           spec:
             params:
               - name: repo-url
