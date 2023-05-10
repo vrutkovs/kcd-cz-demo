@@ -42,7 +42,7 @@ spec:
     params:
       - name: SCRIPT
         value: |
-          cd $(workspaces.manifest-dir.path)/manifests/overlays/default
+          cd $(workspaces.manifest-dir.path)/manifests/overlays/stage
           NAMESPACE="$(context.pipelineRun.namespace)"
           echo "Namespace: ${NAMESPACE}"
           echo "Deploying commit $(tasks.fetch-source.results.commit)"
