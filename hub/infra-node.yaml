@@ -1,0 +1,9 @@
+kind: Node
+apiVersion: v1
+metadata:
+  name: vrutkovs-demo-qdf7z-worker-a
+spec:
+  taints:
+    - key: node-role.kubernetes.io/infra
+      effect: NoExecute
+      value: reserved

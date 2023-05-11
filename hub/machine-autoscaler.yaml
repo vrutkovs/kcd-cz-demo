@@ -10,7 +10,7 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name:  vrutkovs-demo-qdf7z-worker-a
+    name: vrutkovs-demo-qdf7z-worker-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
@@ -23,7 +23,7 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name:  vrutkovs-demo-qdf7z-worker-b
+    name: vrutkovs-demo-qdf7z-worker-b
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
@@ -36,4 +36,4 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name:  vrutkovs-demo-qdf7z-worker-c
+    name: vrutkovs-demo-qdf7z-worker-c
