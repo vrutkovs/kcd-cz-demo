@@ -9,7 +9,7 @@ metadata:
 spec:
   nodeSelector:
     node-role.kubernetes.io/infra: ""
-  availabilityConfig: High
+  availabilityConfig: Basic
   overrides:
     components:
     - enabled: true
