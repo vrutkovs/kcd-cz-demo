@@ -14,6 +14,7 @@
 * [ ] dev pipeline: comment in PR
 * [x] stage pipeline: push image to ghcr.io
 * [x] Rollout changes to production via Blue/Green
+* [ ] Run MCE and ArgoCD on infra nodes
 * [ ] Describe what these pieces do
 
 ## Howto
