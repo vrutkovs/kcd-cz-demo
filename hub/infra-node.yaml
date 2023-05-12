@@ -1,7 +1,7 @@
 kind: Node
 apiVersion: v1
 metadata:
-  name: vrutkovs-demo-qdf7z-worker-a
+  name: vrutkovs-demo-wch6b-worker-a-jhqv4
 spec:
   taints:
     - key: node-role.kubernetes.io/infra
