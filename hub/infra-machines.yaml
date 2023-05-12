@@ -4,7 +4,7 @@ metadata:
   name: vrutkovs-demo-z8p28-worker-a
   namespace: openshift-machine-api
 spec:
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
