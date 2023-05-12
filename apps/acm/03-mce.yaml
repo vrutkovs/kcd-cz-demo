@@ -9,6 +9,13 @@ metadata:
 spec:
   nodeSelector:
     node-role.kubernetes.io/infra: ""
+  tolerations:
+  - key: node-role.kubernetes.io/infra
+    effect: NoSchedule
+    operator: Exists
+  - key: node-role.kubernetes.io/infra
+    effect: NoExecute
+    operator: Exists
   availabilityConfig: Basic
   overrides:
     components:
