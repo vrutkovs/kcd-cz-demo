@@ -30,5 +30,5 @@ spec:
     - '*.vrutkovs-demo.devcluster.openshift.com'
     - '*.apps.vrutkovs-demo.devcluster.openshift.com'
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-prod-cluster-issuer
     kind: ClusterIssuer
