@@ -16,3 +16,7 @@ spec:
         route53:
           region: us-east-2
           hostedZoneID: Z3URY6TWQ91KVV
+          accessKeyID: AKIAI4PTPSPCIHG32EAQ
+          secretAccessKeySecretRef:
+            name: aws-secret
+            key: aws_secret_access_key
