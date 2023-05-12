@@ -3,14 +3,7 @@ kind: Config
 metadata:
   name: cluster
 spec:
-  affinity:
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - podAffinityTerm:
-          namespaces:
-          - openshift-image-registry
-          topologyKey: kubernetes.io/hostname
-        weight: 100
+  replicas: 1
   nodeSelector:
     node-role.kubernetes.io/infra: ""
   tolerations:
