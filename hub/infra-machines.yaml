@@ -17,7 +17,7 @@ spec:
           node-role.kubernetes.io/infra: ""
       taints:
       - key: node-role.kubernetes.io/infra
-        effect: NoExecute
+        effect: NoSchedule
         value: reserved
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
