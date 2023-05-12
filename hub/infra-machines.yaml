@@ -12,6 +12,9 @@ spec:
         machine.openshift.io/cluster-api-machine-type: infra
         node-role.kubernetes.io/infra: ""
     spec:
+      metadata:
+        labels:
+          node-role.kubernetes.io/infra: ""
       taints:
       - key: node-role.kubernetes.io/infra
         effect: NoExecute
