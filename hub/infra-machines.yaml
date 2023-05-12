@@ -1,3 +1,20 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: vrutkovs-demo-wch6b-worker-a
+  namespace: openshift-machine-api
+spec:
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        node-role.kubernetes.io/infra: ""
+    spec:
+      taints:
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
+        value: reserved
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
