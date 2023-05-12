@@ -1,0 +1,13 @@
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  managementState: "Managed"
+  unsupportedConfigOverrides:
+    controller:
+      args:
+      - "--dns01-recursive-nameservers=1.1.1.1:53"
+      - "--dns01-recursive-nameservers-only

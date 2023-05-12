@@ -6,6 +6,7 @@ metadata:
   labels:
     app: cert-manager
   annotations:
+    argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   secretName: router-certs
@@ -14,13 +15,12 @@ spec:
       app: cert-manager
   duration: 2160h # 90d
   renewBefore: 360h # 15d
-  commonName: '*.vrutkovs-stage.devcluster.openshift.com'
+  commonName: '*.apps.vrutkovs-stage.devcluster.openshift.com'
   usages:
     - server auth
     - client auth
   dnsNames:
-    - '*.vrutkovs-stage.devcluster.openshift.com'
     - '*.apps.vrutkovs-stage.devcluster.openshift.com'
   issuerRef:
-    name: letsencrypt-prod-cluster-issuer
+    name: letsencrypt-stage-issuer
     kind: ClusterIssuer
