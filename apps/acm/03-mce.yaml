@@ -7,6 +7,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "3"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  nodeSelector:
+    node-role.kubernetes.io/infra: ""
   availabilityConfig: High
   overrides:
     components:
