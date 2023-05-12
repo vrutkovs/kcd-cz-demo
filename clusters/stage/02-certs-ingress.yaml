@@ -22,5 +22,5 @@ spec:
   dnsNames:
     - '*.apps.vrutkovs-stage.devcluster.openshift.com'
   issuerRef:
-    name: letsencrypt-stage-issuer
+    name: letsencrypt-prod-cluster-issuer
     kind: ClusterIssuer
