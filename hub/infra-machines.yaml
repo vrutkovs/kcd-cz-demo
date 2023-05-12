@@ -4,6 +4,7 @@ metadata:
   name: vrutkovs-demo-wch6b-worker-a
   namespace: openshift-machine-api
 spec:
+  replicas: 2
   template:
     metadata:
       labels:
@@ -15,19 +16,6 @@ spec:
       - key: node-role.kubernetes.io/infra
         effect: NoExecute
         value: reserved
----
-apiVersion: autoscaling.openshift.io/v1beta1
-kind: MachineAutoscaler
-metadata:
-  name: worker-us-east-2a
-  namespace: openshift-machine-api
-spec:
-  maxReplicas: 5
-  minReplicas: 1
-  scaleTargetRef:
-    apiVersion: machine.openshift.io/v1beta1
-    kind: MachineSet
-    name: vrutkovs-demo-wch6b-worker-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
