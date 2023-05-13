@@ -14,7 +14,8 @@
 * [ ] dev pipeline: comment in PR
 * [x] stage pipeline: push image to ghcr.io
 * [x] Rollout changes to production via Blue/Green
-* [ ] Run MCE and ArgoCD on infra nodes
+  * [ ] Deployment still has one replica?
+* [x] Run MCE and ArgoCD on infra nodes
 * [ ] Describe what these pieces do
 
 ## Howto
@@ -25,3 +26,17 @@
 * `oc apply -f secrets/secret-store.yaml` to create secret store
 * `bash runme.sh` for each folder in `clusters` to create Hypershift clusters
 * Sync remaining apps
+
+## Techonologies used
+
+* ACM to control spoke clsuters
+* MCE to spin up spoke clusters
+* HyperShift to run control plane on hub cluster
+* ArgoCD to control manifests via gitops
+* Tekton to build images and rollout manifests
+* Argo Rollouts to do canary deployment
+* Cert manager to issue Lets Encrypt certificates
+* Global LB to loadbalance load between regional clusters
+* KEDA to autoscale replicas based on connections
+* External Secrets to sync secrets to clusters
+* Helm/Kustomize to adjust deployment settings
