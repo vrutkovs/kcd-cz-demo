@@ -16,7 +16,7 @@ spec:
   duration: 2160h # 90d
   renewBefore: 360h # 15d
   commonName: '*.apps.vrutkovs-prod-eu.devcluster.openshift.com'
-  euages:
+  usages:
     - server auth
     - client auth
   dnsNames:
