@@ -16,7 +16,7 @@ metadata:
 spec:
   fips: false
   release:
-    image: 'quay.io/openshift-release-dev/ocp-release:4.12.16-x86_64'
+    image: 'quay.io/okd/scos-release:4.13.0-0.okd-scos-2023-05-04-192252'
   dns:
     baseDomain: devcluster.openshift.com
   controllerAvailabilityPolicy: SingleReplica
