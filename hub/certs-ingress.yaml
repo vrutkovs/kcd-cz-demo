@@ -20,7 +20,7 @@ spec:
     - server auth
     - client auth
   dnsNames:
-    - '*.vrutkovs-demo.origin-gce.dev.openshift.com'
+    - '*.apps.vrutkovs-demo.origin-gce.dev.openshift.com'
   issuerRef:
     name: letsencrypt-prod-gcp
     kind: ClusterIssuer
