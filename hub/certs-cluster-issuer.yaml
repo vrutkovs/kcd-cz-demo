@@ -14,7 +14,7 @@ spec:
     solvers:
     - dns01:
         cloudDNS:
-          projectID: openshift-gce-devel
+          project: openshift-gce-devel
           serviceAccountSecretRef:
             name: google-secret
             key: service-account.json
