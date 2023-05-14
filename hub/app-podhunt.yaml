@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: podhunt
+  namespace: pod-hunt
+  labels:
+    app.kubernetes.io/instance: argocd
+spec:
+  destination:
+    namespace: pod-hunt
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: manifests
+    repoURL: 'https://github.com/vrutkovs/k8s-podhunt'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
