@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: podhunt
-  namespace: pod-hunt
+  namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: argocd
 spec:
