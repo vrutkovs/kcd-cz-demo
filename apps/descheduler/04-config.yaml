@@ -1,0 +1,13 @@
+apiVersion: operator.openshift.io/v1
+kind: KubeDescheduler
+metadata:
+  name: cluster
+  namespace: openshift-kube-descheduler-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  deschedulingIntervalSeconds: 1800
+  profiles:
+  - AffinityAndTaints
+  - LifecycleAndUtilization
