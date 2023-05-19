@@ -8,6 +8,10 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   deschedulingIntervalSeconds: 1800
+  logLevel: Normal
+  mode: Predictive
+  operatorLogLevel: Normal
   profiles:
-  - AffinityAndTaints
-  - LifecycleAndUtilization
+    - AffinityAndTaints
+    - LifecycleAndUtilization
+  managementState: "Managed"
