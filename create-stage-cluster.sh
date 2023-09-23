@@ -15,4 +15,4 @@ hypershift create cluster aws \
     --node-pool-replicas 1 \
     --namespace clusters \
 	--etcd-storage-class ssd-csi \
-    --release-image quay.io/openshift-release-dev/ocp-release:4.12.12-x86_64
+    --release-image quay.io/openshift-release-dev/ocp-release:4.13.13-x86_64
