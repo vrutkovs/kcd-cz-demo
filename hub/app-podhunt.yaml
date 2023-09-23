@@ -11,7 +11,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: manifests
+    path: 'manifests/overlays/hub/'
     repoURL: 'https://github.com/vrutkovs/k8s-podhunt'
     targetRevision: HEAD
   syncPolicy:
