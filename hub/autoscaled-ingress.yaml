@@ -11,8 +11,8 @@ spec:
     kind: IngressController
     name: default
     envSourceContainerName: ingress-operator
-  maxReplicaCount: 2
-  minReplicaCount: 20
+  minReplicaCount: 2
+  maxReplicaCount: 20
   cooldownPeriod: 1
   pollingInterval: 1
   triggers:
