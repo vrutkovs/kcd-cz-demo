@@ -116,15 +116,6 @@ spec:
   searchCollector:
     enabled: false
 ---
-apiVersion: internal.open-cluster-management.io/v1beta1
-kind: ManagedClusterInfo
-metadata:
-  name: vrutkovs-stage
-  namespace: vrutkovs-stage
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
-spec: {}
----
 apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSet
 metadata:

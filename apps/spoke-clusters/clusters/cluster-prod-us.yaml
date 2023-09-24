@@ -114,12 +114,3 @@ spec:
     enabled: true
   searchCollector:
     enabled: false
----
-apiVersion: internal.open-cluster-management.io/v1beta1
-kind: ManagedClusterInfo
-metadata:
-  name: vrutkovs-prod-us
-  namespace: vrutkovs-prod-us
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
-spec: {}
