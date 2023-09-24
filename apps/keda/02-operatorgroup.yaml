@@ -7,3 +7,5 @@ metadata:
   namespace: openshift-keda
 spec:
   upgradeStrategy: Default
+  targetNamespaces:
+  - openshift-keda

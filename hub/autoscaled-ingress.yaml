@@ -1,28 +1,29 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: scaled-deployment
-  namespace: workload
+  name: ingress-scaler
   annotations:
     argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   scaleTargetRef:
-    apiVersion: argoproj.io/v1alpha1
-    kind: Rollout
-    name: color-demo
-  maxReplicaCount: 10
-  minReplicaCount: 2
-  pollingInterval: 30
+    apiVersion: operator.openshift.io/v1
+    kind: IngressController
+    name: default
+    envSourceContainerName: ingress-operator
+  maxReplicaCount: 2
+  minReplicaCount: 20
+  cooldownPeriod: 1
+  pollingInterval: 1
   triggers:
   - type: prometheus
+    metricType: AverageValue
     metadata:
       serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
       metricName: haproxy_backend_connections_total
-      threshold: "5"
-      query: sum(rate(haproxy_backend_connections_total{exported_namespace="workload"}[5m]))
+      threshold: "1"
+      query: sum(rate(haproxy_backend_connections_total{exported_namespace="openshift-console"}[1m]))
       authModes: "bearer"
-      metricType: Value
       namespace: workload
     authenticationRef:
       name: keda-trigger-auth-prometheus
