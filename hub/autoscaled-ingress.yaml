@@ -23,7 +23,7 @@ spec:
       serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
       metricName: haproxy_backend_connections_total
       threshold: "1"
-      query: sum(rate(haproxy_backend_connections_total{exported_namespace="openshift-console"}[1m]))
+      query: sum(rate(haproxy_frontend_connections_total[1m]))
       authModes: "bearer"
       namespace: openshift-ingress-operator
     authenticationRef:
