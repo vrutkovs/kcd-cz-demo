@@ -21,6 +21,15 @@ data:
       - key: node-role.kubernetes.io/infra
         value: reserved
         effect: NoSchedule
+      volumeClaimTemplate:
+        metadata:
+          name: prometheus-data
+          annotations:
+            openshift.io/cluster-monitoring-drop-pvc: "yes"
+        spec:
+          resources:
+            requests:
+              storage: 20Gi
     prometheusOperator:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
