@@ -25,6 +25,6 @@ spec:
       threshold: "1"
       query: sum(rate(haproxy_backend_connections_total{exported_namespace="openshift-console"}[1m]))
       authModes: "bearer"
-      namespace: workload
+      namespace: openshift-ingress-operator
     authenticationRef:
       name: keda-trigger-auth-prometheus
