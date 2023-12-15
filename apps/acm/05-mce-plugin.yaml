@@ -4,7 +4,7 @@ metadata:
   name: hypershift-addon
   namespace: local-cluster
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "5"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   installNamespace: open-cluster-management-agent-addon
