@@ -32,7 +32,7 @@ spec:
 
           agentImage:
             repository: "registry.connect.redhat.com/hashicorp/vault"
-            tag: "1.14.0-ubi"
+            tag: "1.15.3-ubi"
 
         csi:
           image:
@@ -42,7 +42,7 @@ spec:
 
         server:
           image:
-            tag: "1.14.0-ubi"
+            tag: "1.15.3-ubi"
             repository: registry.connect.redhat.com/hashicorp/vault
 
           extraEnvironmentVars:
@@ -93,22 +93,6 @@ spec:
               service.beta.openshift.io/serving-cert-secret-name: vault-server-tls
 
           extraInitContainers:
-            # # This example installs a plugin pulled from github into the /usr/local/libexec/vault/oauthapp folder,
-            # # which is defined in the volumes value.
-            - name: github-module-downloader
-              image: registry.access.redhat.com/ubi8/ubi:8.5
-              command:
-              - /bin/bash
-              - -c
-              - |
-                  cd /usr/local/libexec/vault
-                  curl -L -o vault-plugin-secrets-github-linux-amd64 https://github.com/martinbaillie/vault-plugin-secrets-github/releases/download/v2.0.0/vault-plugin-secrets-github-linux-amd64
-                  chmod +x vault-plugin-secrets-github-linux-amd64
-                  curl -L -o SHA256SUMS https://github.com/martinbaillie/vault-plugin-secrets-github/releases/download/v2.0.0/SHA256SUMS
-              volumeMounts:
-                - name: plugins
-                  mountPath: /usr/local/libexec/vault
-
             - name: utility-downloader
               image: registry.access.redhat.com/ubi8/ubi:8.5
               command:
@@ -194,43 +178,6 @@ spec:
                     fi
                   done
               volumeMounts:
-                - name: vault-root-token
-                  mountPath: /vault-root-token
-            - name: github-module-loader
-              image: registry.connect.redhat.com/hashicorp/vault:1.14.0-ubi
-              env:
-              - name: VAULT_SKIP_VERIFY
-                value: "true"
-              - name: VAULT_ADDR
-                value: https://localhost:8200
-              - name: VAULT_CACERT
-                value: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
-              command:
-              - /bin/bash
-              - -c
-              - |
-                  while true; do
-                    sleep 5
-                    if [[ -f /vault-root-token/root_token ]]; then
-                      export VAULT_TOKEN=$(cat /vault-root-token/root_token)
-                      if [[ $(vault status | grep "Sealed" | grep "false") ]]; then
-                        if [[ $(vault plugin list secret | grep vault-plugin-secrets-github) ]]; then
-                          echo vault-plugin-secrets-github plugin already installed
-                          sleep 5
-                        else
-                          echo SHA256SUM $(grep vault-plugin-secrets-github-linux-amd64 /usr/local/libexec/vault/SHA256SUMS | cut -d' ' -f1)
-                          vault plugin register -sha256=$(grep vault-plugin-secrets-github-linux-amd64 /usr/local/libexec/vault/SHA256SUMS | cut -d' ' -f1) -command=vault-plugin-secrets-github-linux-amd64 -args="--tls-skip-verify=true" secret vault-plugin-secrets-github
-                        fi
-                      else
-                        echo vault still sealed
-                      fi
-                    else
-                      echo root token not initialized yet
-                    fi
-                  done
-              volumeMounts:
-                - name: plugins
-                  mountPath: /usr/local/libexec/vault
                 - name: vault-root-token
                   mountPath: /vault-root-token
   syncPolicy:
