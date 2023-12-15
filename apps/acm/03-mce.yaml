@@ -38,3 +38,9 @@ spec:
       name: search
     - enabled: false
       name: cluster-backup
+    - enabled: true
+      name: cluster-permission
+    - enabled: true
+      name: multicluster-observability
+    - enabled: true
+      name: submariner-addon
