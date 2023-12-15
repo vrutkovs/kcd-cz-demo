@@ -15,4 +15,4 @@ hypershift create cluster aws \
 	--node-pool-replicas 1 \
 	--namespace clusters \
 	--etcd-storage-class ssd-csi \
-	--release-image quay.io/okd/scos-release:4.13.0-0.okd-scos-2023-05-04-192252
+	--release-image quay.io/okd/scos-release:4.14.0-0.okd-scos-2023-11-10-050846
