@@ -136,10 +136,7 @@ spec:
                       export ROOT_TOKEN=$(echo "$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .root_token)
                       echo "$UNSEAL_KEY"
                       echo "$ROOT_TOKEN"
-                      /usr/local/libexec/vault/kubectl delete secret vault-init -n ${NAMESPACE}
-                      /usr/local/libexec/vault/kubectl create secret generic vault-init -n ${NAMESPACE} --from-literal=unseal_key=${UNSEAL_KEY} --from-literal=root_token=${ROOT_TOKEN}
                     else
-                      echo vault already initialized
                       sleep 5
                     fi
                   done
@@ -170,8 +167,6 @@ spec:
                         else
                           echo unseal key not initialized yet
                         fi
-                      else
-                        echo vault already unsealed
                       fi
                     else
                       echo Vault not initialized yet
