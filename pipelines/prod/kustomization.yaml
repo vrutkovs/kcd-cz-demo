@@ -9,6 +9,5 @@ patchesJson6902:
     name: colors
     version: v1
 resources:
-- rollout.yaml
 - global-lb.yaml
 - pdb.yaml
