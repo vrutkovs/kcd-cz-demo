@@ -9,11 +9,11 @@ metadata:
 spec:
   refreshInterval: 1h
   secretStoreRef:
-    name: fake
+    name: vault
     kind: ClusterSecretStore
   target:
     name: github-token
   data:
   - secretKey: config.json
     remoteRef:
-      key: /stage-cluster/github-token
+      key: "secret/github-token"

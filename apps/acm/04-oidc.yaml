@@ -9,10 +9,10 @@ metadata:
 spec:
   refreshInterval: 1h
   secretStoreRef:
-    name: fake
+    name: vault
     kind: ClusterSecretStore
   target:
     name: hypershift-operator-oidc-provider-s3-credentials
   dataFrom:
   - extract:
-      key: /local-cluster/oidc
+      key: "secret/oidc"

@@ -8,12 +8,11 @@ metadata:
 spec:
   refreshInterval: 1h
   secretStoreRef:
-    name: fake
+    name: vault
     kind: ClusterSecretStore
   target:
     name: github-token
   data:
   - secretKey: token
     remoteRef:
-      key: /openshift-gitops/github-token
-      version: v1
+      key: "secret/github-token"
