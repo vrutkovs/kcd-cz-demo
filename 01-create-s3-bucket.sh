@@ -13,5 +13,6 @@ echo "{
             \"Resource\": \"arn:aws:s3:::${BUCKET_NAME}/*\"
         }
     ]
-}" | envsubst > secrets/policy.json
-aws s3api put-bucket-policy --bucket $BUCKET_NAME --policy file://secrets/policy.json
+}" | envsubst > policy.json
+aws s3api put-bucket-policy --bucket $BUCKET_NAME --policy file://policy.json
+rm -rf policy.json
