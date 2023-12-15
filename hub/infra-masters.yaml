@@ -1,0 +1,12 @@
+apiVersion: machine.openshift.io/v1
+kind: ControlPlaneMachineSet
+metadata:
+  name: cluster
+  namespace: openshift-machine-api
+spec:
+  template:
+    machines_v1beta1_machine_openshift_io:
+      spec:
+        providerSpec:
+          value:
+            machineType: n2-standard-8
