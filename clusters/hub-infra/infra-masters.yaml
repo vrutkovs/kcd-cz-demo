@@ -9,4 +9,4 @@ spec:
       spec:
         providerSpec:
           value:
-            machineType: n2-standard-8
+            machineType: n2-highmem-8
