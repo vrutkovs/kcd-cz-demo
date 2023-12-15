@@ -20,9 +20,8 @@ spec:
       wildcardPolicy: None
     insecure: false
     resources: {}
-  sso:
-    dex:
-      openShiftOAuth: true
+  dex:
+    openShiftOAuth: true
   rbac:
     defaultPolicy: 'role:readonly'
     policy: |
