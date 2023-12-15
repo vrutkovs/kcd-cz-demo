@@ -34,7 +34,6 @@
 * HyperShift to run control plane on hub cluster
 * ArgoCD to control manifests via gitops
 * Tekton to build images and rollout manifests
-* Argo Rollouts to do canary deployment
 * Cert manager to issue Lets Encrypt certificates
 * Global LB to loadbalance load between regional clusters
 * KEDA to autoscale replicas based on connections
