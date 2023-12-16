@@ -6,7 +6,6 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  replicas: 4
   template:
     metadata:
       labels:
@@ -21,6 +20,21 @@ spec:
       - key: node-role.kubernetes.io/infra
         effect: NoSchedule
         value: reserved
+---
+apiVersion: autoscaling.openshift.io/v1beta1
+kind: MachineAutoscaler
+metadata:
+  name: worker-us-east-2a
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: machine.openshift.io/v1beta1
+    kind: MachineSet
+    name: vrutkovs-demo-j6xpk-worker-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
