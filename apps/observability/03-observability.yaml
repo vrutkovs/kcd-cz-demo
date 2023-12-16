@@ -12,4 +12,8 @@ spec:
       name: thanos-object-storage
       key: thanos.yaml
   nodeSelector:
-    node-role.kubernetes.io/infra:
+    node-role.kubernetes.io/infra: ""
+  tolerations:
+    - key: node-role.kubernetes.io/infra
+      effect: NoSchedule
+      operator: Exists
