@@ -13,8 +13,6 @@ spec:
       url: https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/application
       secret:
         name: lokistack-gateway-bearer-token
-      loki:
-        tenantKey: kubernetes.namespace_name
   pipelines:
     - name: application-logs
       inputRefs:
