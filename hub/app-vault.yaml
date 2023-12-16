@@ -21,6 +21,14 @@ spec:
           openshift: true
           tlsDisable: false
 
+        nodeSelector:
+          node-role.kubernetes.io/infra: ""
+
+        tolerations:
+        - key: node-role.kubernetes.io/infra
+          effect: NoSchedule
+          operator: Exists
+
         ui:
           enabled: true
 
