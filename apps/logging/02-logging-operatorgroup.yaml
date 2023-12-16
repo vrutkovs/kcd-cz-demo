@@ -1,0 +1,22 @@
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: openshift-logging
+  namespace: openshift-logging
+spec:
+  upgradeStrategy: Default
+  targetNamespaces:
+    - openshift-logging
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: openshift-operators-redhat
+  namespace: openshift-operators-redhat
+spec:
+  upgradeStrategy: Default

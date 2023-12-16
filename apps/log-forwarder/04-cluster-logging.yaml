@@ -1,0 +1,14 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogging
+metadata:
+  name: instance
+  namespace: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    logging.openshift.io/preview-vector-collector: enabled
+spec:
+  collection:
+    logs:
+      type: fluentd
+      fluentd: {}
