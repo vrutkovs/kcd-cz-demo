@@ -10,5 +10,4 @@ metadata:
 spec:
   collection:
     logs:
-      type: fluentd
-      fluentd: {}
+      type: vector
