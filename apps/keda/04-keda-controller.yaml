@@ -14,9 +14,10 @@ spec:
   metricsServer:
     logLevel: '0'
   serviceAccount: {}
-  nodeSelector:
-    node-role.kubernetes.io/infra: ""
-  tolerations:
-  - key: node-role.kubernetes.io/infra
-    effect: NoSchedule
-    operator: Exists
+  operator:
+    nodeSelector:
+      node-role.kubernetes.io/infra: ""
+    tolerations:
+    - key: node-role.kubernetes.io/infra
+      effect: NoSchedule
+      operator: Exists
