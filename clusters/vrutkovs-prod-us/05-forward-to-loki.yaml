@@ -1,0 +1,23 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  outputs:
+    - name: loki-applications
+      type: "loki"
+      url: https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/application
+      secret:
+        name: lokistack-gateway-bearer-token
+  pipelines:
+    - name: application-logs
+      labels:
+        clusterId: prod-us
+      inputRefs:
+      - application
+      outputRefs:
+      - loki-applications
