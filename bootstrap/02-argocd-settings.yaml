@@ -9,6 +9,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   applicationSet: {}
+  ha:
+    enabled: true
   dex:
     openShiftOAuth: true
   server:
