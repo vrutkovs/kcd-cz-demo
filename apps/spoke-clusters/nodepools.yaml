@@ -2,6 +2,26 @@
 apiVersion: hypershift.openshift.io/v1beta1
 kind: NodePool
 metadata:
+  name: vrutkovs-dev-us-east-2a
+  namespace: clusters
+spec:
+  platform:
+    aws:
+      instanceType: m5.xlarge
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: vrutkovs-stage-us-east-2a
+  namespace: clusters
+spec:
+  platform:
+    aws:
+      instanceType: m5.xlarge
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
   name: vrutkovs-prod-eu-eu-west-3a
   namespace: clusters
 spec:
@@ -16,6 +36,9 @@ spec:
     upgradeType: Replace
   nodeDrainTimeout: 0s
   replicas: 2
+  platform:
+    aws:
+      instanceType: m5.xlarge
 ---
 apiVersion: hypershift.openshift.io/v1beta1
 kind: NodePool
@@ -34,3 +57,6 @@ spec:
     upgradeType: Replace
   nodeDrainTimeout: 0s
   replicas: 2
+  platform:
+    aws:
+      instanceType: m5.xlarge
