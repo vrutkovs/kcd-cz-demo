@@ -73,6 +73,7 @@ spec:
           hs.status = "Progressing"
           hs.message = "Waiting for certificate"
           return hs
+  resourceTrackingMethod: annotation
   repo:
     serviceaccount: vplugin
     mountsatoken: true
