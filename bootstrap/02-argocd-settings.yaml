@@ -11,8 +11,10 @@ spec:
   applicationSet: {}
   ha:
     enabled: true
-  dex:
-    openShiftOAuth: true
+  sso:
+    provider: dex
+    dex:
+      openShiftOAuth: true
   server:
     route:
       enabled: true
