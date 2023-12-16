@@ -102,15 +102,6 @@ data:
           tlsSkipVerify: true
         secureJsonData:
           httpHeaderValue1: Bearer ${GATEWAY_TOKEN}
-      - name: Loki (Audit)
-        type: loki
-        access: proxy
-        url: https://${GATEWAY_ADDRESS}/api/logs/v1/audit/
-        jsonData:
-          httpHeaderName1: Authorization
-          tlsSkipVerify: true
-        secureJsonData:
-          httpHeaderValue1: Bearer ${GATEWAY_TOKEN}
       - name: Prometheus
         type: prometheus
         access: proxy

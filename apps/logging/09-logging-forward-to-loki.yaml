@@ -32,3 +32,8 @@ spec:
       outputRefs:
         - default
       detectMultilineErrors: true
+    - name: infra-logs
+      inputRefs:
+      - infrastructure
+      outputRefs:
+      - loki-infra
