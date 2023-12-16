@@ -16,6 +16,9 @@ spec:
       metadata:
         labels:
           node-role.kubernetes.io/infra: ""
+      providerSpec:
+        value:
+          machineType: n2-highmem-8
       taints:
       - key: node-role.kubernetes.io/infra
         effect: NoSchedule
