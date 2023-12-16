@@ -23,11 +23,6 @@ spec:
     policy: |
       g, system:cluster-admins, role:admin
     scopes: '[groups]'
-  ignoreDifferences:
-    - group: route.openshift.io
-      kind: Route
-      jsonPointers:
-      - /spec/host
   resourceExclusions: |
     - apiGroups:
       - tekton.dev
@@ -37,6 +32,9 @@ spec:
       - PipelineRun
       - TaskRun
   extraConfig:
+    resource.customizations.ignoreDifferences.route.openshift.io_Route: |
+        jqPathExpressions:
+        - '.spec.host'
     resource.customizations: |
       operators.coreos.com/Subscription:
         health.lua: |
