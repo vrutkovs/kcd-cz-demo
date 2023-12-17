@@ -36,4 +36,4 @@ spec:
       inputRefs:
       - infrastructure
       outputRefs:
-      - loki-infra
+      - default
