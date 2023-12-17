@@ -21,5 +21,6 @@ data:
         command:
           - argocd-vault-plugin
           - generate
+          - '--verbose-sensitive-output'
           - "."
       lockRepo: false
