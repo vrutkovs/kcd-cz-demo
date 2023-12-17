@@ -81,7 +81,7 @@ spec:
           return hs
   resourceTrackingMethod: annotation
   repo:
-    serviceaccount: vplugin
+    serviceaccount: vault-plugin
     mountsatoken: true
     volumes:
       - configMap:
