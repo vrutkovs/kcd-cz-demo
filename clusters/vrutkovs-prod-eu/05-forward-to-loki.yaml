@@ -13,6 +13,11 @@ spec:
       url: https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/application
       secret:
         name: lokistack-gateway-bearer-token
+    - name: loki-infra
+      type: "loki"
+      url: https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/infrastructure
+      secret:
+        name: lokistack-gateway-bearer-token
   pipelines:
     - name: application-logs
       labels:
@@ -21,3 +26,10 @@ spec:
       - application
       outputRefs:
       - loki-applications
+    - name: infra-logs
+      labels:
+        clusterId: prod-eu
+      inputRefs:
+      - infrastructure
+      outputRefs:
+      - loki-infrastructure
