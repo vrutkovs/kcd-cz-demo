@@ -3,8 +3,6 @@ kind: Secret
 metadata:
   name: github-token
   namespace: workload
-  annotations:
-    avp.kubernetes.io/path: "secret/data/github-token"
 type: Opaque
 stringData:
-  token: <token>
+  token: <path:secret/data/github-token#token>

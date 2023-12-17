@@ -4,8 +4,7 @@ metadata:
   name: thanos-object-storage
   namespace: open-cluster-management-observability
   annotations:
-    avp.kubernetes.io/path: "secret/data/thanos-settings"
     argocd.argoproj.io/sync-wave: "2"
 type: Opaque
 stringData:
-  thanos.yaml: <thanos.yaml>
+  thanos.yaml: <path:secret/data/thanos-settings#thanos.yaml>

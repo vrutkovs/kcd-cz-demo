@@ -4,10 +4,9 @@ metadata:
   name: hypershift-operator-oidc-provider-s3-credentials
   namespace: local-cluster
   annotations:
-    avp.kubernetes.io/path: "secret/data/oidc"
     argocd.argoproj.io/sync-wave: "4"
 type: Opaque
 stringData:
-  bucket: <bucket>
-  region: <region>
-  credentials: <credentials>
+  bucket: <path:secret/data/oidc#bucket>
+  region: <path:secret/data/oidc#region>
+  credentials: <path:secret/data/oidc#credentials>
