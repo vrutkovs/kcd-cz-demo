@@ -23,8 +23,6 @@ spec:
         path: 'apps/cert-manager'
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
-        directory:
-          recurse: true
       syncPolicy:
         automated:
           prune: true
