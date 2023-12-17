@@ -5,7 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  disableAllDefaultSources: true
+  disableAllDefaultSources: false
   sources:
   - name: "community-operators"
     disabled: false
