@@ -11,12 +11,6 @@ data:
       name: argocd-vault-plugin
     spec:
       allowConcurrency: true
-      discover:
-        find:
-          command:
-            - sh
-            - "-c"
-            - "find . -name '*' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
       generate:
         command:
           - argocd-vault-plugin
