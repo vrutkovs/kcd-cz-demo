@@ -9,5 +9,4 @@ metadata:
     logging.openshift.io/preview-vector-collector: enabled
 spec:
   collection:
-    logs:
-      type: vector
+    type: vector
