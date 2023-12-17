@@ -32,4 +32,4 @@ spec:
       inputRefs:
       - infrastructure
       outputRefs:
-      - loki-infrastructure
+      - loki-infra
