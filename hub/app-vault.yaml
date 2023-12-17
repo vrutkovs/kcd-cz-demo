@@ -21,14 +21,6 @@ spec:
           openshift: true
           tlsDisable: false
 
-        nodeSelector:
-          node-role.kubernetes.io/infra: ""
-
-        tolerations:
-        - key: node-role.kubernetes.io/infra
-          effect: NoSchedule
-          operator: Exists
-
         ui:
           enabled: true
 
@@ -56,6 +48,13 @@ spec:
           extraEnvironmentVars:
             VAULT_CACERT: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
 
+          nodeSelector:
+            node-role.kubernetes.io/infra: ""
+
+          tolerations:
+          - key: node-role.kubernetes.io/infra
+            effect: NoSchedule
+            operator: Exists
 
           route:
             enabled: true
