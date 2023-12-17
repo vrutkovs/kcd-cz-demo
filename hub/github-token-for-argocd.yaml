@@ -1,3 +1,4 @@
+---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -16,3 +17,14 @@ spec:
   - secretKey: token
     remoteRef:
       key: "secret/github-token"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-token
+  namespace: openshift-gitops
+  annotations:
+    avp.kubernetes.io/path: "secret/data/github-token"
+type: Opaque
+stringData:
+  token: <token>
