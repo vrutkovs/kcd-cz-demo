@@ -1,18 +1,11 @@
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
+apiVersion: v1
+kind: Secret
 metadata:
   name: thanos-object-storage
   namespace: open-cluster-management-observability
   annotations:
+    avp.kubernetes.io/path: "secret/data/thanos-settings"
     argocd.argoproj.io/sync-wave: "2"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  refreshInterval: 1h0m0s
-  secretStoreRef:
-    name: vault
-    kind: ClusterSecretStore
-  target:
-    name: thanos-object-storage
-  dataFrom:
-  - extract:
-      key: "secret/thanos-settings"
+type: Opaque
+stringData:
+  thanos.yaml: <thanos.yaml>

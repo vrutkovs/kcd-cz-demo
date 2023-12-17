@@ -1,18 +1,13 @@
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
+apiVersion: v1
+kind: Secret
 metadata:
-  name: oidc
+  name: hypershift-operator-oidc-provider-s3-credentials
   namespace: local-cluster
   annotations:
+    avp.kubernetes.io/path: "secret/data/oidc"
     argocd.argoproj.io/sync-wave: "4"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  refreshInterval: 1h0m0s
-  secretStoreRef:
-    name: vault
-    kind: ClusterSecretStore
-  target:
-    name: hypershift-operator-oidc-provider-s3-credentials
-  dataFrom:
-  - extract:
-      key: "secret/oidc"
+type: Opaque
+stringData:
+  bucket: <bucket>
+  region: <region>
+  credentials: <credentials>

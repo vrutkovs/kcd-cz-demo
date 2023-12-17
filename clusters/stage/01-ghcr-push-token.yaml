@@ -1,19 +1,10 @@
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
+apiVersion: v1
+kind: Secret
 metadata:
   name: github-token
   namespace: workload
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  refreshInterval: 1h0m0s
-  secretStoreRef:
-    name: vault
-    kind: ClusterSecretStore
-  target:
-    name: github-token
-  data:
-  - secretKey: config.json
-    remoteRef:
-      key: "secret/github-token"
+    avp.kubernetes.io/path: "secret/data/github-token"
+type: Opaque
+stringData:
+  token: <token>
