@@ -13,7 +13,7 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'cluster-prod-infra'
+      name: 'cluster-{{name}}-common-infra'
     spec:
       destination:
         namespace: workload
