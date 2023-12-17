@@ -16,6 +16,8 @@ spec:
     dex:
       openShiftOAuth: true
   server:
+    autoscale:
+      enabled: true
     route:
       enabled: true
       path: /
