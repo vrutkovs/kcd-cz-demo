@@ -94,3 +94,9 @@ spec:
     - key: node-role.kubernetes.io/infra
       effect: NoSchedule
       operator: Exists
+    spec:
+      template:
+        spec:
+          containers:
+            - name: grafana
+              image: hub.docker.io/grafana/grafana:10.0.10
