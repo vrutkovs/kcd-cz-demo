@@ -11,7 +11,6 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   finalizers:
     - hypershift.openshift.io/finalizer
-    - hypershift.io/aws-oidc-discovery
   labels:
     hypershift.openshift.io/auto-created-for-infra: vrutkovs-stage
 spec:
