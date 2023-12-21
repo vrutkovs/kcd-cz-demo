@@ -12,23 +12,6 @@ spec:
 apiVersion: hypershift.openshift.io/v1beta1
 kind: NodePool
 metadata:
-  name: vrutkovs-stage-us-east-2a
-  namespace: clusters
-spec:
-  platform:
-    kubevirt:
-      compute:
-        cores: 8
-        memory: 16Gi
-      rootVolume:
-        persistent:
-          size: 50Gi
-        type: Persistent
-    type: KubeVirt
----
-apiVersion: hypershift.openshift.io/v1beta1
-kind: NodePool
-metadata:
   name: vrutkovs-prod-eu-eu-west-3a
   namespace: clusters
 spec:

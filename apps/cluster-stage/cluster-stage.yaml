@@ -120,3 +120,33 @@ metadata:
 spec:
   clusterSelector:
     selectorType: ExclusiveClusterSetLabel
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: vrutkovs-stage
+  namespace: clusters
+  annotations:
+    cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-stage
+    cluster.open-cluster-management.io/managedcluster-name: vrutkovs-stage
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  clusterName: vrutkovs-stage
+  management:
+    autoRepair: false
+    upgradeType: Replace
+  nodeDrainTimeout: 0s
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.14.6-x86_64
+  replicas: 2
+  platform:
+    kubevirt:
+      compute:
+        cores: 8
+        memory: 16Gi
+      rootVolume:
+        persistent:
+          size: 50Gi
+        type: Persistent
+    type: KubeVirt
