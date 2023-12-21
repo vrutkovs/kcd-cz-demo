@@ -11,13 +11,24 @@ spec:
     log:
       mode: "console"
       level: "warn"
+    auth.anonymous:
+      enabled: true
     auth:
       disable_login_form: false
       disable_signout_menu: true
     auth.basic:
       enabled: true
-    auth.anonymous:
+    auth.proxy:
       enabled: true
+      enable_login_token: true
+      header_property: "username"
+      header_name: "X-Forwarded-User"
+    users:
+      allow_sign_up: false
+      auto_assign_org: true
+      auto_assign_org_role: Admin
+      editors_can_admin: true
+      viewers_can_edit: true
   containers:
     - env:
         - name: SAR
