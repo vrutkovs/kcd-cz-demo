@@ -37,6 +37,7 @@ data:
         key: node-role.kubernetes.io/infra
         value: reserved
     prometheusK8s:
+      retention: "1h"
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
