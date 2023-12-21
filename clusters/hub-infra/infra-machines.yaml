@@ -24,6 +24,30 @@ spec:
         effect: NoSchedule
         value: reserved
 ---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: vrutkovs-demo-gfc65-worker-b
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    metadata:
+      labels:
+        node-role.kubernetes.io/virtualization: ""
+    spec:
+      metadata:
+        labels:
+          node-role.kubernetes.io/virtualization: ""
+      providerSpec:
+        value:
+          machineType: n2-highmem-8
+      taints:
+      - key: node-role.kubernetes.io/virtualization
+        effect: NoSchedule
+        value: reserved
+---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
