@@ -5,6 +5,9 @@ kind: ManagedClusterSetBinding
 metadata:
   name: stage
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   clusterSet: stage
 ---
@@ -13,6 +16,9 @@ kind: Placement
 metadata:
   name: stage-cluster
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   predicates:
   - requiredClusterSelector:
@@ -28,6 +34,9 @@ kind: GitOpsCluster
 metadata:
   name: stage
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   argoServer:
     cluster: local-cluster

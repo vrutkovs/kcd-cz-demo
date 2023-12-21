@@ -9,6 +9,8 @@ metadata:
     policy.open-cluster-management.io/controls: SC-28 Protection Of Information At
       Rest, SC-6 Resource Availability, SC-8 Transmission Confidentiality and
       Integrity
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   disabled: false
   policy-templates:
@@ -33,6 +35,9 @@ kind: PlacementRule
 metadata:
   name: stage-policy-placement
   namespace: clusters
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   clusterSelector:
     matchExpressions:
@@ -48,6 +53,9 @@ kind: PlacementBinding
 metadata:
   name: stage-policy-placement
   namespace: clusters
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 placementRef:
   name: stage-policy-placement
   apiGroup: apps.open-cluster-management.io

@@ -8,6 +8,7 @@ metadata:
     cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-stage
     cluster.open-cluster-management.io/managedcluster-name: vrutkovs-stage
     argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   finalizers:
     - hypershift.openshift.io/finalizer
     - hypershift.io/aws-oidc-discovery
