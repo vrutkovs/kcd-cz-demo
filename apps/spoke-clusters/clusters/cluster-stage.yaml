@@ -30,15 +30,9 @@ spec:
     managementType: Managed
   infrastructureAvailabilityPolicy: SingleReplica
   platform:
-    aws:
-      cloudProviderConfig:
-        zone: us-east-2a
-      endpointAccess: Public
-      region: us-east-2
-      resourceTags:
-        - key: kubernetes.io/cluster/vrutkovs-stage
-          value: owned
-    type: AWS
+    kubevirt:
+      baseDomainPassthrough: true
+    type: KubeVirt
   secretEncryption:
     aescbc:
       activeKey:
