@@ -8,3 +8,4 @@ spec:
     - mce
     - acm
     - logging-view-plugin
+    - kubevirt-plugin
