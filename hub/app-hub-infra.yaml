@@ -16,3 +16,16 @@ spec:
     path: apps/hub-infra
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1h
