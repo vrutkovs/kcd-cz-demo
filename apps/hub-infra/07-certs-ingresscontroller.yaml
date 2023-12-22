@@ -9,3 +9,5 @@ metadata:
 spec:
   defaultCertificate:
     name: router-certs
+  routeAdmission:
+    wildcardPolicy: WildcardsAllowed
