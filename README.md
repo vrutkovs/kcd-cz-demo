@@ -14,13 +14,12 @@
 ## Howto
 
 * Run `create-s3-bucket`, enable ACL in the bucket manually
-* Comment `repo` in `bootstrap/02-argocd-settings.yaml`
 * `oc apply -f bootstrap` until all objects are created
 * Get unseal key and vault token via `oc -n vault logs -f vault-0 -c auto-initializer`
 * Update vault token in `secrets/setup-vault.sh`
 * Run `02-update-vault.sh` to fill in Vault
-* Wait for core apps to sync
-* `bash create-<env>.sh` to create Hypershift clusters
+* Apply main configuration: `oc apply -f apps/argocd` until all objects are created
+* Once `acm` app syncs create Hypershift clusters `bash create-<env>.sh`
 * Sync remaining apps
 
 ## Techonologies used

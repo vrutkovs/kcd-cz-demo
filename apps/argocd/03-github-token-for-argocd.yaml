@@ -3,6 +3,8 @@ kind: Secret
 metadata:
   name: github-token
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 type: Opaque
 stringData:
   token: <path:secret/data/github-token#token>

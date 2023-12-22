@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: vault
   namespace: openshift-gitops
-  labels:
-    app.kubernetes.io/instance: argocd
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
