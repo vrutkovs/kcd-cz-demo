@@ -1,0 +1,70 @@
+apiVersion: platform.stackrox.io/v1alpha1
+kind: Central
+metadata:
+  name: stackrox-central-services
+  namespace: stackrox
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  central:
+    db:
+      isEnabled: Default
+      nodeSelector:
+        node-role.kubernetes.io/infra: ''
+      persistence:
+        persistentVolumeClaim:
+          claimName: central-db
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved
+    exposure:
+      loadBalancer:
+        enabled: false
+        port: 443
+      nodePort:
+        enabled: false
+      route:
+        enabled: true
+    monitoring:
+      exposeEndpoint: Enabled
+    nodeSelector:
+      node-role.kubernetes.io/infra: ''
+    notifierSecretsEncryption:
+      enabled: false
+    persistence:
+      persistentVolumeClaim:
+        claimName: stackrox-db
+        storageClassName: ssd-csi
+    telemetry:
+      enabled: true
+    tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
+        value: reserved
+  egress:
+    connectivityPolicy: Online
+  monitoring:
+    openshift:
+      enabled: true
+  scanner:
+    analyzer:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ''
+      scaling:
+        autoScaling: Enabled
+        maxReplicas: 5
+        minReplicas: 2
+        replicas: 3
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved
+    db:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ''
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
+          value: reserved

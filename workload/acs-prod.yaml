@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-prod-acs
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: prod-cluster
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: 'cluster-{{name}}-acs'
+    spec:
+      destination:
+        namespace: workload
+        server: '{{server}}'
+      project: default
+      source:
+        path: 'apps/acs'
+        repoURL: https://github.com/vrutkovs/kcd-cz-demo
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        retry:
+          limit: -1
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 1h
