@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: spoke-clusters
+  name: cluster-prod-us
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: argocd
@@ -11,8 +11,6 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    directory:
-      recurse: true
-    path: apps/spoke-clusters
+    path: apps/clusters/prod-us
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD

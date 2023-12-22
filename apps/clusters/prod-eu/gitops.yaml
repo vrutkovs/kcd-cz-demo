@@ -1,0 +1,39 @@
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: vrutkovs-prod-us
+  labels:
+    cluster.open-cluster-management.io/clusterset: prod
+  annotations:
+    import.open-cluster-management.io/hosting-cluster-name: local-cluster
+    import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
+    open-cluster-management/created-via: other
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
+---
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: vrutkovs-prod-us
+  namespace: vrutkovs-prod-us
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  clusterName: vrutkovs-prod-us
+  clusterNamespace: vrutkovs-prod-us
+  clusterLabels:
+    cloud: auto-detect
+    vendor: auto-detect
+  applicationManager:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: false

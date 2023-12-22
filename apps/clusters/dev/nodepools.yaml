@@ -1,0 +1,29 @@
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: vrutkovs-dev
+  namespace: clusters
+  annotations:
+    cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-dev
+    cluster.open-cluster-management.io/managedcluster-name: vrutkovs-dev
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  clusterName: vrutkovs-dev
+  management:
+    autoRepair: false
+    upgradeType: Replace
+  nodeDrainTimeout: 0s
+  release:
+    image: quay.io/okd/scos-release:4.14.0-0.okd-scos-2023-11-10-050846
+  replicas: 1
+  platform:
+    kubevirt:
+      compute:
+        cores: 4
+        memory: 16Gi
+      rootVolume:
+        persistent:
+          size: 50Gi
+        type: Persistent
+    type: KubeVirt

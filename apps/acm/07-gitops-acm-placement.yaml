@@ -1,18 +1,25 @@
-
----
-apiVersion: cluster.open-cluster-management.io/v1beta2
-kind: ManagedClusterSetBinding
+kind: ConfigMap
+apiVersion: v1
 metadata:
-  name: prod
+  name: acm-placement
   namespace: openshift-gitops
-spec:
-  clusterSet: prod
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+data:
+  apiVersion: cluster.open-cluster-management.io/v1beta1
+  kind: placementdecisions
+  matchKey: clusterName
+  statusListKey: decisions
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: prod-cluster
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   predicates:
   - requiredClusterSelector:
@@ -28,6 +35,9 @@ kind: GitOpsCluster
 metadata:
   name: prod
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   argoServer:
     cluster: local-cluster
