@@ -14,6 +14,7 @@
 ## Howto
 
 * Run `create-s3-bucket`, enable ACL in the bucket manually
+* Rename machines in `bootstrap/05-infra-machines.yaml` to match random MachineSet hash
 * `oc apply -f bootstrap` until all objects are created
 * Get unseal key and vault token via `oc -n vault logs -f vault-0 -c auto-initializer`
 * Update vault token in `secrets/setup-vault.sh`
