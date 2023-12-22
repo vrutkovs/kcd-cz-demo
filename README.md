@@ -18,7 +18,7 @@
 * Get unseal key and vault token via `oc -n vault logs -f vault-0 -c auto-initializer`
 * Update vault token in `secrets/setup-vault.sh`
 * Run `02-update-vault.sh` to fill in Vault
-* Apply main configuration: `oc apply -f apps/argocd` until all objects are created
+* Apply main configuration: `oc apply -f app-hub.yml` until all objects are created
 * Once `acm` app syncs create Hypershift clusters `bash create-<env>.sh`
 * Sync remaining apps
 
