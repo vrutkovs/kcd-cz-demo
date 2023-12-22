@@ -11,7 +11,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: apps/cluster-stage
+    path: apps/clusters/stage
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
   syncPolicy:
