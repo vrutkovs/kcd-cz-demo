@@ -1,0 +1,17 @@
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  identityProviders:
+  - name: github
+    mappingMethod: claim
+    type: GitHub
+    github:
+      clientID: 4d7b2c37541942c402a6
+      clientSecret:
+        name: github-oauth-secret
+      teams:
+      - okd-project/admins
