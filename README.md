@@ -22,11 +22,11 @@
 * Apply main configuration: `oc apply -f app-hub.yml` until all objects are created
 * Once `openshift-logging` is created create a new Vault secret for `external-log-forwarder` SA
 * Once `acm` app syncs create Hypershift clusters `bash create-<env>.sh`
-* Sync remaining apps
+* Sync `spoke-clusters` and `applicationsets` apps, enable autosync
 
 ## Techonologies used
 
-* ACM to control spoke clsuters
+* ACM to control spoke clusters
 * MCE to spin up spoke clusters
 * HyperShift to run control plane on hub cluster
 * ArgoCD to control manifests via gitops
