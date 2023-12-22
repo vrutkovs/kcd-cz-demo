@@ -20,6 +20,7 @@
 * Update vault token in `secrets/setup-vault.sh`
 * Run `02-update-vault.sh` to fill in Vault
 * Apply main configuration: `oc apply -f app-hub.yml` until all objects are created
+* Once `openshift-logging` is created create a new Vault secret for `external-log-forwarder` SA
 * Once `acm` app syncs create Hypershift clusters `bash create-<env>.sh`
 * Sync remaining apps
 
