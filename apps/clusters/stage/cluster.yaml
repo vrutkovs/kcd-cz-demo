@@ -147,3 +147,15 @@ spec:
           size: 50Gi
         type: Persistent
     type: KubeVirt
+  configuration:
+    oauth:
+      identityProviders:
+      - name: github
+        mappingMethod: claim
+        type: GitHub
+        github:
+          clientID: ffcf97a3b3342cf4e019
+          clientSecret:
+            name: github-oauth-secret-stage
+          teams:
+          - okd-project/admins
