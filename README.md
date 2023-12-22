@@ -7,24 +7,20 @@
 * [x] Add global load balancer
 * [x] Rollout latest repo changes to stage
 * [x] Prod clusters use custom overlay
-* [x] Autoscale pods on production via KEDA
-  * [ ] KEDA scaling may be broken?
-* [x] Store secrets via External Secrets
-* [ ] dev pipeline: go vet and other checks
-* [ ] dev pipeline: comment in PR
+* [x] Store secrets in Vault
 * [x] stage pipeline: push image to ghcr.io
-* [x] Rollout changes to production via Blue/Green
-  * [ ] Deployment still has one replica?
 * [x] Run MCE and ArgoCD on infra nodes
-* [ ] Describe what these pieces do
 
 ## Howto
 
 * Run `create-s3-bucket`, enable ACL in the bucket manually
+* Comment `repo` in `bootstrap/02-argocd-settings.yaml`
 * `oc apply -f bootstrap` until all objects are created
-* Wait for `acm` app to sync
-* `oc apply -f secrets/secret-store.yaml` to create secret store
-* `bash runme.sh` for each folder in `clusters` to create Hypershift clusters
+* Get unseal key and vault token via `oc -n vault logs -f vault-0 -c auto-initializer`
+* Update vault token in `secrets/setup-vault.sh`
+* Run `02-update-vault.sh` to fill in Vault
+* Wait for core apps to sync
+* `bash create-<env>.sh` to create Hypershift clusters
 * Sync remaining apps
 
 ## Techonologies used
@@ -36,6 +32,10 @@
 * Tekton to build images and rollout manifests
 * Cert manager to issue Lets Encrypt certificates
 * Global LB to loadbalance load between regional clusters
-* KEDA to autoscale replicas based on connections
-* External Secrets to sync secrets to clusters
+* KEDA to autoscale hub ingress based on connections
+* ArgoCD Vault plugin to sync secrets to clusters
 * Helm/Kustomize to adjust deployment settings
+* Openshift Virtualization to spin up stage cluster
+* Openshift Logging to collect logs
+* Thanos to have a long-term metrics storage
+* Descheduler to spread pods across nodes
