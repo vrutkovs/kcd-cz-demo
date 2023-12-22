@@ -17,8 +17,6 @@ spec:
   fips: false
   release:
     image: 'quay.io/openshift-release-dev/ocp-release:4.14.6-x86_64'
-  dns:
-    baseDomain: devcluster.openshift.com
   controllerAvailabilityPolicy: SingleReplica
   infraID: vrutkovs-stage
   etcd:
