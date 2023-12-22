@@ -9,7 +9,7 @@ metadata:
 apiVersion: platform.stackrox.io/v1alpha1
 kind: SecuredCluster
 metadata:
-  name: stage
+  name: prod-eu
   namespace: stackrox
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
@@ -40,5 +40,5 @@ spec:
       collection: EBPF
       imageFlavor: Regular
     taintToleration: TolerateTaints
-  clusterName: stage
+  clusterName: prod-eu
   centralEndpoint: 'central-stackrox.apps.vrutkovs-demo.origin-gce.dev.openshift.com:443'
