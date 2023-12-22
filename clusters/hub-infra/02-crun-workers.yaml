@@ -1,7 +1,9 @@
 apiVersion: machineconfiguration.openshift.io/v1
 kind: ContainerRuntimeConfig
 metadata:
- name: overlay-size
+  name: crun
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
  machineConfigPoolSelector:
    matchLabels:

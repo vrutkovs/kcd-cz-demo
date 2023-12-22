@@ -3,6 +3,8 @@ kind: ControlPlaneMachineSet
 metadata:
   name: cluster
   namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   template:
     machines_v1beta1_machine_openshift_io:
