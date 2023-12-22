@@ -13,14 +13,14 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'cluster-{{name}}-common-infra'
+      name: 'cluster-{{name}}-infra'
     spec:
       destination:
         namespace: workload
         server: '{{server}}'
       project: default
       source:
-        path: 'clusters/prod'
+        path: 'clusters/{{name}}'
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
       syncPolicy:
