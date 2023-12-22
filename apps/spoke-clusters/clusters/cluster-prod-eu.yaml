@@ -1,4 +1,15 @@
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-oauth-secret-prod-eu
+  namespace: clusters
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+type: Opaque
+stringData:
+  clientSecret: <path:secret/data/oauth-prod-eu#secret>
+---
 apiVersion: hypershift.openshift.io/v1beta1
 kind: HostedCluster
 metadata:
@@ -14,6 +25,18 @@ metadata:
   labels:
     hypershift.openshift.io/auto-created-for-infra: vrutkovs-prod-eu
 spec:
+  configuration:
+    oauth:
+      identityProviders:
+      - name: github
+        mappingMethod: claim
+        type: GitHub
+        github:
+          clientID: 8aa91dd0426c1dbb71fa
+          clientSecret:
+            name: github-oauth-secret-prod-eu
+          teams:
+          - okd-project/admins
   fips: false
   release:
     image: 'quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64'
