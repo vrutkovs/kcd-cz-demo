@@ -1,0 +1,148 @@
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  name: vrutkovs-dev
+  namespace: clusters
+  annotations:
+    cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-dev
+    cluster.open-cluster-management.io/managedcluster-name: vrutkovs-dev
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  finalizers:
+    - hypershift.openshift.io/finalizer
+  labels:
+    hypershift.openshift.io/auto-created-for-infra: vrutkovs-dev
+spec:
+  fips: false
+  release:
+    image: 'quay.io/okd/scos-release:4.14.0-0.okd-scos-2023-11-10-050846'
+  controllerAvailabilityPolicy: SingleReplica
+  infraID: vrutkovs-dev
+  etcd:
+    managed:
+      storage:
+        persistentVolume:
+          size: 4Gi
+        type: PersistentVolume
+    managementType: Managed
+  infrastructureAvailabilityPolicy: SingleReplica
+  platform:
+    kubevirt:
+      baseDomainPassthrough: true
+    type: KubeVirt
+  secretEncryption:
+    aescbc:
+      activeKey:
+        name: vrutkovs-dev-etcd-encryption-key
+    type: aescbc
+  networking:
+    clusterNetwork:
+      - cidr: 10.132.0.0/14
+    machineNetwork:
+      - cidr: 10.0.0.0/16
+    networkType: OVNKubernetes
+    serviceNetwork:
+      - cidr: 172.31.0.0/16
+  pullSecret:
+    name: vrutkovs-dev-pull-secret
+  issuerURL: 'https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-dev'
+  sshKey:
+    name: vrutkovs-dev-ssh-key
+  autoscaling: {}
+  olmCatalogPlacement: management
+  services:
+    - service: APIServer
+      servicePublishingStrategy:
+        type: LoadBalancer
+    - service: OAuthServer
+      servicePublishingStrategy:
+        type: Route
+    - service: Konnectivity
+      servicePublishingStrategy:
+        type: Route
+    - service: Ignition
+      servicePublishingStrategy:
+        type: Route
+    - service: OVNSbDb
+      servicePublishingStrategy:
+        type: Route
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: vrutkovs-dev
+  labels:
+    cluster.open-cluster-management.io/clusterset: dev
+  annotations:
+    import.open-cluster-management.io/hosting-cluster-name: local-cluster
+    import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
+    open-cluster-management/created-via: other
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
+---
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: vrutkovs-dev
+  namespace: vrutkovs-dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  clusterName: vrutkovs-dev
+  clusterNamespace: vrutkovs-dev
+  clusterLabels:
+    cloud: auto-detect
+    vendor: auto-detect
+  applicationManager:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: false
+---
+apiVersion: cluster.open-cluster-management.io/v1beta2
+kind: ManagedClusterSet
+metadata:
+  name: dev
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  clusterSelector:
+    selectorType: ExclusiveClusterSetLabel
+---
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: vrutkovs-dev
+  namespace: clusters
+  annotations:
+    cluster.open-cluster-management.io/hypershiftdeployment: local-cluster/vrutkovs-dev
+    cluster.open-cluster-management.io/managedcluster-name: vrutkovs-dev
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  clusterName: vrutkovs-dev
+  management:
+    autoRepair: false
+    upgradeType: Replace
+  nodeDrainTimeout: 0s
+  release:
+    image: quay.io/okd/scos-release:4.14.0-0.okd-scos-2023-11-10-050846
+  replicas: 2
+  platform:
+    kubevirt:
+      compute:
+        cores: 8
+        memory: 16Gi
+      rootVolume:
+        persistent:
+          size: 50Gi
+        type: Persistent
+    type: KubeVirt
