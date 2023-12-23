@@ -118,46 +118,8 @@ spec:
               - -c
               - |
                   cd /usr/local/libexec/vault
-                  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-                  chmod +x kubectl
                   curl -L -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
                   chmod +x jq
-              volumeMounts:
-                - name: plugins
-                  mountPath: /usr/local/libexec/vault
-
-          extraContainers:
-            # you should not do this in production
-            - name: auto-initializer
-              image: registry.connect.redhat.com/hashicorp/vault:1.14.0-ubi
-              env:
-              - name: NAMESPACE
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.namespace
-              - name: VAULT_SKIP_VERIFY
-                value: "true"
-              - name: VAULT_ADDR
-                value: https://localhost:8200
-              - name: VAULT_CACERT
-                value: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
-              command:
-              - /bin/bash
-              - -c
-              - |
-                  while true; do
-                    sleep 5
-                    if [[ $(vault status | grep "Initialized" | grep "false") ]]; then
-                      export INIT_RESPONSE=$(vault operator init -format=json -key-shares 1 -key-threshold 1)
-                      echo "$INIT_RESPONSE"
-                      export UNSEAL_KEY=$(echo "$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .unseal_keys_b64[0])
-                      export ROOT_TOKEN=$(echo "$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .root_token)
-                      echo "$UNSEAL_KEY"
-                      echo "$ROOT_TOKEN"
-                    else
-                      sleep 5
-                    fi
-                  done
               volumeMounts:
                 - name: plugins
                   mountPath: /usr/local/libexec/vault
