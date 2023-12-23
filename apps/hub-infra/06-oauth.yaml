@@ -13,3 +13,5 @@ spec:
       clientID: c42f5da56269e2226ea9
       clientSecret:
         name: github-oauth-secret
+      organizations:
+      - okd-project
