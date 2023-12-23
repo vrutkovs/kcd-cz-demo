@@ -7,11 +7,11 @@ done
 oc exec -ti vault-0 -- bash <<EOF
 export VAULT_ADDR=https://vault.vault.svc:8200
 # Update root token
-export VAULT_TOKEN=hvs.yGDW8DeKQnuNen0LPQkBy6wT
+export VAULT_TOKEN=hvs.UC2HfhNhkaG4Zs5KvBfuS8Gt
 vault auth enable kubernetes
 vault write auth/kubernetes/config \
   token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
-  kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
+  kubernetes_host="https://$\KUBERNETES_PORT_443_TCP_ADDR:443" \
   kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
   issuer=https://kubernetes.default.svc
 
