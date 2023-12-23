@@ -3,8 +3,9 @@ kind: Application
 metadata:
   name: cluster-stage
   namespace: openshift-gitops
-  labels:
-    app.kubernetes.io/instance: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   destination:
     namespace: openshift-gitops

@@ -4,7 +4,7 @@ kind: ManagedClusterSet
 metadata:
   name: prod
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "7"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   clusterSelector:
@@ -16,7 +16,7 @@ metadata:
   name: prod
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "7"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   clusterSet: prod
