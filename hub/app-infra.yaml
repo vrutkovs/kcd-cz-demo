@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: infra
+  name: hub-infra
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: argocd
@@ -11,7 +11,9 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: clusters/hub-infra
+    directory:
+      recurse: true
+    path: apps/hub-infra
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
   syncPolicy:
