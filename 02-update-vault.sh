@@ -6,8 +6,13 @@ for file in $(ls secrets/); do
 done
 oc exec -ti vault-0 -- bash <<EOF
 export VAULT_ADDR=https://vault.vault.svc:8200
-# Update root token
-export VAULT_TOKEN=hvs.UC2HfhNhkaG4Zs5KvBfuS8Gt
+export INIT_RESPONSE=$(vault operator init -format=json -key-shares 1 -key-threshold 1)
+echo "$INIT_RESPONSE"
+export UNSEAL_KEY=$(echo "$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .unseal_keys_b64[0])
+export VAULT_TOKEN=$(echo "$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .root_token)
+echo "$UNSEAL_KEY"
+echo "$VAULT_TOKEN"
+
 vault auth enable kubernetes
 vault write auth/kubernetes/config \
   token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
@@ -18,8 +23,9 @@ vault write auth/kubernetes/config \
 vault secrets enable -path=secret/ -version=2 kv
 
 vault policy write vault_plugin - << EOZ
-path "secret/*"
-  { capabilities = ["read"] }
+path "secret/*" {
+  capabilities = ["read"]
+}
 EOZ
 vault write auth/kubernetes/role/vault_plugin \
     bound_service_account_names=vault-plugin \
