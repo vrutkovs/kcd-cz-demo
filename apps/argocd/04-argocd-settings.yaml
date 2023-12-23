@@ -25,6 +25,12 @@ spec:
         termination: reencrypt
       wildcardPolicy: None
     resources: {}
+  controller:
+    sharding:
+      dynamicScalingEnabled: true
+      minShards: 1
+      maxShards: 3
+      clustersPerShard: 1
   rbac:
     defaultPolicy: 'role:readonly'
     policy: |
