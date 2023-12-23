@@ -1,22 +1,29 @@
 #!/bin/bash
-set -eux
+echo "Copying secrets"
 oc project vault
 for file in $(ls secrets/); do
   oc exec -ti vault-0 -- sh -c "cat - > /tmp/${file}" < secrets/${file}
 done
+echo "Updating vault"
 oc exec -ti vault-0 -- bash <<EOF
-export VAULT_ADDR=https://vault.vault.svc:8200
-export INIT_RESPONSE=$(vault operator init -format=json -key-shares 1 -key-threshold 1)
-echo "$INIT_RESPONSE"
-export UNSEAL_KEY=$(echo "$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .unseal_keys_b64[0])
-export VAULT_TOKEN=$(echo "$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .root_token)
-echo "$UNSEAL_KEY"
-echo "$VAULT_TOKEN"
+set -eux
+export VAULT_ADDR=https://localhost:8200
+export VAULT_SKIP_VERIFY=true
+export VAULT_CACERT=/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+
+export INIT_RESPONSE=\$(vault operator init -format=json -key-shares 1 -key-threshold 1)
+echo "\$INIT_RESPONSE"
+export UNSEAL_KEY=\$(echo "\$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .unseal_keys_b64[0])
+export VAULT_TOKEN=\$(echo "\$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .root_token)
+echo "\$UNSEAL_KEY"
+echo "\$VAULT_TOKEN"
+
+vault operator unseal \$UNSEAL_KEY
 
 vault auth enable kubernetes
 vault write auth/kubernetes/config \
-  token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
-  kubernetes_host="https://$\KUBERNETES_PORT_443_TCP_ADDR:443" \
+  token_reviewer_jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token \
+  kubernetes_host="https://\$KUBERNETES_PORT_443_TCP_ADDR:443" \
   kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
   issuer=https://kubernetes.default.svc
 
