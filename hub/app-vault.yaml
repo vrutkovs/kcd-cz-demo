@@ -8,6 +8,19 @@ spec:
     server: 'https://kubernetes.default.svc'
     namespace: vault
   project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1h
   source:
     chart: vault
     repoURL: https://helm.releases.hashicorp.com
