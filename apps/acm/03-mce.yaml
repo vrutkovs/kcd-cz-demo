@@ -42,5 +42,5 @@ spec:
       name: cluster-permission
     - enabled: true
       name: multicluster-observability
-    - enabled: true
+    - enabled: false
       name: submariner-addon
