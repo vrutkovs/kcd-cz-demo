@@ -86,6 +86,18 @@ spec:
           hs.status = "Progressing"
           hs.message = "Waiting for certificate"
           return hs
+      operator.open-cluster-management.io/MultiClusterHub:
+        health.lua: |
+          hs = {}
+          hs.status = "Progressing"
+          hs.message = ""
+          if obj.status ~= nil then
+            if obj.status.phase == "Installed" then
+              hs.message = obj.status.state .. " - " .. obj.status.desiredVersion
+              hs.status = "Healthy"
+            end
+          end
+          return hs
   resourceTrackingMethod: annotation
   repo:
     serviceaccount: vault-plugin
