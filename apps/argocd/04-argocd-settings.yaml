@@ -114,6 +114,11 @@ spec:
                   hs.message = condition.message
                   return hs
                 end
+                if condition.type == "ClusterVersionSucceeding" and condition.status == "True" then
+                  hs.status = "Healthy"
+                  hs.message = condition.message
+                  return hs
+                end
               end
             end
           end
