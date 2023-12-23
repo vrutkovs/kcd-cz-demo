@@ -17,7 +17,7 @@ spec:
   overrides:
     components:
     - enabled: true
-      name: hypershift-preview
+      name: hypershift
     - enabled: true
       name: hypershift-local-hosting
     - enabled: true
