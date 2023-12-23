@@ -16,8 +16,6 @@
 * Run `create-s3-bucket`, enable ACL in the bucket manually
 * Rename machines in `bootstrap/05-infra-machines.yaml` to match random MachineSet hash
 * `oc apply -f bootstrap` until all objects are created
-* Get unseal key and vault token via `oc -n vault logs -f vault-0 -c auto-initializer`
-* Update vault token in `secrets/setup-vault.sh`
 * Run `02-update-vault.sh` to fill in Vault
 * Apply main configuration: `oc apply -f app-hub.yaml` until all objects are created
 * Once `openshift-logging` is created create a new Vault secret for `external-log-forwarder` SA
