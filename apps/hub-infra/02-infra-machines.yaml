@@ -1,7 +1,7 @@
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: vrutkovs-demo-h5qd9-worker-a
+  name: vrutkovs-demo-dbf2j-worker-a
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -20,14 +20,14 @@ spec:
         value:
           machineType: n2-standard-8
       taints:
-      - key: node-role.kubernetes.io/infra
-        effect: NoSchedule
-        value: reserved
+        - key: node-role.kubernetes.io/infra
+          effect: NoSchedule
+          value: reserved
 ---
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: vrutkovs-demo-h5qd9-worker-b
+  name: vrutkovs-demo-dbf2j-worker-b
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -44,9 +44,9 @@ spec:
         value:
           machineType: n2-highmem-8
       taints:
-      - key: node-role.kubernetes.io/virtualization
-        effect: NoSchedule
-        value: reserved
+        - key: node-role.kubernetes.io/virtualization
+          effect: NoSchedule
+          value: reserved
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
@@ -61,7 +61,7 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-h5qd9-worker-a
+    name: vrutkovs-demo-dbf2j-worker-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
@@ -76,7 +76,7 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-h5qd9-worker-b
+    name: vrutkovs-demo-dbf2j-worker-b
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
@@ -91,4 +91,4 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-h5qd9-worker-c
+    name: vrutkovs-demo-dbf2j-worker-c
