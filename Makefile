@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .EXPORT_ALL_VARIABLES:
-HUB_VERSION="4.15.0-rc.8-x86_64"
+HUB_VERSION="4.14.13"
 BASE_DOMAIN=devcluster.openshift.com
 CLUSTER=vrutkovs-demo
 
@@ -21,7 +21,7 @@ create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 create-hub-cluster: ## Create hub cluster
 	cd ${OKD_INSTALLER_PATH} && \
 	make gcp \
-		VERSION=4.15 \
+		VERSION=4.14 \
 		TYPE=ocp \
 		TEMPLATE=templates/gcp-large.j2.yaml \
 		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
@@ -29,7 +29,7 @@ create-hub-cluster: ## Create hub cluster
 destroy-hub-cluster: ## Destroy hub cluster
 	cd ${OKD_INSTALLER_PATH} && \
 	make destroy-gcp \
-		VERSION=4.15 \
+		VERSION=4.14 \
 		TYPE=ocp
 
 update-infra-machine-hash:
