@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .EXPORT_ALL_VARIABLES:
-HUB_VERSION="4.14.13"
+HUB_VERSION="4.14.13-x86_64"
 BASE_DOMAIN=devcluster.openshift.com
 CLUSTER=vrutkovs-demo
 
@@ -18,7 +18,7 @@ install: create-s3-bucket create-hub-cluster update-infra-machine-hash bootstrap
 create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 01-create-s3-bucket.sh
 
-create-hub-cluster: ## Create hub cluster
+create-hub-cluster:
 	cd ${OKD_INSTALLER_PATH} && \
 	make gcp \
 		VERSION=4.14 \
@@ -64,5 +64,37 @@ fill-up-vault:
 
 install-hub:
 	${OC} apply -f app-hub.yaml
+
+create-prod-eu:
+	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+	hypershift create cluster aws \
+			--name "vrutkovs-prod-eu" \
+			--infra-id "vrutkovs-prod-eu" \
+			--aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
+			--pull-secret "${OKD_INSTALLER_PATH}/pull_secrets/pull_secret.json" \
+			--region "eu-west-3" \
+			--base-domain "${BASE_DOMAIN}" \
+			--generate-ssh \
+			--node-pool-replicas 1 \
+			--namespace clusters \
+			--etcd-storage-class ssd-csi \
+			--release-image quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64
+
+create-prod-us:
+	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+	hypershift create cluster aws \
+			--name "vrutkovs-prod-us" \
+			--infra-id "vrutkovs-prod-us" \
+			--aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
+			--pull-secret "${OKD_INSTALLER_PATH}/pull_secrets/pull_secret.json" \
+			--region "us-west-2" \
+			--base-domain "${BASE_DOMAIN}" \
+			--generate-ssh \
+			--node-pool-replicas 1 \
+			--namespace clusters \
+			--etcd-storage-class ssd-csi \
+			--release-image quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64
+
+create-spoke-clusters: create-prod-eu create-prod-us ## Create spoke clusters
 
 .PHONY: all $(MAKECMDGOALS)
