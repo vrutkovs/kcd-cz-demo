@@ -53,8 +53,9 @@ bootstrap:
 	done
 
 roll-out-infra-machines:
-	${OC} get machine -n openshift-machine-api -o name | grep worker-a | xargs ${OC} -n openshift-machine-api delete
-	${OC} get machine -n openshift-machine-api -o name | grep worker-b | xargs ${OC} -n openshift-machine-api delete
+	${OC} -n openshift-machine-api get machine -o name | grep worker-a | xargs ${OC} -n openshift-machine-api delete
+	${OC} -n openshift-machine-api get machine -o name | grep worker-b | xargs ${OC} -n openshift-machine-api delete
+	${OC} -n openshift-machine-api scale machineset ${CLUSTER}-${INFRA_HASH} --replicas=3
 
 wait-for-operators-to-be-stable:
 	${OC} adm wait-for-stable-cluster --minimum-stable-period=1s --timeout=30m
