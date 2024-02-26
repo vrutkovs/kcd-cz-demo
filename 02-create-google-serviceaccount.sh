@@ -31,3 +31,4 @@ gcloud iam service-accounts keys create \
   ~/src/github.com/vrutkovs/okd-installer/.gcp/credentials \
   --iam-account="vrutkovs@openshift-gce-devel.iam.gserviceaccount.com"
 cp -rvf ~/src/github.com/vrutkovs/okd-installer/.gcp/credentials secrets/google-creds.json
+yq e '.config.service_account=load_str("secrets/google-creds.json")' -i secrets/thanos-object-storage.yaml
