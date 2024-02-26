@@ -24,8 +24,6 @@ spec:
           clientID: 4d7b2c37541942c402a6
           clientSecret:
             name: github-oauth-secret-dev
-          teams:
-          - okd-project/admins
   fips: false
   release:
     image: 'quay.io/okd/scos-release:4.14.0-0.okd-scos-2023-11-10-050846'
