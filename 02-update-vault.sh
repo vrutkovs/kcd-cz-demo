@@ -4,6 +4,7 @@ oc project vault
 for file in $(ls secrets/); do
   oc exec -ti vault-0 -- sh -c "cat - > /tmp/${file}" < secrets/${file}
 done
+oc wait pods/vault-0 --for=condition=Initialized
 echo "Updating vault"
 oc exec -ti vault-0 -- bash <<EOF
 set -eux
