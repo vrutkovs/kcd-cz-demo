@@ -61,7 +61,7 @@ roll-out-infra-machines:
 	${OC} -n openshift-machine-api scale machineset ${CLUSTER}-${INFRA_HASH}-worker-c --replicas=3
 
 wait-for-operators-to-be-stable:
-	${OC} adm wait-for-stable-cluster --minimum-stable-period=1s --timeout=30m
+	${OC} adm wait-for-stable-cluster --minimum-stable-period=30s --timeout=30m
 
 fill-up-vault:
 	KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig ./02-update-vault.sh
