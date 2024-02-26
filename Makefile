@@ -13,7 +13,7 @@ all: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install: create-s3-bucket create-google-sa create-hub-cluster update-infra-machine-hash bootstrap roll-out-infra-machines fill-up-vault install-hub wait-for-operators-to-be-stable ## Start install from scratch
+install: create-s3-bucket create-google-sa create-hub-cluster update-infra-machine-hash update-scaled-hash bootstrap roll-out-infra-machines fill-up-vault install-hub wait-for-operators-to-be-stable ## Start install from scratch
 
 create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 01-create-s3-bucket.sh
@@ -48,6 +48,16 @@ update-infra-machine-hash:
 	git commit -m "Update infra hash to ${INFRA_HASH}"
 	git push
 update-infra-machine-hash: YAML="apps/hub-infra/02-infra-machines.yaml"
+
+update-scaled-hash:
+	$(eval HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+			oc -n openshift-ingress-operator get secrets -o name | grep "metrics-reader-token" | cut -d '-' -f 4))
+	yq e ".spec.secretTargetRef[0].name = \"metrics-reader-token-${HASH}\"" -i ${YAML}
+	yq e ".spec.secretTargetRef[1].name = \"metrics-reader-token-${HASH}\"" -i ${YAML}
+	git add ${YAML}
+	git commit -m "Update metrics token hash to ${INFRA_HASH}"
+	git push
+update-scaled-hash: YAML="apps/keda/05-scale-trigger.yaml"
 
 bootstrap:
 	while true; do \
