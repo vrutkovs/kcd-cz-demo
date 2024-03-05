@@ -43,7 +43,7 @@ update-infra-machine-hash:
 	yq e "select(documentIndex == 2) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-a\"" ${YAML} > /tmp/doc_2.yaml
 	yq e "select(documentIndex == 3) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-b\"" ${YAML} > /tmp/doc_3.yaml
 	yq e "select(documentIndex == 4) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-c\"" ${YAML} > /tmp/doc_4.yaml
-	yq eval-all '. as $$item' /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml /tmp/doc_4.yaml > ${YAML}
+	yq eval-all /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml /tmp/doc_4.yaml > ${YAML}
 	git add ${YAML}
 	git commit -m "Update infra hash to ${INFRA_HASH}"
 	git push
