@@ -14,7 +14,7 @@ spec:
       strategy: RollingUpdate
     upgradeType: Replace
   nodeDrainTimeout: 0s
-  replicas: 2
+  replicas: 1
   platform:
     aws:
-      instanceType: m5.xlarge
+      instanceType: g4dn.4xlarge
