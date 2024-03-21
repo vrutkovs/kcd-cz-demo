@@ -24,8 +24,6 @@ spec:
           clientID: ffcf97a3b3342cf4e019
           clientSecret:
             name: github-oauth-secret-stage
-          teams:
-          - okd-project/admins
   fips: false
   release:
     image: 'quay.io/openshift-release-dev/ocp-release:4.14.10-x86_64'
