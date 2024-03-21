@@ -18,7 +18,7 @@ spec:
   pollingInterval: 2
   fallback:
     failureThreshold: 3
-    replicas: 1
+    replicas: 4
   advanced:
     restoreToOriginalReplicaCount: true
     horizontalPodAutoscalerConfig:
