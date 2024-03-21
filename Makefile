@@ -124,7 +124,7 @@ create-prod-us:
 
 destroy-prod-us:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-	hcp destroy destroy cluster aws \
+	hcp destroy cluster aws \
     --name vrutkovs-prod-us \
     --infra-id vrutkovs-prod-us \
     --aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
@@ -133,6 +133,6 @@ destroy-prod-us:
 
 create-spoke-clusters: create-prod-eu create-prod-us ## Create spoke clusters
 destroy-spoke-clusters: destroy-prod-eu destroy-prod-us ## Destroy spoke clusters
-
+destroy: destroy-spoke-clusters destroy-hub-cluster ## Destroy spoke and hub
 
 .PHONY: all $(MAKECMDGOALS)
