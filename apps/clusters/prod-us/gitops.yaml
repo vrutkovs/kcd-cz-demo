@@ -25,8 +25,8 @@ spec:
   clusterName: vrutkovs-prod-eu
   clusterNamespace: vrutkovs-prod-eu
   clusterLabels:
-    cloud: auto-detect
-    vendor: auto-detect
+    cloud: Amazon
+    vendor: OpenShift
   applicationManager:
     enabled: true
   certPolicyController:
