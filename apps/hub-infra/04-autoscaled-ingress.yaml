@@ -22,7 +22,7 @@ spec:
     metadata:
       serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
       threshold: "1"
-      query: 'sum(haproxy_frontend_max_session_rate)/10'
+      query: 'sum(kube_node_role{role="worker",service="kube-state-metrics"})'
       authModes: "bearer"
       namespace: openshift-ingress-operator
     authenticationRef:
