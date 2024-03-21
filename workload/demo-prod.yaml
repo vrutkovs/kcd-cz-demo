@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: workload-prod
+  name: demo-prod
   namespace: openshift-gitops
 spec:
   generators:
@@ -13,19 +13,16 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'workload-prod-{{name}}'
+      name: 'demo-prod-{{name}}'
     spec:
       destination:
-        namespace: workload
+        namespace: ai-prompt
         server: '{{server}}'
       project: default
       source:
-        path: 'manifests/overlays/{{name}}/'
-        repoURL: https://github.com/vrutkovs/color-demo
-        targetRevision: e14f163
-        kustomize:
-          images:
-          - ghcr.io/vrutkovs/color-demo:f7f34dba445a6d8c3c82dc4a2772ab16a511eb42
+        path: 'manifests/'
+        repoURL: https://github.com/vrutkovs/openshift-ai-prompt
+        targetRevision: 569814d
       syncPolicy:
         automated:
           prune: true
