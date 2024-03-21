@@ -84,6 +84,8 @@ create-prod-eu:
 	hcp create cluster aws \
 			--name "vrutkovs-prod-eu" \
 			--infra-id "vrutkovs-prod-eu" \
+			--control-plane-availability-policy=SingleReplica \
+			--infra-availability-policy=SingleReplica \
 			--aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
 			--pull-secret "${OKD_INSTALLER_PATH}/pull_secrets/pull_secret.json" \
 			--region "eu-west-3" \
@@ -98,6 +100,8 @@ create-prod-us:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
 	hcp create cluster aws \
 			--name "vrutkovs-prod-us" \
+			--control-plane-availability-policy=SingleReplica \
+			--infra-availability-policy=SingleReplica \
 			--infra-id "vrutkovs-prod-us" \
 			--aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
 			--pull-secret "${OKD_INSTALLER_PATH}/pull_secrets/pull_secret.json" \
