@@ -19,25 +19,3 @@ spec:
     aws:
       instanceType: g4dn.4xlarge
     type: AWS
----
-apiVersion: hypershift.openshift.io/v1beta1
-kind: NodePool
-metadata:
-  name: vrutkovs-prod-eu-eu-west-3b
-  namespace: clusters
-spec:
-  clusterName: vrutkovs-prod-eu
-  management:
-    autoRepair: false
-    replace:
-      rollingUpdate:
-        maxSurge: 1
-        maxUnavailable: 0
-      strategy: RollingUpdate
-    upgradeType: Replace
-  nodeDrainTimeout: 0s
-  replicas: 1
-  platform:
-    aws:
-      instanceType: m6i.2xlarge
-    type: AWS
