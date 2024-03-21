@@ -1,14 +1,14 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: colors-global
+  name: demo-global
   labels:
     app: colors
 spec:
   host: kcd-vrutkovs-demo.devcluster.openshift.com
   to:
     kind: Service
-    name: colors
+    name: openshift-ai-prompt
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
