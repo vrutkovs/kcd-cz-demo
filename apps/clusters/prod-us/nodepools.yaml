@@ -18,3 +18,4 @@ spec:
   platform:
     aws:
       instanceType: g4dn.4xlarge
+    type: AWS
