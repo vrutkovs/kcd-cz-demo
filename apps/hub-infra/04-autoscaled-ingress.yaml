@@ -24,17 +24,17 @@ spec:
     horizontalPodAutoscalerConfig:
       behavior:
         scaleDown:
-          stabilizationWindowSeconds: 3
+          stabilizationWindowSeconds: 60
           policies:
           - type: Percent
             value: 100
-            periodSeconds: 1
+            periodSeconds: 30
         scaleUp:
-          stabilizationWindowSeconds: 3
+          stabilizationWindowSeconds: 60
           policies:
           - type: Percent
             value: 100
-            periodSeconds: 1
+            periodSeconds: 30
   triggers:
   - type: prometheus
     metricType: AverageValue
