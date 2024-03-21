@@ -21,7 +21,6 @@ spec:
     metricType: AverageValue
     metadata:
       serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
-      metricName: haproxy_backend_connections_total
       threshold: "1"
       query: sum(haproxy_frontend_max_session_rate)/10
       authModes: "bearer"
