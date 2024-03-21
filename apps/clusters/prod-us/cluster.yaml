@@ -13,18 +13,6 @@ metadata:
   labels:
     hypershift.openshift.io/auto-created-for-infra: vrutkovs-prod-us
 spec:
-  configuration:
-    oauth:
-      identityProviders:
-      - name: github
-        mappingMethod: claim
-        type: GitHub
-        github:
-          clientID: da1f688da70855392c68
-          clientSecret:
-            name: github-oauth-secret-prod-us
-          teams:
-          - okd-project/admins
   fips: false
   release:
     image: 'quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64'
