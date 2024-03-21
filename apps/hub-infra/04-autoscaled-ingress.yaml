@@ -15,15 +15,34 @@ spec:
   minReplicaCount: 2
   maxReplicaCount: 5
   cooldownPeriod: 1
-  pollingInterval: 1
+  pollingInterval: 2
+  fallback:
+    failureThreshold: 3
+    replicas: 1
+  advanced:
+    restoreToOriginalReplicaCount: true
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 3
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 1
+        scaleUp:
+          stabilizationWindowSeconds: 3
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 1
   triggers:
   - type: prometheus
     metricType: AverageValue
     metadata:
       serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
       threshold: "1"
+      metricName: 'kube-node-role'
       query: 'sum(kube_node_role{role="worker",service="kube-state-metrics"})'
       authModes: "bearer"
-      namespace: openshift-ingress-operator
     authenticationRef:
       name: keda-trigger-auth-prometheus
