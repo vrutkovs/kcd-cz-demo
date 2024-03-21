@@ -17,10 +17,6 @@ spec:
   overrides:
     components:
     - enabled: true
-      name: hypershift
-    - enabled: true
-      name: hypershift-local-hosting
-    - enabled: true
       name: console
     - enabled: true
       name: insights
