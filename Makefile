@@ -81,7 +81,7 @@ install-hub:
 
 create-prod-eu:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-	hypershift create cluster aws \
+	hcp create cluster aws \
 			--name "vrutkovs-prod-eu" \
 			--infra-id "vrutkovs-prod-eu" \
 			--aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
@@ -96,7 +96,7 @@ create-prod-eu:
 
 create-prod-us:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-	hypershift create cluster aws \
+	hcp create cluster aws \
 			--name "vrutkovs-prod-us" \
 			--infra-id "vrutkovs-prod-us" \
 			--aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
