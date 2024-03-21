@@ -96,6 +96,15 @@ create-prod-eu:
 			--etcd-storage-class ssd-csi \
 			--release-image quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64
 
+destroy-prod-eu:
+	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+	hcp destroy cluster aws \
+    --name vrutkovs-prod-eu \
+    --infra-id vrutkovs-prod-eu \
+    --aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
+    --region eu-west-3 \
+		--base-domain "${BASE_DOMAIN}"
+
 create-prod-us:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
 	hcp create cluster aws \
@@ -113,6 +122,17 @@ create-prod-us:
 			--etcd-storage-class ssd-csi \
 			--release-image quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64
 
+destroy-prod-us:
+	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+	hcp destroy destroy cluster aws \
+    --name vrutkovs-prod-us \
+    --infra-id vrutkovs-prod-us \
+    --aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
+    --region us-west-2 \
+    --base-domain "${BASE_DOMAIN}"
+
 create-spoke-clusters: create-prod-eu create-prod-us ## Create spoke clusters
+destroy-spoke-clusters: destroy-prod-eu destroy-prod-us ## Destroy spoke clusters
+
 
 .PHONY: all $(MAKECMDGOALS)
