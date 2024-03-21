@@ -9,5 +9,5 @@ stringData:
   GENERATE_DEVICE: "cuda"
   GENERATE_IMAGE: "image-registry.openshift-image-registry.svc:5000/ai-prompt/openshift-ai-prompt:openjourney"
   GENERATE_STEPS: "50"
-  GENERATE_TIMEOUT": "600"
+  GENERATE_TIMEOUT: "600"
   S3_BUCKET_NAME: "vrutkovs-demo"
