@@ -51,18 +51,18 @@ spec:
             tag: "1.2.1"
             pullPolicy: IfNotPresent
 
-        nodeSelector:
-          node-role.kubernetes.io/master: ""
-
-        tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
-          operator: Exists
-
         server:
           image:
             tag: "1.15.3-ubi"
             repository: registry.connect.redhat.com/hashicorp/vault
+
+          nodeSelector:
+            node-role.kubernetes.io/master: ""
+
+          tolerations:
+          - key: node-role.kubernetes.io/master
+            effect: NoSchedule
+            operator: Exists
 
           extraEnvironmentVars:
             VAULT_CACERT: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
