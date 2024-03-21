@@ -40,5 +40,5 @@ spec:
   replicas: 1
   platform:
     aws:
-      instanceType: m6.2xlarge
+      instanceType: m6i.2xlarge
     type: AWS
