@@ -94,7 +94,7 @@ create-prod-eu:
 			--node-pool-replicas 1 \
 			--namespace clusters \
 			--etcd-storage-class ssd-csi \
-			--release-image quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64
+			--release-image quay.io/openshift-release-dev/ocp-release:4.14.23-x86_64
 
 destroy-prod-eu:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
@@ -120,7 +120,7 @@ create-prod-us:
 			--node-pool-replicas 1 \
 			--namespace clusters \
 			--etcd-storage-class ssd-csi \
-			--release-image quay.io/openshift-release-dev/ocp-release:4.14.3-x86_64
+			--release-image quay.io/openshift-release-dev/ocp-release:4.14.23-x86_64
 
 destroy-prod-us:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
