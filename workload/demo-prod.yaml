@@ -22,7 +22,7 @@ spec:
       source:
         path: 'manifests/'
         repoURL: https://github.com/vrutkovs/openshift-ai-prompt
-        targetRevision: 898d313
+        targetRevision: 2e11677
       syncPolicy:
         automated:
           prune: true
