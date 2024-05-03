@@ -1,5 +1,7 @@
 #!/bin/bash
 set -eux
+sudo dnf install -y /usr/bin/aws
+
 BUCKET_NAME=vrutkovs-hypershift-demo
 aws s3api create-bucket --bucket $BUCKET_NAME
 aws s3api delete-public-access-block --bucket $BUCKET_NAME
