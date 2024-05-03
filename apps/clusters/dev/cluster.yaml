@@ -26,7 +26,7 @@ spec:
             name: github-oauth-secret-dev
   fips: false
   release:
-    image: 'quay.io/okd/scos-release:4.14.0-0.okd-scos-2023-11-10-050846'
+    image: 'quay.io/okd/scos-release:4.15.0-0.okd-scos-2024-01-18-223523'
   controllerAvailabilityPolicy: SingleReplica
   infraID: vrutkovs-dev
   etcd:

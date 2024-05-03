@@ -15,7 +15,7 @@ spec:
     upgradeType: Replace
   nodeDrainTimeout: 0s
   release:
-    image: quay.io/okd/scos-release:4.14.0-0.okd-scos-2023-11-10-050846
+    image: quay.io/okd/scos-release:4.15.0-0.okd-scos-2024-01-18-223523
   replicas: 1
   platform:
     kubevirt:
