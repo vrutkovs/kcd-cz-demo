@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .EXPORT_ALL_VARIABLES:
-HUB_VERSION="4.14.13-x86_64"
+HUB_VERSION="4.14.23-x86_64"
 BASE_DOMAIN=devcluster.openshift.com
 CLUSTER=vrutkovs-demo
 
