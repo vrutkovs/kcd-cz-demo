@@ -142,7 +142,7 @@ spec:
   clusterName: vrutkovs-stage
   management:
     autoRepair: false
-    upgradeType: Replace
+    upgradeType: InPlace
   nodeDrainTimeout: 0s
   release:
     image: quay.io/openshift-release-dev/ocp-release:4.15.9-x86_64

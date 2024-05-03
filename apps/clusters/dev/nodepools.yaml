@@ -11,8 +11,8 @@ metadata:
 spec:
   clusterName: vrutkovs-dev
   management:
-    autoRepair: false
-    upgradeType: Replace
+    autoRepair: true
+    upgradeType: InPlace
   nodeDrainTimeout: 0s
   release:
     image: quay.io/okd/scos-release:4.15.0-0.okd-scos-2024-01-18-223523
