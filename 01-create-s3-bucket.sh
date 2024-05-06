@@ -17,6 +17,7 @@ echo "{
     ]
 }" | envsubst > policy.json
 aws s3api put-bucket-policy --bucket $BUCKET_NAME --policy file://policy.json
+rm -rf policy.json
 
 BUCKET_NAME=vrutkovs-demo
 aws s3api create-bucket --bucket $BUCKET_NAME
