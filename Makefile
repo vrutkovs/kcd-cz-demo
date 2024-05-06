@@ -74,6 +74,8 @@ wait-for-operators-to-be-stable:
 	${OC} adm wait-for-stable-cluster --minimum-stable-period=30s --timeout=30m
 
 fill-up-vault:
+	${OC} apply hub/app-vault.yaml
+	${OC} -n vault wait pods/vault-0 --for=condition=Ready
 	KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig ./02-update-vault.sh
 
 install-hub:
