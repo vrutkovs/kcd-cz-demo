@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .EXPORT_ALL_VARIABLES:
-HUB_VERSION="4.14.23-x86_64"
+HUB_VERSION="4.15.12-x86_64"
 BASE_DOMAIN=devcluster.openshift.com
 CLUSTER=vrutkovs-demo
 
@@ -24,7 +24,7 @@ create-google-sa:
 create-hub-cluster:
 	cd ${OKD_INSTALLER_PATH} && \
 	make gcp \
-		VERSION=4.14 \
+		VERSION=4.15 \
 		TYPE=ocp \
 		TEMPLATE=templates/gcp-large.j2.yaml \
 		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
