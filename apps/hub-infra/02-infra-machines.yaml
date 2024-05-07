@@ -43,10 +43,6 @@ spec:
       providerSpec:
         value:
           machineType: n2-highmem-8
-      taints:
-        - key: node-role.kubernetes.io/virtualization
-          effect: NoSchedule
-          value: reserved
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
