@@ -27,5 +27,5 @@ spec:
     - targetPath: "secureJsonData.httpHeaderValue1"
       valueFrom:
         secretKeyRef:
-          name: "clusterreader-sa"
+          name: "clusterreader-sa-token-tnrsw"
           key: "token"
