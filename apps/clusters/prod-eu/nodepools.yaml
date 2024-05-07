@@ -3,6 +3,9 @@ kind: NodePool
 metadata:
   name: vrutkovs-prod-eu-eu-west-3a
   namespace: clusters
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   clusterName: vrutkovs-prod-eu
   management:
