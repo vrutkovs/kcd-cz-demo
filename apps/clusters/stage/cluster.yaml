@@ -156,4 +156,6 @@ spec:
         persistent:
           size: 50Gi
         type: Persistent
+      nodeSelector:
+        node-role.kubernetes.io/virtualization: ""
     type: KubeVirt
