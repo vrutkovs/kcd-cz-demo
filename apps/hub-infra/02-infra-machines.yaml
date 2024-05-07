@@ -1,7 +1,7 @@
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: vrutkovs-demo-2mlwk-worker-a
+  name: vrutkovs-demo--worker-a
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -27,7 +27,7 @@ spec:
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: vrutkovs-demo-2mlwk-worker-b
+  name: vrutkovs-demo--worker-b
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -57,7 +57,7 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-2mlwk-worker-a
+    name: vrutkovs-demo--worker-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
@@ -72,7 +72,7 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-2mlwk-worker-b
+    name: vrutkovs-demo--worker-b
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
@@ -87,4 +87,4 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-2mlwk-worker-c
+    name: vrutkovs-demo--worker-c
