@@ -19,7 +19,13 @@ spec:
       timeInterval: 5s
       tlsSkipVerify: true
     secureJsonData:
-      httpHeaderValue1: 'Bearer sha256~5CJAGBFB3iKpUwV0MyMEZZ8qmRUE1C_AuO-2ggXHv_o'
+      httpHeaderValue1: 'Bearer ${token}'
     name: Observatorium
     type: prometheus
     url: 'http://rbac-query-proxy.open-cluster-management-observability.svc.cluster.local:8080'
+  valuesFrom:
+    - targetPath: "secureJsonData.httpHeaderValue1"
+      valueFrom:
+        secretKeyRef:
+          name: "clusterreader-sa"
+          key: "token"
