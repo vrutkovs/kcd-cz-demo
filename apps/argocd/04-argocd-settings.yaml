@@ -31,6 +31,13 @@ spec:
       minShards: 1
       maxShards: 3
       clustersPerShard: 1
+    resources:
+      limits:
+        cpu: '2'
+        memory: 4Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi
   rbac:
     defaultPolicy: 'role:readonly'
     policy: |
