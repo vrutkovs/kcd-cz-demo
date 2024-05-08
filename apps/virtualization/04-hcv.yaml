@@ -52,5 +52,9 @@ spec:
     nodePlacement:
       nodeSelector:
         node-role.kubernetes.io/virtualization: ""
+      tolerations:
+        - value: reserved
+          key: node-role.kubernetes.io/virtualization
+          effect: NoSchedule
   resourceRequirements:
     vmiCPUAllocationRatio: 10
