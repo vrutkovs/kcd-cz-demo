@@ -2,7 +2,7 @@
 apiVersion: cluster.open-cluster-management.io/v1
 kind: ManagedCluster
 metadata:
-  name: vrutkovs-prod-us
+  name: vrutkovs-prod-eu
   labels:
     cluster.open-cluster-management.io/clusterset: prod
   annotations:
@@ -17,13 +17,13 @@ spec:
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
-  name: vrutkovs-prod-us
-  namespace: vrutkovs-prod-us
+  name: vrutkovs-prod-eu
+  namespace: vrutkovs-prod-eu
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  clusterName: vrutkovs-prod-us
-  clusterNamespace: vrutkovs-prod-us
+  clusterName: vrutkovs-prod-eu
+  clusterNamespace: vrutkovs-prod-eu
   clusterLabels:
     cloud: Amazon
     vendor: OpenShift

@@ -45,7 +45,6 @@ spec:
         operator: In
         values:
           - stage
-          - prod
   clusterConditions: []
 ---
 apiVersion: policy.open-cluster-management.io/v1
