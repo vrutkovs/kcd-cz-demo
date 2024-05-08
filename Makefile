@@ -32,7 +32,7 @@ create-hub-cluster:
 destroy-hub-cluster: ## Destroy hub cluster
 	cd ${OKD_INSTALLER_PATH} && \
 	make destroy-gcp \
-		VERSION=4.14 \
+		VERSION=4.15 \
 		TYPE=ocp
 
 update-infra-machine-hash:
