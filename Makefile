@@ -80,9 +80,9 @@ argocd-bootstrap:
 	done
 
 roll-out-infra-machines:
-	${OC} -n openshift-machine-api get machine -o name | grep worker-a | xargs ${OC} -n openshift-machine-api delete
-	${OC} -n openshift-machine-api get machine -o name | grep worker-b | xargs ${OC} -n openshift-machine-api delete
-	${OC} -n openshift-machine-api get machine -o name | grep worker-c | xargs ${OC} -n openshift-machine-api delete
+	${OC} -n openshift-machine-api get machine -o name | grep worker-a | xargs ${OC} -n openshift-machine-api delete --wait=false
+	${OC} -n openshift-machine-api get machine -o name | grep worker-b | xargs ${OC} -n openshift-machine-api delete --wait=false
+	${OC} -n openshift-machine-api get machine -o name | grep worker-c | xargs ${OC} -n openshift-machine-api delete --wait=false
 
 wait-for-operators-to-be-stable:
 	${OC} adm wait-for-stable-cluster --minimum-stable-period=30s --timeout=30m
