@@ -10,7 +10,7 @@ spec:
   clusterName: vrutkovs-prod-eu
   management:
     autoRepair: true
-    upgradeType: InPlace
+    upgradeType: Replace
   nodeDrainTimeout: 0s
   replicas: 1
   platform:
