@@ -81,11 +81,11 @@ spec:
     useOpenKernelModules: false
     virtualTopology:
       config: ''
-    devicePlugin:
-      config:
-        default: "tesla-t4"
-        name: "time-slicing-config"
-      enabled: true
+  devicePlugin:
+    config:
+      default: "tesla-t4"
+      name: "time-slicing-config"
+    enabled: true
   kataManager:
     config:
       artifactsDir: /opt/nvidia-gpu-operator/artifacts/runtimeclasses
