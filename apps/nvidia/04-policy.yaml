@@ -1,3 +1,21 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: time-slicing-config
+  namespace: nvidia-gpu-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+data:
+  tesla-t4: |-
+    version: v1
+    sharing:
+      timeSlicing:
+        resources:
+        - name: nvidia.com/gpu
+          replicas: 8
+---
 apiVersion: nvidia.com/v1
 kind: ClusterPolicy
 metadata:
@@ -63,11 +81,11 @@ spec:
     useOpenKernelModules: false
     virtualTopology:
       config: ''
-  devicePlugin:
-    config:
-      default: ''
-      name: ''
-    enabled: true
+    devicePlugin:
+      config:
+        default: "tesla-t4"
+        name: "time-slicing-config"
+      enabled: true
   kataManager:
     config:
       artifactsDir: /opt/nvidia-gpu-operator/artifacts/runtimeclasses
