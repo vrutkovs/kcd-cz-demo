@@ -59,6 +59,19 @@ update-scaled-hash:
 	git push
 update-scaled-hash: YAML="apps/keda/05-scale-trigger.yaml"
 
+update-grafana-hash:
+	$(eval HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+			oc -n grafana-operator get secrets -o name | grep "clusterreader-sa-token" | cut -d '-' -f 4))
+	yq e "select(documentIndex == 0) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_0.yaml
+	yq e "select(documentIndex == 1) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_1.yaml
+	yq e "select(documentIndex == 2) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_2.yaml
+	yq e "select(documentIndex == 3) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_3.yaml
+	yq eval-all /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml > ${YAML}
+	git add ${YAML}
+	git commit -m "Update grafana sa token hash to ${INFRA_HASH}"
+	git push
+update-grafana-hash: YAML="apps/grafana/05-datasources.yaml"
+
 argocd-bootstrap:
 	while true; do \
 		${OC} apply -f bootstrap && break; \
