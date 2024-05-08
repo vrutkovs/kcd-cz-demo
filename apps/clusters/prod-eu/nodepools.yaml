@@ -1,7 +1,7 @@
 apiVersion: hypershift.openshift.io/v1beta1
 kind: NodePool
 metadata:
-  name: vrutkovs-prod-eu-central-1a
+  name: vrutkovs-prod-eu-eu-central-1a
   namespace: clusters
   annotations:
     argocd.argoproj.io/sync-wave: "3"
