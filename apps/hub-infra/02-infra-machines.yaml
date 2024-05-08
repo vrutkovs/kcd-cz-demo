@@ -19,6 +19,7 @@ spec:
       providerSpec:
         value:
           machineType: n2-standard-8
+          preemptible: true
       taints:
         - key: node-role.kubernetes.io/infra
           effect: NoSchedule
@@ -43,10 +44,25 @@ spec:
       providerSpec:
         value:
           machineType: n2-highmem-8
+          preemptible: true
       taints:
         - key: node-role.kubernetes.io/virtualization
           effect: NoSchedule
           value: reserved
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: vrutkovs-demo-z6srs-worker-c
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    spec:
+      providerSpec:
+        value:
+          preemptible: true
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler

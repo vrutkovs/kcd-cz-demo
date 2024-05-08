@@ -40,10 +40,11 @@ update-infra-machine-hash:
 			oc get machineset -n openshift-machine-api -o jsonpath='{.items[0].metadata.name}' | cut -d '-' -f 3))
 	yq e "select(documentIndex == 0) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-a\"" ${YAML} > /tmp/doc_0.yaml
 	yq e "select(documentIndex == 1) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-b\"" ${YAML} > /tmp/doc_1.yaml
-	yq e "select(documentIndex == 2) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-a\"" ${YAML} > /tmp/doc_2.yaml
-	yq e "select(documentIndex == 3) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-b\"" ${YAML} > /tmp/doc_3.yaml
-	yq e "select(documentIndex == 4) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-c\"" ${YAML} > /tmp/doc_4.yaml
-	yq eval-all /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml /tmp/doc_4.yaml > ${YAML}
+	yq e "select(documentIndex == 2) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-c\"" ${YAML} > /tmp/doc_2.yaml
+	yq e "select(documentIndex == 3) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-a\"" ${YAML} > /tmp/doc_3.yaml
+	yq e "select(documentIndex == 4) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-b\"" ${YAML} > /tmp/doc_4.yaml
+	yq e "select(documentIndex == 5) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-c\"" ${YAML} > /tmp/doc_5.yaml
+	yq eval-all /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml /tmp/doc_4.yaml  /tmp/doc_5.yaml > ${YAML}
 	git add ${YAML}
 	git commit -m "Update infra hash to ${INFRA_HASH}"
 	git push
@@ -81,7 +82,7 @@ argocd-bootstrap:
 roll-out-infra-machines:
 	${OC} -n openshift-machine-api get machine -o name | grep worker-a | xargs ${OC} -n openshift-machine-api delete
 	${OC} -n openshift-machine-api get machine -o name | grep worker-b | xargs ${OC} -n openshift-machine-api delete
-	${OC} -n openshift-machine-api scale machineset ${CLUSTER}-${INFRA_HASH}-worker-c --replicas=3
+	${OC} -n openshift-machine-api get machine -o name | grep worker-c | xargs ${OC} -n openshift-machine-api delete
 
 wait-for-operators-to-be-stable:
 	${OC} adm wait-for-stable-cluster --minimum-stable-period=30s --timeout=30m
