@@ -1,0 +1,15 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ai-prompt
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: workload
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: tldrwiki
