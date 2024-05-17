@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tldrwiki-prod
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: prod-cluster
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: 'tldrwiki-prod-{{name}}'
+    spec:
+      destination:
+        namespace: tldrwiki
+        server: '{{server}}'
+      project: default
+      source:
+        path: 'manifests/'
+        repoURL: https://github.com/vrutkovs/tldrwiki
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        retry:
+          limit: -1
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 1h
