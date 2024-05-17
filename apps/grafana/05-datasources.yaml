@@ -28,7 +28,7 @@ spec:
     - targetPath: "secureJsonData.httpHeaderValue1"
       valueFrom:
         secretKeyRef:
-          name: "clusterreader-sa-token-5l7bv"
+          name: "clusterreader-sa-token-"
           key: "token"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
@@ -60,7 +60,7 @@ spec:
     - targetPath: "secureJsonData.httpHeaderValue1"
       valueFrom:
         secretKeyRef:
-          name: "clusterreader-sa-token-5l7bv"
+          name: "clusterreader-sa-token-"
           key: "token"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
@@ -92,7 +92,7 @@ spec:
     - targetPath: "secureJsonData.httpHeaderValue1"
       valueFrom:
         secretKeyRef:
-          name: "clusterreader-sa-token-5l7bv"
+          name: "clusterreader-sa-token-"
           key: "token"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
@@ -124,5 +124,5 @@ spec:
     - targetPath: "secureJsonData.httpHeaderValue1"
       valueFrom:
         secretKeyRef:
-          name: "clusterreader-sa-token-5l7bv"
+          name: "clusterreader-sa-token-"
           key: "token"
