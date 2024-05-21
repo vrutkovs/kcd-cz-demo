@@ -13,7 +13,7 @@ all: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install: create-s3-bucket create-google-sa create-hub-cluster argocd-bootstrap fill-up-vault install-hub wait-for-operators-to-be-stable update-scaled-hash update-grafana-hash ## Start install from scratch
+install: create-s3-bucket create-google-sa create-hub-cluster argocd-bootstrap fill-up-vault install-hub wait-for-operators-to-be-stable update-hashes ## Start install from scratch
 
 create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 01-create-s3-bucket.sh
@@ -91,35 +91,39 @@ update-infra-machine-hash:
 	git push
 update-infra-machine-hash: YAML="apps/hub-infra/02-infra-machines.yaml"
 
-update-scaled-hash:
-	while true; do
-		$(eval HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-				oc -n openshift-ingress-operator get secrets -o name | grep "metrics-reader-token" | cut -d '-' -f 4))
-		if [[ HASH == "" ]]; then sleep 30; continue; fi
-		yq e ".spec.secretTargetRef[0].name = \"metrics-reader-token-${HASH}\"" -i ${YAML}
-		yq e ".spec.secretTargetRef[1].name = \"metrics-reader-token-${HASH}\"" -i ${YAML}
-		git add ${YAML}
-		git commit -m "Update metrics token hash to ${INFRA_HASH}"
-		git push
-		break
+update-hashes:
+	while true; do \
+		$(eval METRIC_HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+				oc -n openshift-ingress-operator get secrets -o name | grep "metrics-reader-token" | cut -d '-' -f 4)) \
+		if [[ "${METRIC_HASH}" == "" ]]; then sleep 30; continue; fi && \
+		make update-scaled-hash METRIC_HASH="${METRIC_HASH}" && \
+		break; \
 	done
+	while true; do \
+			$(eval GRAFANA_HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+			oc -n grafana-operator get secrets -o name | grep "clusterreader-sa-token" | cut -d '-' -f 4)) \
+		if [[ "${GRAFANA_HASH}" == "" ]]; then sleep 30; continue; fi && \
+		make update-grafana-hash GRAFANA_HASH="${GRAFANA_HASH}" && \
+		break; \
+	done
+
+update-scaled-hash:
+	yq e ".spec.secretTargetRef[0].name = \"metrics-reader-token-${METRIC_HASH}\"" -i ${YAML}
+	yq e ".spec.secretTargetRef[1].name = \"metrics-reader-token-${METRIC_HASH}\"" -i ${YAML}
+	git add ${YAML}
+	git commit -m "Update metrics token hash to ${METRIC_HASH}"
+	git push
 update-scaled-hash: YAML="apps/keda/05-scale-trigger.yaml"
 
 update-grafana-hash:
-	while true; do \
-		$(eval HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-				oc -n grafana-operator get secrets -o name | grep "clusterreader-sa-token" | cut -d '-' -f 4))
-		if [[ HASH == "" ]]; then sleep 30; continue; fi
-		yq e "select(documentIndex == 0) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_0.yaml \
-		yq e "select(documentIndex == 1) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_1.yaml \
-		yq e "select(documentIndex == 2) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_2.yaml \
-		yq e "select(documentIndex == 3) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${HASH}\"" ${YAML} > /tmp/doc_3.yaml \
-		yq eval-all /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml > ${YAML} \
-		git add ${YAML} \
-		git commit -m "Update grafana sa token hash to ${INFRA_HASH}" \
-		git push \
-		break \
-	done
+	yq e "select(documentIndex == 0) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${GRAFANA_HASH}\"" ${YAML} > /tmp/doc_0.yaml
+	yq e "select(documentIndex == 1) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${GRAFANA_HASH}\"" ${YAML} > /tmp/doc_1.yaml
+	yq e "select(documentIndex == 2) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${GRAFANA_HASH}\"" ${YAML} > /tmp/doc_2.yaml
+	yq e "select(documentIndex == 3) | .spec.valuesFrom[0].valueFrom.secretKeyRef.name = \"clusterreader-sa-token-${GRAFANA_HASH}\"" ${YAML} > /tmp/doc_3.yaml
+	yq eval-all /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml > ${YAML}
+	git add ${YAML}
+	git commit -m "Update grafana sa token hash to ${GRAFANA_HASH}"
+	git push
 update-grafana-hash: YAML="apps/grafana/05-datasources.yaml"
 
 argocd-bootstrap:
