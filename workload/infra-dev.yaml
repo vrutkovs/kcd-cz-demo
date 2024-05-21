@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: cluster-dev-infra
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   generators:
     - clusterDecisionResource:
