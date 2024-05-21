@@ -39,14 +39,19 @@ copy-machineset:
 	yq e ".spec.template.spec.taints[0].effect = \"NoSchedule\"" -i ${FILE_NAME} && \
 	yq e ".spec.template.spec.taints[0].value = \"reserved\"" -i ${FILE_NAME}
 
-create-hub-cluster:
+create-hub-cluster: gcp-createmanifests gcp-updatehashes gcp-createcluster
+
+gcp-createmanifests:
 	cd ${OKD_INSTALLER_PATH} && \
 	make gcp-createmanifests \
 		VERSION=4.15 \
 		TYPE=ocp \
 		TEMPLATE=templates/gcp-large.j2.yaml \
 		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
+
+gcp-updatehashes:
 	$(eval HASH := $(shell yq e ".metadata.name" ${OKD_INSTALLER_PATH}/clusters/vrutkovs-demo/openshift/99_openshift-cluster-api_worker-machineset-0.yaml | cut -d'-' -f3))
+	echo "HASH=${HASH}"
 	make copy-machineset INDEX=0 LETTER=a ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=1 LETTER=b ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=2 LETTER=c ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
@@ -59,13 +64,13 @@ create-hub-cluster:
 	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-1.yaml && \
 	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-2.yaml
 
-
-#	cd ${OKD_INSTALLER_PATH} && \
-#	make gcp-createcluster \
-#		VERSION=4.15 \
-#		TYPE=ocp \
-#		TEMPLATE=templates/gcp-large.j2.yaml \
-#		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
+gcp-createcluster:
+	cd ${OKD_INSTALLER_PATH} && \
+	make gcp-createcluster \
+		VERSION=4.15 \
+		TYPE=ocp \
+		TEMPLATE=templates/gcp-large.j2.yaml \
+		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
 
 destroy-hub-cluster: ## Destroy hub cluster
 	cd ${OKD_INSTALLER_PATH} && \
