@@ -65,7 +65,6 @@ gcp-updatehashes:
 	make copy-machineset INDEX=0 LETTER=a ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=1 LETTER=b ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=2 LETTER=c ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
-	make update-infra-machine-hash INFRA_HASH=${HASH}
 
 gcp-createcluster:
 	cd ${OKD_INSTALLER_PATH} && \
@@ -80,25 +79,6 @@ destroy-hub-cluster: ## Destroy hub cluster
 	make destroy-gcp \
 		VERSION=4.15 \
 		TYPE=ocp
-
-update-infra-machine-hash:
-	yq e "select(documentIndex == 0) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-a\"" ${YAML} > /tmp/doc_0.yaml
-	yq e "select(documentIndex == 1) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-b\"" ${YAML} > /tmp/doc_1.yaml
-	yq e "select(documentIndex == 2) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-c\"" ${YAML} > /tmp/doc_2.yaml
-	yq e "select(documentIndex == 3) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-a\"" ${YAML} > /tmp/doc_3.yaml
-	yq e "select(documentIndex == 4) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-b\"" ${YAML} > /tmp/doc_4.yaml
-	yq e "select(documentIndex == 5) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-worker-c\"" ${YAML} > /tmp/doc_5.yaml
-	yq e "select(documentIndex == 6) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-infra-a\"" ${YAML} > /tmp/doc_6.yaml
-	yq e "select(documentIndex == 7) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-infra-b\"" ${YAML} > /tmp/doc_7.yaml
-	yq e "select(documentIndex == 8) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-infra-c\"" ${YAML} > /tmp/doc_8.yaml
-	yq e "select(documentIndex == 9) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-virtualization-a\"" ${YAML} > /tmp/doc_9.yaml
-	yq e "select(documentIndex == 10) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-virtualization-b\"" ${YAML} > /tmp/doc_10.yaml
-	yq e "select(documentIndex == 11) | .spec.scaleTargetRef.name = \"${CLUSTER}-${INFRA_HASH}-virtualization-c\"" ${YAML} > /tmp/doc_11.yaml
-	yq eval-all /tmp/doc_0.yaml /tmp/doc_1.yaml /tmp/doc_2.yaml /tmp/doc_3.yaml /tmp/doc_4.yaml /tmp/doc_5.yaml /tmp/doc_6.yaml /tmp/doc_7.yaml /tmp/doc_8.yaml /tmp/doc_9.yaml /tmp/doc_10.yaml /tmp/doc_11.yaml > ${YAML}
-	git add ${YAML}
-	git commit -m "Update infra hash to ${INFRA_HASH}"
-	git push
-update-infra-machine-hash: YAML="apps/hub-infra/02-infra-machines.yaml"
 
 update-hashes:
 	while true; do \

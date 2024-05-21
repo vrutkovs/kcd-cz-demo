@@ -1,7 +1,8 @@
+---
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: vrutkovs-demo-rqx9d-worker-a
+  name: infra-a
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -28,7 +29,61 @@ spec:
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: vrutkovs-demo-rqx9d-worker-b
+  name: infra-b
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        node-role.kubernetes.io/infra: ""
+    spec:
+      metadata:
+        labels:
+          node-role.kubernetes.io/infra: ""
+      providerSpec:
+        value:
+          machineType: n2-standard-8
+          preemptible: true
+      taints:
+        - key: node-role.kubernetes.io/infra
+          effect: NoSchedule
+          value: reserved
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: infra-c
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        node-role.kubernetes.io/infra: ""
+    spec:
+      metadata:
+        labels:
+          node-role.kubernetes.io/infra: ""
+      providerSpec:
+        value:
+          machineType: n2-standard-8
+          preemptible: true
+      taints:
+        - key: node-role.kubernetes.io/infra
+          effect: NoSchedule
+          value: reserved
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: virtualization-a
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -53,7 +108,85 @@ spec:
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
-  name: vrutkovs-demo-rqx9d-worker-c
+  name: virtualization-b
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    metadata:
+      labels:
+        node-role.kubernetes.io/virtualization: ""
+    spec:
+      metadata:
+        labels:
+          node-role.kubernetes.io/virtualization: ""
+      providerSpec:
+        value:
+          machineType: n2-highmem-8
+          preemptible: true
+      taints:
+        - key: node-role.kubernetes.io/virtualization
+          effect: NoSchedule
+          value: reserved
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: virtualization-c
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    metadata:
+      labels:
+        node-role.kubernetes.io/virtualization: ""
+    spec:
+      metadata:
+        labels:
+          node-role.kubernetes.io/virtualization: ""
+      providerSpec:
+        value:
+          machineType: n2-highmem-8
+          preemptible: true
+      taints:
+        - key: node-role.kubernetes.io/virtualization
+          effect: NoSchedule
+          value: reserved
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: worker-a
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    spec:
+      providerSpec:
+        value:
+          preemptible: true
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: worker-b
+  namespace: openshift-machine-api
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    spec:
+      providerSpec:
+        value:
+          preemptible: true
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  name: worker-c
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -67,7 +200,7 @@ spec:
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: worker-us-east-2a
+  name: worker-a
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -77,12 +210,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-worker-a
+    name: worker-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: worker-us-east-2b
+  name: worker-b
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -92,12 +225,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-worker-b
+    name: worker-b
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: worker-us-east-2c
+  name: worker-c
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -107,12 +240,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-worker-c
+    name: worker-c
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: infra-us-east-2a
+  name: infra-a
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -122,12 +255,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-infra-a
+    name: infra-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: infra-us-east-2b
+  name: infra-b
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -137,12 +270,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-infra-b
+    name: infra-b
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: infra-us-east-2c
+  name: infra-c
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -152,12 +285,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-infra-c
+    name: infra-c
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: virtualization-us-east-2a
+  name: virtualization-a
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -167,12 +300,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-virtualization-a
+    name: virtualization-a
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: virtualization-us-east-2b
+  name: virtualization-b
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -182,12 +315,12 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-virtualization-b
+    name: virtualization-b
 ---
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: virtualization-us-east-2c
+  name: virtualization-c
   namespace: openshift-machine-api
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -197,4 +330,4 @@ spec:
   scaleTargetRef:
     apiVersion: machine.openshift.io/v1beta1
     kind: MachineSet
-    name: vrutkovs-demo-rqx9d-virtualization-c
+    name: virtualization-c
