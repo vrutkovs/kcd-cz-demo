@@ -133,6 +133,21 @@ spec:
           hs.status = "Progressing"
           hs.message = ""
           return hs
+      platform.stackrox.io/Central:
+        health.lua: |
+          hs = {}
+          if obj.status ~= nil and obj.status.conditions ~= nil then
+              for i, condition in ipairs(obj.status.conditions) do
+                if condition.status == "True" and condition.reason == "InstallSuccessful" then
+                    hs.status = "Healthy"
+                    hs.message = condition.message
+                    return hs
+                end
+              end
+          end
+          hs.status = "Progressing"
+          hs.message = "Waiting for Central to deploy."
+          return hs
   resourceTrackingMethod: annotation
   repo:
     serviceaccount: vault-plugin
