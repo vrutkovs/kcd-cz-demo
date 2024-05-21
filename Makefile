@@ -13,7 +13,7 @@ all: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install: create-s3-bucket create-google-sa create-hub-cluster wait-for-operators-to-be-stable update-infra-machine-hash argocd-bootstrap fill-up-vault install-hub wait-for-operators-to-be-stable update-scaled-hash update-grafana-hash ## Start install from scratch
+install: create-s3-bucket create-google-sa create-hub-cluster argocd-bootstrap fill-up-vault install-hub wait-for-operators-to-be-stable update-scaled-hash update-grafana-hash ## Start install from scratch
 
 create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 01-create-s3-bucket.sh
