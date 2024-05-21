@@ -34,13 +34,12 @@ copy-machineset:
 		yq e ".spec.template.metadata.labels.\"node-role.kubernetes.io/${ROLE}\" = \"\"" -i ${FILE_NAME} && \
 		yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-type\" = \"${ROLE}\"" -i ${FILE_NAME} && \
 		yq e ".spec.template.spec.providerSpec.value.machineType = \"${MACHINE_TYPE}\"" -i ${FILE_NAME} && \
+		yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i ${FILE_NAME} && \
 		if [[ ${ROLE} != "worker" ]]; then \
 			yq e ".spec.replicas = 0" -i ${FILE_NAME} && \
 			yq e ".spec.template.spec.taints[0].key = \"node-role.kubernetes.io/${ROLE}\"" -i ${FILE_NAME} && \
 			yq e ".spec.template.spec.taints[0].effect = \"NoSchedule\"" -i ${FILE_NAME} && \
 			yq e ".spec.template.spec.taints[0].value = \"reserved\"" -i ${FILE_NAME}; \
-		else \
-			yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i ${FILE_NAME}; \
 		fi
 
 create-hub-cluster: gcp-createmanifests gcp-updatehashes gcp-createcluster
