@@ -1,0 +1,37 @@
+apiVersion: platform.stackrox.io/v1alpha1
+kind: SecuredCluster
+metadata:
+  name: cluster
+  namespace: stackrox
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  monitoring:
+    openshift:
+      enabled: true
+  auditLogs:
+    collection: Auto
+  admissionControl:
+    listenOnUpdates: true
+    bypass: BreakGlassAnnotation
+    contactImageScanners: DoNotScanInline
+    listenOnCreates: true
+    replicas: 1
+    timeoutSeconds: 20
+    listenOnEvents: true
+  scanner:
+    analyzer:
+      scaling:
+        autoScaling: Enabled
+        maxReplicas: 5
+        minReplicas: 1
+        replicas: 1
+    scannerComponent: AutoSense
+  perNode:
+    collector:
+      collection: EBPF
+      imageFlavor: Regular
+    taintToleration: TolerateTaints
+  clusterName: stage
+  centralEndpoint: 'central-stackrox.apps.vrutkovs-demo.origin-gce.dev.openshift.com:443'

@@ -1,44 +1,7 @@
----
+kind: ConfigMap
 apiVersion: v1
-kind: Namespace
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-  name: stackrox
----
-apiVersion: platform.stackrox.io/v1alpha1
-kind: SecuredCluster
-metadata:
-  name: prod-us
+  name: cluster-name
   namespace: stackrox
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  monitoring:
-    openshift:
-      enabled: true
-  auditLogs:
-    collection: Auto
-  admissionControl:
-    listenOnUpdates: true
-    bypass: BreakGlassAnnotation
-    contactImageScanners: DoNotScanInline
-    listenOnCreates: true
-    replicas: 1
-    timeoutSeconds: 20
-    listenOnEvents: true
-  scanner:
-    analyzer:
-      scaling:
-        autoScaling: Enabled
-        maxReplicas: 5
-        minReplicas: 1
-        replicas: 1
-    scannerComponent: AutoSense
-  perNode:
-    collector:
-      collection: EBPF
-      imageFlavor: Regular
-    taintToleration: TolerateTaints
-  clusterName: prod-us
-  centralEndpoint: 'central-stackrox.apps.vrutkovs-demo.origin-gce.dev.openshift.com:443'
+data:
+  name: prod-us
