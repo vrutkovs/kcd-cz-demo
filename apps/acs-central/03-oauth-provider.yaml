@@ -25,6 +25,7 @@ spec:
             - -c
             - |
               #!/usr/bin/env bash
+              set -e
               # Wait for central to be ready
               attempt_counter=0
               max_attempts=20
