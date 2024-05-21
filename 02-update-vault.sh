@@ -13,7 +13,7 @@ done
 
 echo "Updating vault"
 oc exec -ti vault-0 -- bash <<EOF
-set -eux
+set -e
 export VAULT_ADDR=https://localhost:8200
 export VAULT_SKIP_VERIFY=true
 export VAULT_CACERT=/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
@@ -22,8 +22,8 @@ export INIT_RESPONSE=\$(vault operator init -format=json -key-shares 1 -key-thre
 echo "\$INIT_RESPONSE"
 export UNSEAL_KEY=\$(echo "\$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .unseal_keys_b64[0])
 export VAULT_TOKEN=\$(echo "\$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .root_token)
-echo "\$UNSEAL_KEY"
-echo "\$VAULT_TOKEN"
+tee "\$UNSEAL_KEY" /tmp/unseal_key
+tee "\$VAULT_TOKEN" /tmp/vault_token
 
 vault operator unseal \$UNSEAL_KEY
 
