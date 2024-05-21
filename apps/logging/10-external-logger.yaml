@@ -35,3 +35,52 @@ subjects:
 - kind: ServiceAccount
   name: external-log-forwarder
   namespace: openshift-logging
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: external-log-forwarder-token
+  namespace: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    kubernetes.io/service-account.name: external-log-forwarder
+type: kubernetes.io/service-account-token
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+  name: store-token-in-vault
+  namespace: openshift-logging
+spec:
+  template:
+    spec:
+      containers:
+        - image: quay.io/openshift/origin-cli:4.16
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: external-log-forwarder-token
+                  key: token
+          command:
+            - /bin/bash
+            - -c
+            - |
+              #!/usr/bin/env bash
+              oc -n vault exec -ti vault-0 -- bash <<EOF
+                set -eux
+                export VAULT_ADDR=https://localhost:8200
+                export VAULT_SKIP_VERIFY=true
+                export VAULT_CACERT=/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+                vault kv put secret/external-log-forwarder token="${TOKEN}"
+              EOF
+          imagePullPolicy: Always
+          name: store-token-in-vault
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
