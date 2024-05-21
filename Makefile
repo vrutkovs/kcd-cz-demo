@@ -13,7 +13,7 @@ all: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install: create-s3-bucket create-google-sa create-hub-cluster wait-for-operators-to-be-stable update-infra-machine-hash argocd-bootstrap roll-out-infra-machines fill-up-vault install-hub wait-for-operators-to-be-stable update-scaled-hash update-grafana-hash ## Start install from scratch
+install: create-s3-bucket create-google-sa create-hub-cluster wait-for-operators-to-be-stable update-infra-machine-hash argocd-bootstrap fill-up-vault install-hub wait-for-operators-to-be-stable update-scaled-hash update-grafana-hash ## Start install from scratch
 
 create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 01-create-s3-bucket.sh
@@ -21,13 +21,51 @@ create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 create-google-sa:
 	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 02-create-google-serviceaccount.sh
 
+copy-machineset:
+	$(eval MS_NAME := ${CLUSTER}-${HASH}-${ROLE}-${LETTER})
+	$(eval FILE_NAME := 99_openshift-cluster-api_${ROLE}-machineset-${INDEX}.yaml)
+	cd ${OKD_INSTALLER_PATH}/clusters/vrutkovs-demo/openshift && \
+	cp -rvf 99_openshift-cluster-api_worker-machineset-${INDEX}.yaml ${FILE_NAME} && \
+	yq e ".metadata.name = \"${MS_NAME}\"" -i ${FILE_NAME} && \
+	yq e ".spec.selector.matchLabels.\"machine.openshift.io/cluster-api-machineset\" = \"${MS_NAME}\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machineset\" = \"${MS_NAME}\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-role\" = \"${ROLE}\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-type\" = \"${ROLE}\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.metadata.labels.\"node-role.kubernetes.io/${ROLE}\" = \"\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-type\" = \"${ROLE}\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.spec.providerSpec.value.machineType = \"${MACHINE_TYPE}\"" -i ${FILE_NAME} && \
+	yq e ".spec.replicas = 0" -i ${FILE_NAME} && \
+	yq e ".spec.template.spec.taints[0].key = \"node-role.kubernetes.io/${ROLE}\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.spec.taints[0].effect = \"NoSchedule\"" -i ${FILE_NAME} && \
+	yq e ".spec.template.spec.taints[0].value = \"reserved\"" -i ${FILE_NAME}
+
 create-hub-cluster:
 	cd ${OKD_INSTALLER_PATH} && \
-	make gcp \
+	make gcp-createmanifests \
 		VERSION=4.15 \
 		TYPE=ocp \
 		TEMPLATE=templates/gcp-large.j2.yaml \
 		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
+	$(eval HASH := $(shell yq e ".metadata.name" ${OKD_INSTALLER_PATH}/clusters/vrutkovs-demo/openshift/99_openshift-cluster-api_worker-machineset-0.yaml | cut -d'-' -f3))
+	make copy-machineset INDEX=0 LETTER=a ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
+	make copy-machineset INDEX=1 LETTER=b ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
+	make copy-machineset INDEX=2 LETTER=c ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
+	make copy-machineset INDEX=0 LETTER=a ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
+	make copy-machineset INDEX=1 LETTER=b ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
+	make copy-machineset INDEX=2 LETTER=c ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
+	make update-infra-machine-hash INFRA_HASH=${HASH}
+	cd ${OKD_INSTALLER_PATH}/clusters/vrutkovs-demo/openshift && \
+	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-0.yaml && \
+	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-1.yaml && \
+	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-2.yaml
+
+
+#	cd ${OKD_INSTALLER_PATH} && \
+#	make gcp-createcluster \
+#		VERSION=4.15 \
+#		TYPE=ocp \
+#		TEMPLATE=templates/gcp-large.j2.yaml \
+#		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
 
 destroy-hub-cluster: ## Destroy hub cluster
 	cd ${OKD_INSTALLER_PATH} && \
@@ -36,8 +74,6 @@ destroy-hub-cluster: ## Destroy hub cluster
 		TYPE=ocp
 
 update-infra-machine-hash:
-	$(eval INFRA_HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-			oc get machineset -n openshift-machine-api -o jsonpath='{.items[0].metadata.name}' | cut -d '-' -f 3))
 	yq e "select(documentIndex == 0) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-a\"" ${YAML} > /tmp/doc_0.yaml
 	yq e "select(documentIndex == 1) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-b\"" ${YAML} > /tmp/doc_1.yaml
 	yq e "select(documentIndex == 2) | .metadata.name = \"${CLUSTER}-${INFRA_HASH}-worker-c\"" ${YAML} > /tmp/doc_2.yaml
@@ -78,11 +114,6 @@ argocd-bootstrap:
 		${OC} apply -f bootstrap && break; \
 		sleep 30; \
 	done
-
-roll-out-infra-machines:
-	${OC} -n openshift-machine-api get machine -o name | grep worker-a | xargs ${OC} -n openshift-machine-api delete --wait=false
-	${OC} -n openshift-machine-api get machine -o name | grep worker-b | xargs ${OC} -n openshift-machine-api delete --wait=false
-	${OC} -n openshift-machine-api get machine -o name | grep worker-c | xargs ${OC} -n openshift-machine-api delete --wait=false
 
 wait-for-operators-to-be-stable:
 	${OC} adm wait-for-stable-cluster --minimum-stable-period=30s --timeout=30m
