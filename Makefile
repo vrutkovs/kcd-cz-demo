@@ -81,17 +81,17 @@ destroy-hub-cluster: ## Destroy hub cluster
 
 update-hashes:
 	while true; do \
-		$(eval METRIC_HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-				oc -n openshift-ingress-operator get secrets -o name | grep "metrics-reader-token" | cut -d '-' -f 4)) \
-		if [[ "${METRIC_HASH}" == "" ]]; then sleep 30; continue; fi && \
-		make update-scaled-hash METRIC_HASH="${METRIC_HASH}"; \
+		if [[ "$(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+				oc -n openshift-ingress-operator get secrets -o name | grep "metrics-reader-token")" == "" ]]; then sleep 30; continue; fi && \
+		make update-scaled-hash METRIC_HASH="$(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+				oc -n openshift-ingress-operator get secrets -o name | grep "metrics-reader-token" | cut -d '-' -f 4)"; \
 		break; \
 	done
 	while true; do \
-			$(eval GRAFANA_HASH := $(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
-			oc -n grafana-operator get secrets -o name | grep "clusterreader-sa-token" | cut -d '-' -f 4)) \
-		if [[ "${GRAFANA_HASH}" == "" ]]; then sleep 30; continue; fi && \
-		make update-grafana-hash GRAFANA_HASH="${GRAFANA_HASH}"; \
+		if [[ "$(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+			oc -n grafana-operator get secrets -o name | grep "clusterreader-sa-token")" == "" ]]; then sleep 30; continue; fi && \
+		make update-grafana-hash GRAFANA_HASH="$(shell KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
+			oc -n grafana-operator get secrets -o name | grep "clusterreader-sa-token" | cut -d '-' -f 4)"; \
 		break; \
 	done
 
