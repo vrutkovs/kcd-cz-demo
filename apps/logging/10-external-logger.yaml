@@ -98,6 +98,7 @@ spec:
                 export VAULT_ADDR=https://localhost:8200
                 export VAULT_SKIP_VERIFY=true
                 export VAULT_CACERT=/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+                export VAULT_TOKEN="\$(cat /tmp/vault_token)"
                 vault kv put secret/external-log-forwarder token="${TOKEN}"
               EOF
           imagePullPolicy: Always
