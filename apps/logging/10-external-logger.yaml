@@ -45,7 +45,30 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
     kubernetes.io/service-account.name: external-log-forwarder
 type: kubernetes.io/service-account-token
-
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: store-password-in-vault
+  namespace: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: vault-exec-logging
+  namespace: vault
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: vault-exec
+subjects:
+  - kind: ServiceAccount
+    name: store-password-in-vault
+    namespace: openshift-logging
 ---
 apiVersion: batch/v1
 kind: Job
@@ -81,6 +104,6 @@ spec:
           name: store-token-in-vault
       dnsPolicy: ClusterFirst
       restartPolicy: Never
-      serviceAccount: default
-      serviceAccountName: default
+      serviceAccount: store-password-in-vault
+      serviceAccountName: store-password-in-vault
       terminationGracePeriodSeconds: 30
