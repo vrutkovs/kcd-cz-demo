@@ -22,22 +22,26 @@ create-google-sa:
 	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 02-create-google-serviceaccount.sh
 
 copy-machineset:
-	$(eval MS_NAME := ${CLUSTER}-${HASH}-${ROLE}-${LETTER})
+	$(eval MS_NAME := ${ROLE}-${LETTER})
 	$(eval FILE_NAME := 99_openshift-cluster-api_${ROLE}-machineset-${INDEX}.yaml)
 	cd ${OKD_INSTALLER_PATH}/clusters/vrutkovs-demo/openshift && \
-	cp -rvf 99_openshift-cluster-api_worker-machineset-${INDEX}.yaml ${FILE_NAME} && \
-	yq e ".metadata.name = \"${MS_NAME}\"" -i ${FILE_NAME} && \
-	yq e ".spec.selector.matchLabels.\"machine.openshift.io/cluster-api-machineset\" = \"${MS_NAME}\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machineset\" = \"${MS_NAME}\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-role\" = \"${ROLE}\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-type\" = \"${ROLE}\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.metadata.labels.\"node-role.kubernetes.io/${ROLE}\" = \"\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-type\" = \"${ROLE}\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.spec.providerSpec.value.machineType = \"${MACHINE_TYPE}\"" -i ${FILE_NAME} && \
-	yq e ".spec.replicas = 0" -i ${FILE_NAME} && \
-	yq e ".spec.template.spec.taints[0].key = \"node-role.kubernetes.io/${ROLE}\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.spec.taints[0].effect = \"NoSchedule\"" -i ${FILE_NAME} && \
-	yq e ".spec.template.spec.taints[0].value = \"reserved\"" -i ${FILE_NAME}
+		if [[ ${ROLE} != "worker" ]]; then cp -rvf 99_openshift-cluster-api_worker-machineset-${INDEX}.yaml ${FILE_NAME}; fi && \
+		yq e ".metadata.name = \"${MS_NAME}\"" -i ${FILE_NAME} && \
+		yq e ".spec.selector.matchLabels.\"machine.openshift.io/cluster-api-machineset\" = \"${MS_NAME}\"" -i ${FILE_NAME} && \
+		yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machineset\" = \"${MS_NAME}\"" -i ${FILE_NAME} && \
+		yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-role\" = \"${ROLE}\"" -i ${FILE_NAME} && \
+		yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-type\" = \"${ROLE}\"" -i ${FILE_NAME} && \
+		yq e ".spec.template.metadata.labels.\"node-role.kubernetes.io/${ROLE}\" = \"\"" -i ${FILE_NAME} && \
+		yq e ".spec.template.metadata.labels.\"machine.openshift.io/cluster-api-machine-type\" = \"${ROLE}\"" -i ${FILE_NAME} && \
+		yq e ".spec.template.spec.providerSpec.value.machineType = \"${MACHINE_TYPE}\"" -i ${FILE_NAME} && \
+		if [[ ${ROLE} != "worker" ]]; then \
+			yq e ".spec.replicas = 0" -i ${FILE_NAME} && \
+			yq e ".spec.template.spec.taints[0].key = \"node-role.kubernetes.io/${ROLE}\"" -i ${FILE_NAME} && \
+			yq e ".spec.template.spec.taints[0].effect = \"NoSchedule\"" -i ${FILE_NAME} && \
+			yq e ".spec.template.spec.taints[0].value = \"reserved\"" -i ${FILE_NAME}; \
+		else \
+			yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i ${FILE_NAME}; \
+		fi
 
 create-hub-cluster: gcp-createmanifests gcp-updatehashes gcp-createcluster
 
@@ -58,11 +62,10 @@ gcp-updatehashes:
 	make copy-machineset INDEX=0 LETTER=a ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
 	make copy-machineset INDEX=1 LETTER=b ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
 	make copy-machineset INDEX=2 LETTER=c ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
+	make copy-machineset INDEX=0 LETTER=a ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
+	make copy-machineset INDEX=1 LETTER=b ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
+	make copy-machineset INDEX=2 LETTER=c ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make update-infra-machine-hash INFRA_HASH=${HASH}
-	cd ${OKD_INSTALLER_PATH}/clusters/vrutkovs-demo/openshift && \
-	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-0.yaml && \
-	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-1.yaml && \
-	yq e '.spec.template.spec.providerSpec.value.preemtible=true' -i 99_openshift-cluster-api_worker-machineset-2.yaml
 
 gcp-createcluster:
 	cd ${OKD_INSTALLER_PATH} && \
