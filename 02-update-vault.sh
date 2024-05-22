@@ -22,8 +22,8 @@ export INIT_RESPONSE=\$(vault operator init -format=json -key-shares 1 -key-thre
 echo "\$INIT_RESPONSE"
 export UNSEAL_KEY=\$(echo "\$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .unseal_keys_b64[0])
 export VAULT_TOKEN=\$(echo "\$INIT_RESPONSE" | /usr/local/libexec/vault/jq -r .root_token)
-tee "\$UNSEAL_KEY" /tmp/unseal_key
-tee "\$VAULT_TOKEN" /tmp/vault_token
+echo "\$UNSEAL_KEY" | tee /tmp/unseal_key
+echo "\$VAULT_TOKEN" | tee /tmp/vault_token
 
 vault operator unseal \$UNSEAL_KEY
 
