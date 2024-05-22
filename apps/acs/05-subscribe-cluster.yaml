@@ -33,7 +33,7 @@ spec:
 
                 # Wait for central to be ready
                 attempt_counter=0
-                max_attempts=20
+                max_attempts=200
                 echo "Waiting for central to be available..."
                 until $(curl -k --output /dev/null --silent --head --fail https://central-stackrox.apps.vrutkovs-demo.origin-gce.dev.openshift.com); do
                     if [ ${attempt_counter} -eq ${max_attempts} ];then
@@ -44,7 +44,7 @@ spec:
                     printf '.'
                     attempt_counter=$(($attempt_counter+1))
                     echo "Made attempt $attempt_counter, waiting..."
-                    sleep 5
+                    sleep 30
                 done
 
                 echo "Configuring cluster-init bundle"
