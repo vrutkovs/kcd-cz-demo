@@ -25,6 +25,15 @@ spec:
         path: 'apps/acs/app-client'
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
+        kustomize:
+          patches:
+            - target:
+                kind: SecuredCluster
+                name: cluster
+              patch: |-
+                - op: replace
+                  path: /spec/clusterName
+                  value: {{name}}
       syncPolicy:
         automated:
           prune: true
