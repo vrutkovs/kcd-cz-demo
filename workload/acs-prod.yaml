@@ -22,7 +22,7 @@ spec:
         server: '{{server}}'
       project: default
       source:
-        path: 'apps/acs'
+        path: 'apps/acs/app-client'
         repoURL: https://github.com/vrutkovs/kcd-cz-demo
         targetRevision: HEAD
       syncPolicy:

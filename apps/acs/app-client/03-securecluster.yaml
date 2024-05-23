@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: acs-central
+  name: acs-securecluster
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: argocd
@@ -13,7 +13,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: apps/acs-central
+    path: apps/acs/securecluster
     repoURL: 'https://github.com/vrutkovs/kcd-cz-demo'
     targetRevision: HEAD
   syncPolicy:
