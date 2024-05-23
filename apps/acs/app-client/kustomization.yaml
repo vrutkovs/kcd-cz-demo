@@ -1,5 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- 01-subscription.yaml
-- 02-securecluster.yaml
+- subscription/01-namespace.yaml
+- subscription/02-operatorgroup.yaml
+- subscription/03-subscription.yaml
+- securecluster/01-stackrox-namespace.yaml
+- securecluster/02-sa-role.yaml
+- securecluster/02-sa.yaml
+- securecluster/03-sa-rb.yaml
+- securecluster/04-securecluster.yaml
+- securecluster/05-subscribe-cluster.yaml
