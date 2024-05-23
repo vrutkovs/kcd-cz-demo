@@ -34,6 +34,13 @@ spec:
                 - op: replace
                   path: /spec/clusterName
                   value: {{name}}
+            - target:
+                kind: SecuredCluster
+                name: cluster
+              patch: |-
+                - op: replace
+                  path: /spec/template/spec/containers/0/env/1/value
+                  value: {{name}}
       syncPolicy:
         automated:
           prune: true

@@ -17,10 +17,7 @@ spec:
                   name: central-htpasswd
                   key: password
             - name: CLUSTER_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: cluster-name
-                  key: name
+              value: hub
           command:
             - /bin/bash
             - -c
