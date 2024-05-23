@@ -33,5 +33,5 @@ spec:
       collection: EBPF
       imageFlavor: Regular
     taintToleration: TolerateTaints
-  clusterName: stage
+  clusterName: hub
   centralEndpoint: 'central-stackrox.apps.vrutkovs-demo.origin-gce.dev.openshift.com:443'
