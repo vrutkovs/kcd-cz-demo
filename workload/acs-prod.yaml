@@ -33,8 +33,8 @@ spec:
                   path: /spec/clusterName
                   value: {{name}}
             - target:
-                kind: SecuredCluster
-                name: cluster
+                kind: Job
+                name: create-cluster-init-bundle
               patch: |-
                 - op: replace
                   path: /spec/template/spec/containers/0/env/1/value
