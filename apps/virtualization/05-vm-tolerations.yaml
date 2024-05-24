@@ -1,0 +1,25 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: vm-tolerations
+  namespace: openshift-cnv
+  annotations:
+    deployOVS: 'false'
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  serviceAccountRef:
+    name: default
+  patches:
+    vm-tolerations:
+      targetObjectRef:
+        apiVersion: kubevirt.io/v1
+        kind: VirtualMachine
+      patchTemplate: |
+        spec:
+          tolerations:
+          - value: reserved
+            key: node-role.kubernetes.io/virtualization
+            effect: NoSchedule
+      patchType: application/merge-patch+json
+      sourceObjectRefs: []
