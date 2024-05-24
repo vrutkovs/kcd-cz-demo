@@ -17,9 +17,11 @@ spec:
         kind: VirtualMachine
       patchTemplate: |
         spec:
-          tolerations:
-          - value: reserved
-            key: node-role.kubernetes.io/virtualization
-            effect: NoSchedule
+          template:
+            spec:
+              tolerations:
+              - value: reserved
+                key: node-role.kubernetes.io/virtualization
+                effect: NoSchedule
       patchType: application/merge-patch+json
       sourceObjectRefs: []
