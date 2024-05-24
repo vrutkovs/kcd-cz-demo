@@ -9,7 +9,7 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   serviceAccountRef:
-    name: default
+    name: kubevirt-operator
   patches:
     vm-tolerations:
       targetObjectRef:
