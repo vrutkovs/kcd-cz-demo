@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "9"
+  name: create-prod-us
+  namespace: clusters
+spec:
+  template:
+    spec:
+      containers:
+        - image: quay.io/openshift/origin-cli:4.16
+          command:
+            - /bin/bash
+            - -c
+            - |
+              #!/usr/bin/env bash
+              cd /tmp
+              wget --no-check-certificate -qO- https://hcp-cli-download-multicluster-engine.apps.vrutkovs-demo.origin-gce.dev.openshift.com/linux/amd64/hcp.tar.gz | tar xvz -C /tmp
+              /tmp/hcp create cluster aws \
+                --name "vrutkovs-prod-us" \
+                --infra-id "vrutkovs-prod-us" \
+                --control-plane-availability-policy=SingleReplica \
+                --infra-availability-policy=SingleReplica \
+                --aws-creds "/aws-creds/aws-credentials" \
+                --pull-secret "/aws-creds/pullSecret" \
+                --region "us-west-2" \
+                --base-domain "devcluster.openshift.com" \
+                --generate-ssh \
+                --node-pool-replicas 1 \
+                --namespace clusters \
+                --etcd-storage-class ssd-csi \
+                --instance-type g4dn.4xlarge \
+                --release-image quay.io/openshift-release-dev/ocp-release:4.14.23-x86_64
+          imagePullPolicy: Always
+          name: create-prod-us
+          volumeMounts:
+            - mountPath: /aws-creds
+              name: aws-creds
+      volumes:
+      - name: aws-creds
+        secret:
+          secretName: aws-creds
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      serviceAccount: hcp-admin
+      serviceAccountName: hcp-admin
+      terminationGracePeriodSeconds: 30
