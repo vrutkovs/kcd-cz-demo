@@ -14,7 +14,7 @@ data:
       timeSlicing:
         resources:
         - name: nvidia.com/gpu
-          replicas: 8
+          replicas: 2
 ---
 apiVersion: nvidia.com/v1
 kind: ClusterPolicy
