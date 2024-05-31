@@ -31,9 +31,9 @@ spec:
   platform:
     aws:
       cloudProviderConfig:
-        zone: eu-central-1a
+        zone: eu-west-3a
       endpointAccess: Public
-      region: eu-central-1
+      region: eu-west-3
       resourceTags:
         - key: kubernetes.io/cluster/vrutkovs-prod-eu
           value: owned
