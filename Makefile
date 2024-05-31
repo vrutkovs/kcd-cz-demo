@@ -143,7 +143,7 @@ create-prod-eu:
 			--infra-availability-policy=SingleReplica \
 			--aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
 			--pull-secret "${OKD_INSTALLER_PATH}/pull_secrets/pull_secret.json" \
-			--region "eu-west-3" \
+			--region "eu-central-1" \
 			--base-domain "${BASE_DOMAIN}" \
 			--generate-ssh \
 			--node-pool-replicas 1 \
@@ -158,7 +158,7 @@ destroy-prod-eu:
     --name vrutkovs-prod-eu \
     --infra-id vrutkovs-prod-eu \
     --aws-creds "${OKD_INSTALLER_PATH}/.aws/credentials" \
-    --region eu-west-3 \
+    --region eu-central-1 \
 		--base-domain "${BASE_DOMAIN}"
 
 create-prod-us:
