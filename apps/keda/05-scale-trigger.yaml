@@ -9,8 +9,8 @@ metadata:
 spec:
   secretTargetRef:
     - parameter: bearerToken
-      name: metrics-reader-token-tqvcq
+      name: metrics-reader-token-pw5gx
       key: token
     - parameter: ca
-      name: metrics-reader-token-tqvcq
+      name: metrics-reader-token-pw5gx
       key: ca.crt
