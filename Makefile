@@ -176,7 +176,7 @@ create-prod-us:
 			--node-pool-replicas 1 \
 			--namespace clusters \
 			--etcd-storage-class ssd-csi \
-			--instance-type g5.xlarge \
+			--instance-type g5.4xlarge \
 			--release-image quay.io/openshift-release-dev/ocp-release:4.14.23-x86_64
 
 destroy-prod-us:

@@ -16,5 +16,5 @@ spec:
   replicas: 1
   platform:
     aws:
-      instanceType: g5.xlarge
+      instanceType: g5.4xlarge
     type: AWS
