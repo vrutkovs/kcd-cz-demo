@@ -18,10 +18,11 @@ echo "{
         }
     ]
 }" | envsubst > policy.json
-aws iam create-role \
+ROLE_ARN=$(aws iam create-role \
   --role-name ${HCI_ROLE_NAME} \
   --assume-role-policy-document file://policy.json \
-  --query "Role.Arn"
+  --query "Role.Arn" \
+  --output text)
 rm -rf policy.json
 
 echo '{
@@ -160,3 +161,4 @@ aws iam put-role-policy \
 rm -rf policy.json
 
 aws sts get-session-token --output json > /tmp/sts-creds.json
+echo ${ROLE_ARN} > /tmp/role_arn.txt

@@ -52,7 +52,8 @@ vault kv patch secret/aws-creds ssh-privatekey=@/tmp/ssh-private-key
 vault kv patch secret/aws-creds ssh-publickey=@/tmp/ssh-public-key
 vault kv patch secret/aws-creds pullSecret=@/tmp/pull-secret.json
 
-vault kv put secret/sts-creds @/tmp/sts-creds.json
+vault kv put secret/sts-creds sts-creds=@/tmp/sts-creds.json
+vault kv put secret/sts-creds role-arn=@/tmp/role-arn.txt
 
 vault kv put secret/github-token token=@/tmp/github-token
 vault kv put secret/oidc @/tmp/oidc.json
