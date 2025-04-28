@@ -13,13 +13,16 @@ all: help
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-install: create-s3-bucket create-google-sa create-hub-cluster argocd-bootstrap fill-up-vault install-hub ## Start install from scratch
+install: create-s3-bucket create-google-sa create-hub-cluster argocd-bootstrap create-aws-arn fill-up-vault install-hub ## Start install from scratch
 
 create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
 	podman exec -u 1000 -w $(shell pwd) -ti  fedora-toolbox-42 bash 01-create-s3-bucket.sh
 
 create-google-sa:
 	podman exec -u 1000 -w $(shell pwd) -ti  fedora-toolbox-42 bash 02-create-google-serviceaccount.sh
+
+create-aws-arn:
+	podman exec -u 1000 -w $(shell pwd) -ti  fedora-toolbox-42 bash 03-create-aws-arn.sh
 
 copy-machineset:
 	$(eval MS_NAME := ${ROLE}-${LETTER})
