@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .EXPORT_ALL_VARIABLES:
-HUB_VERSION="4.15.14-x86_64"
+HUB_VERSION="4.18.10-x86_64"
 BASE_DOMAIN=devcluster.openshift.com
 CLUSTER=vrutkovs-demo
 
@@ -47,7 +47,7 @@ create-hub-cluster: gcp-createmanifests gcp-updatehashes gcp-createcluster
 gcp-createmanifests:
 	cd ${OKD_INSTALLER_PATH} && \
 	make gcp-createmanifests \
-		VERSION=4.15 \
+		VERSION=4.18 \
 		TYPE=ocp \
 		TEMPLATE=templates/gcp-large.j2.yaml \
 		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
@@ -68,7 +68,7 @@ gcp-updatehashes:
 gcp-createcluster:
 	cd ${OKD_INSTALLER_PATH} && \
 	make gcp-createcluster \
-		VERSION=4.15 \
+		VERSION=4.18 \
 		TYPE=ocp \
 		TEMPLATE=templates/gcp-large.j2.yaml \
 		RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:${HUB_VERSION}
@@ -76,7 +76,7 @@ gcp-createcluster:
 destroy-hub-cluster: ## Destroy hub cluster
 	cd ${OKD_INSTALLER_PATH} && \
 	make destroy-gcp \
-		VERSION=4.15 \
+		VERSION=4.18 \
 		TYPE=ocp
 
 update-hashes:
