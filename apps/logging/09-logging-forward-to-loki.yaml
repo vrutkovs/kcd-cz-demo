@@ -1,5 +1,5 @@
 ---
-apiVersion: logging.openshift.io/v1
+apiVersion: observability.openshift.io/v1
 kind: ClusterLogging
 metadata:
   name: instance
@@ -16,7 +16,7 @@ spec:
   collection:
     type: vector
 ---
-apiVersion: logging.openshift.io/v1
+apiVersion: observability.openshift.io/v1
 kind: ClusterLogForwarder
 metadata:
   name: instance
@@ -34,6 +34,6 @@ spec:
       detectMultilineErrors: true
     - name: infra-logs
       inputRefs:
-      - infrastructure
+        - infrastructure
       outputRefs:
-      - default
+        - default

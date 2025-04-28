@@ -1,4 +1,4 @@
-apiVersion: logging.openshift.io/v1
+apiVersion: observability.openshift.io/v1
 kind: ClusterLogForwarder
 metadata:
   name: instance
@@ -22,13 +22,13 @@ spec:
       labels:
         clusterId: stage
       inputRefs:
-      - application
+        - application
       outputRefs:
-      - loki-applications
+        - loki-applications
     - name: infra-logs
       labels:
         clusterId: stage
       inputRefs:
-      - infrastructure
+        - infrastructure
       outputRefs:
-      - loki-infra
+        - loki-infra
