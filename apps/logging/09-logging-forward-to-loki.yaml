@@ -31,7 +31,6 @@ spec:
         - application
       outputRefs:
         - default
-      detectMultilineErrors: true
     - name: infra-logs
       inputRefs:
         - infrastructure
