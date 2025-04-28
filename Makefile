@@ -150,7 +150,7 @@ create-prod-eu:
 			--namespace clusters \
 			--etcd-storage-class ssd-csi \
 			--instance-type g5.4xlarge \
-			--release-image quay.io/openshift-release-dev/ocp-release:4.14.23-x86_64
+			--release-image quay.io/openshift-release-dev/ocp-release:4.18.10-x86_64
 
 destroy-prod-eu:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \
@@ -177,7 +177,7 @@ create-prod-us:
 			--namespace clusters \
 			--etcd-storage-class ssd-csi \
 			--instance-type g5.4xlarge \
-			--release-image quay.io/openshift-release-dev/ocp-release:4.14.23-x86_64
+			--release-image quay.io/openshift-release-dev/ocp-release:4.18.10-x86_64
 
 destroy-prod-us:
 	env KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig \

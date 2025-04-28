@@ -15,7 +15,7 @@ metadata:
 spec:
   fips: false
   release:
-    image: 'quay.io/openshift-release-dev/ocp-release:4.14.23-x86_64'
+    image: "quay.io/openshift-release-dev/ocp-release:4.18.10-x86_64"
   dns:
     baseDomain: devcluster.openshift.com
   controllerAvailabilityPolicy: SingleReplica
@@ -53,7 +53,7 @@ spec:
       - cidr: 172.31.0.0/16
   pullSecret:
     name: vrutkovs-prod-us-pull-secret
-  issuerURL: 'https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-prod-us'
+  issuerURL: "https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-prod-us"
   sshKey:
     name: vrutkovs-prod-us-ssh-key
   autoscaling: {}
