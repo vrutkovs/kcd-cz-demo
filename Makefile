@@ -129,7 +129,7 @@ fill-up-vault:
 		sleep 30; \
 	done
 	sleep 30
-	KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig ./02-update-vault.sh
+	KUBECONFIG=${OKD_INSTALLER_PATH}/clusters/${CLUSTER}/auth/kubeconfig ./04-update-vault.sh
 
 install-hub:
 	${OC} apply -f app-hub.yaml

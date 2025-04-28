@@ -16,7 +16,7 @@
 * Run `create-s3-bucket`, enable ACL in the bucket manually
 * Rename machines in `bootstrap/05-infra-machines.yaml` to match random MachineSet hash
 * `oc apply -f bootstrap` until all objects are created
-* Run `02-update-vault.sh` to fill in Vault
+* Run `04-update-vault.sh` to fill in Vault
 * Apply main configuration: `oc apply -f app-hub.yaml` until all objects are created
 * Once `openshift-logging` is created create a new Vault secret for `external-log-forwarder` SA
 * Once `acm` app syncs create Hypershift clusters `bash create-<env>.sh`
