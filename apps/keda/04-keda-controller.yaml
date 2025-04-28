@@ -7,17 +7,16 @@ metadata:
     argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  watchNamespace: ''
+  watchNamespace: ""
   operator:
     logLevel: info
     logEncoder: console
-  metricsServer:
-    logLevel: '0'
-  serviceAccount: {}
-  operator:
     nodeSelector:
       node-role.kubernetes.io/infra: ""
     tolerations:
-    - key: node-role.kubernetes.io/infra
-      effect: NoSchedule
-      operator: Exists
+      - key: node-role.kubernetes.io/infra
+        effect: NoSchedule
+        operator: Exists
+  metricsServer:
+    logLevel: "0"
+  serviceAccount: {}
