@@ -22,7 +22,8 @@ spec:
                 --infra-id "vrutkovs-prod-us" \
                 --control-plane-availability-policy=SingleReplica \
                 --infra-availability-policy=SingleReplica \
-                --aws-creds "/aws-creds/aws-credentials" \
+                --sts-creds "/aws-sts-creds/sts-creds.json" \
+                --role-arn "$(cat /aws-sts-creds/role-arn)" \
                 --pull-secret "/aws-creds/pullSecret" \
                 --region "us-west-2" \
                 --base-domain "devcluster.openshift.com" \
