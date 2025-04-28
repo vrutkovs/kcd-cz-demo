@@ -7,7 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "3"
 data:
   config.yaml: |+
-    enableUserWorkload: true
     alertmanagerMain:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
@@ -15,6 +14,7 @@ data:
       - effect: NoSchedule
         key: node-role.kubernetes.io/infra
         value: reserved
+    enableUserWorkload: true
     k8sPrometheusAdapter:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
@@ -29,6 +29,17 @@ data:
       - effect: NoSchedule
         key: node-role.kubernetes.io/infra
         value: reserved
+    nodeExporter:
+      collectors:
+        buddyinfo: {}
+        cpufreq: {}
+        ksmd: {}
+        mountstats: {}
+        netclass: {}
+        netdev: {}
+        processes: {}
+        systemd: {}
+        tcpstat: {}
     openshiftStateMetrics:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
@@ -37,9 +48,9 @@ data:
         key: node-role.kubernetes.io/infra
         value: reserved
     prometheusK8s:
-      retention: "1h"
       nodeSelector:
         node-role.kubernetes.io/infra: ""
+      retention: "1h"
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/infra
@@ -60,6 +71,7 @@ data:
       - effect: NoSchedule
         key: node-role.kubernetes.io/infra
         value: reserved
+      status: {}
     telemeterClient:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
