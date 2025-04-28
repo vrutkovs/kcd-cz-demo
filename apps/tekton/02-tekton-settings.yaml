@@ -9,20 +9,26 @@ spec:
   addon:
     params:
       - name: clusterTasks
-        value: 'true'
+        value: "true"
       - name: communityClusterTasks
-        value: 'false'
+        value: "false"
       - name: pipelineTemplates
-        value: 'false'
+        value: "false"
+      - name: resolverTasks
+        value: "true"
+      - name: communityResolverTasks
+        value: "true"
+      - name: resolverStepActions
+        value: "true"
   pipeline:
     params:
       - name: enableMetrics
-        value: 'true'
+        value: "true"
   profile: all
   pruner:
     resources:
       - taskrun
       - pipelinerun
     keep: 3
-    schedule: '@daily'
+    schedule: "@daily"
   targetNamespace: openshift-pipelines
