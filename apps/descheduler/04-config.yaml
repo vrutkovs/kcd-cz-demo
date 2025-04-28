@@ -15,3 +15,5 @@ spec:
     - AffinityAndTaints
     - LifecycleAndUtilization
   managementState: "Managed"
+  profileCustomizations:
+    devEnableEvictionsInBackground: true
