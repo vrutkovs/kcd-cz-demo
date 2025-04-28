@@ -17,16 +17,16 @@ spec:
   configuration:
     oauth:
       identityProviders:
-      - name: github
-        mappingMethod: claim
-        type: GitHub
-        github:
-          clientID: 4d7b2c37541942c402a6
-          clientSecret:
-            name: github-oauth-secret-dev
+        - name: github
+          mappingMethod: claim
+          type: GitHub
+          github:
+            clientID: 4d7b2c37541942c402a6
+            clientSecret:
+              name: github-oauth-secret-dev
   fips: false
   release:
-    image: 'quay.io/okd/scos-release:4.15.0-0.okd-scos-2024-01-18-223523'
+    image: "quay.io/okd/scos-release:4.19.0-okd-scos.ec.9"
   controllerAvailabilityPolicy: SingleReplica
   infraID: vrutkovs-dev
   etcd:
@@ -56,7 +56,7 @@ spec:
       - cidr: 172.31.0.0/16
   pullSecret:
     name: vrutkovs-dev-pull-secret
-  issuerURL: 'https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-dev'
+  issuerURL: "https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-dev"
   sshKey:
     name: vrutkovs-dev-ssh-key
   autoscaling: {}
