@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  channel: release-2.10
+  channel: release-2.13
   installPlanApproval: Automatic
   name: advanced-cluster-management
   source: redhat-operators
@@ -15,6 +15,6 @@ spec:
     nodeSelector:
       node-role.kubernetes.io/infra: ""
     tolerations:
-    - key: node-role.kubernetes.io/infra
-      effect: NoSchedule
-      operator: Exists
+      - key: node-role.kubernetes.io/infra
+        effect: NoSchedule
+        operator: Exists
