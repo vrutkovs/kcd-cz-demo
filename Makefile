@@ -16,10 +16,10 @@ help:
 install: create-s3-bucket create-google-sa create-hub-cluster argocd-bootstrap fill-up-vault install-hub ## Start install from scratch
 
 create-s3-bucket:  ## Create S3 bucket for AWS clusters auth
-	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 01-create-s3-bucket.sh
+	podman exec -u 1000 -w $(shell pwd) -ti  fedora-toolbox-42 bash 01-create-s3-bucket.sh
 
 create-google-sa:
-	podman exec -u 1000 -w $(shell pwd) -ti fedora-toolbox-39 bash 02-create-google-serviceaccount.sh
+	podman exec -u 1000 -w $(shell pwd) -ti  fedora-toolbox-42 bash 02-create-google-serviceaccount.sh
 
 copy-machineset:
 	$(eval MS_NAME := ${ROLE}-${LETTER})
