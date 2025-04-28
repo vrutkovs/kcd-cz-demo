@@ -3,7 +3,7 @@ set -eux
 sudo dnf install -y /usr/bin/aws
 
 BUCKET_NAME=vrutkovs-hypershift-demo
-aws s3api create-bucket --bucket "${BUCKET_NAME}"
+aws s3api create-bucket --bucket "${BUCKET_NAME}" --region us-east-1
 aws s3api delete-public-access-block --bucket "${BUCKET_NAME}"
 echo "{
     \"Version\": \"2012-10-17\",
@@ -20,7 +20,7 @@ aws s3api put-bucket-policy --bucket "${BUCKET_NAME}" --policy file://policy.jso
 rm -rf policy.json
 
 BUCKET_NAME=vrutkovs-demo
-aws s3api create-bucket --bucket $BUCKET_NAME
+aws s3api create-bucket --bucket $BUCKET_NAME --region us-east-1
 aws s3api put-public-access-block --bucket "${BUCKET_NAME}" --public-access-block-configuration "BlockPublicPolicy=false" # 2
 aws s3api put-bucket-policy --bucket "${BUCKET_NAME}" --policy '{
     "Version": "2012-10-17",
