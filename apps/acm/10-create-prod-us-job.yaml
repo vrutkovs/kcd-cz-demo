@@ -38,10 +38,15 @@ spec:
           volumeMounts:
             - mountPath: /aws-creds
               name: aws-creds
+            - mountPath: /aws-sts-creds
+              name: aws-sts-creds
       volumes:
         - name: aws-creds
           secret:
             secretName: aws-creds
+        - name: aws-sts-creds
+          secret:
+            secretName: aws-sts-creds
       dnsPolicy: ClusterFirst
       restartPolicy: Never
       serviceAccount: hcp-admin
