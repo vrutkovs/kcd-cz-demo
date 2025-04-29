@@ -160,5 +160,5 @@ aws iam put-role-policy \
   --policy-document file://policy.json
 rm -rf policy.json
 
-aws sts get-session-token --output json > /tmp/sts-creds.json
-echo ${ROLE_ARN} > /tmp/role_arn.txt
+aws sts get-session-token --output json > secrets/sts-creds.json
+echo ${ROLE_ARN} > secrets/role-arn.txt
