@@ -17,16 +17,16 @@ spec:
   configuration:
     oauth:
       identityProviders:
-      - name: github
-        mappingMethod: claim
-        type: GitHub
-        github:
-          clientID: ffcf97a3b3342cf4e019
-          clientSecret:
-            name: github-oauth-secret-stage
+        - name: github
+          mappingMethod: claim
+          type: GitHub
+          github:
+            clientID: ffcf97a3b3342cf4e019
+            clientSecret:
+              name: github-oauth-secret-stage
   fips: false
   release:
-    image: 'quay.io/openshift-release-dev/ocp-release:4.15.9-x86_64'
+    image: "quay.io/openshift-release-dev/ocp-release:4.15.9-x86_64"
   controllerAvailabilityPolicy: SingleReplica
   infraID: vrutkovs-stage
   etcd:
@@ -57,7 +57,7 @@ spec:
   clusterID: bac770e1-02bd-420a-9434-6e16509bb378
   pullSecret:
     name: vrutkovs-stage-pull-secret
-  issuerURL: 'https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-stage'
+  issuerURL: "https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-stage"
   sshKey:
     name: vrutkovs-stage-ssh-key
   autoscaling: {}
@@ -66,16 +66,13 @@ spec:
     - service: APIServer
       servicePublishingStrategy:
         type: LoadBalancer
-    - service: OAuthServer
+    - service: Ignition
       servicePublishingStrategy:
         type: Route
     - service: Konnectivity
       servicePublishingStrategy:
         type: Route
-    - service: Ignition
-      servicePublishingStrategy:
-        type: Route
-    - service: OVNSbDb
+    - service: OAuthServer
       servicePublishingStrategy:
         type: Route
 ---
