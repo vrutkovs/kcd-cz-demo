@@ -46,6 +46,22 @@ spec:
       activeKey:
         name: vrutkovs-stage-etcd-encryption-key
     type: aescbc
+  services:
+    - service: APIServer
+      servicePublishingStrategy:
+        type: LoadBalancer
+    - service: OAuthServer
+      servicePublishingStrategy:
+        type: Route
+    - service: Konnectivity
+      servicePublishingStrategy:
+        type: Route
+    - service: Ignition
+      servicePublishingStrategy:
+        type: Route
+    - service: OVNSbDb
+      servicePublishingStrategy:
+        type: Route
   networking:
     clusterNetwork:
       - cidr: 10.132.0.0/14
