@@ -11,3 +11,4 @@ spec:
     - kubevirt-plugin
     - gitops-plugin
     - flightctl-plugin
+    - networking-console-plugin
