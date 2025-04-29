@@ -10,33 +10,60 @@ spec:
   nodeSelector:
     node-role.kubernetes.io/infra: ""
   tolerations:
-  - key: node-role.kubernetes.io/infra
-    effect: NoSchedule
-    operator: Exists
+    - key: node-role.kubernetes.io/infra
+      effect: NoSchedule
+      operator: Exists
   availabilityConfig: Basic
   overrides:
     components:
-    - enabled: true
-      name: console
-    - enabled: true
-      name: insights
-    - enabled: true
-      name: grc
-    - enabled: true
-      name: cluster-lifecycle
-    - enabled: true
-      name: multicluster-engine
-    - enabled: true
-      name: app-lifecycle
-    - enabled: false
-      name: volsync
-    - enabled: false
-      name: search
-    - enabled: false
-      name: cluster-backup
-    - enabled: true
-      name: cluster-permission
-    - enabled: true
-      name: multicluster-observability
-    - enabled: false
-      name: submariner-addon
+      - configOverrides: {}
+        enabled: true
+        name: console
+      - configOverrides: {}
+        enabled: true
+        name: insights
+      - configOverrides: {}
+        enabled: true
+        name: networking-console-plugin
+      - configOverrides: {}
+        enabled: true
+        name: gitops-plugin
+      - configOverrides: {}
+        enabled: true
+        name: networking-console-plugin
+      - configOverrides: {}
+        enabled: true
+        name: grc
+      - configOverrides: {}
+        enabled: true
+        name: cluster-lifecycle
+      - configOverrides: {}
+        enabled: true
+        name: multicluster-engine
+      - configOverrides: {}
+        enabled: true
+        name: app-lifecycle
+      - configOverrides: {}
+        enabled: false
+        name: volsync
+      - configOverrides: {}
+        enabled: false
+        name: search
+      - configOverrides: {}
+        enabled: false
+        name: cluster-backup
+      - configOverrides: {}
+        enabled: true
+        name: cluster-permission
+      - configOverrides: {}
+        enabled: true
+        name: multicluster-observability
+      - configOverrides: {}
+        enabled: false
+        name: submariner-addon
+      - configOverrides: {}
+        enabled: true
+        name: siteconfig
+      - configOverrides: {}
+        enabled: true
+        name: edge-manager-preview
