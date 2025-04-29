@@ -9,3 +9,5 @@ spec:
     - acm
     - logging-view-plugin
     - kubevirt-plugin
+    - gitops-plugin
+    - networking-console-plugin
