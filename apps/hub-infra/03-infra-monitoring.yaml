@@ -50,7 +50,7 @@ data:
     prometheusK8s:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
-      retention: "1h"
+      retention: 1h
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/infra
@@ -64,6 +64,7 @@ data:
           resources:
             requests:
               storage: 20Gi
+        status: {}
     prometheusOperator:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
