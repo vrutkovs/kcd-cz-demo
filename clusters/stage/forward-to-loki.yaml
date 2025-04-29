@@ -1,3 +1,57 @@
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: logging-collector
+  namespace: openshift-logging
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: logging-collector-logs-writer
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+subjects:
+  - kind: ServiceAccount
+    name: logging-collector
+    namespace: openshift-logging
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: logging-collector-logs-writer
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: logging-collector-apps
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+subjects:
+  - kind: ServiceAccount
+    name: logging-collector
+    namespace: openshift-logging
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: collect-application-logs
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: logging-collector-infra
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+subjects:
+  - kind: ServiceAccount
+    name: logging-collector
+    namespace: openshift-logging
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: collect-infrastructure-logs
+---
 apiVersion: observability.openshift.io/v1
 kind: ClusterLogForwarder
 metadata:
@@ -6,28 +60,36 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  serviceAccount:
+    name: logging-collector
   outputs:
     - name: loki-applications
-      type: "loki"
-      url: https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/application
-      secret:
-        name: external-log-forwarder-token
+      loki:
+        url: "https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/application"
+        authentication:
+          token:
+            secret:
+              name: external-log-forwarder-token
+              key: token
+            from: secret
+      type: loki
     - name: loki-infra
-      type: "loki"
-      url: https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/infrastructure
-      secret:
-        name: external-log-forwarder-token
+      loki:
+        url: "https://logging-loki-openshift-logging.apps.vrutkovs-demo.origin-gce.dev.openshift.com/api/logs/v1/infrastructure"
+        authentication:
+          token:
+            secret:
+              name: external-log-forwarder-token
+              key: token
+            from: secret
+      type: loki
   pipelines:
-    - name: application-logs
-      labels:
-        clusterId: stage
+    - name: app-logs
       inputRefs:
         - application
       outputRefs:
         - loki-applications
     - name: infra-logs
-      labels:
-        clusterId: stage
       inputRefs:
         - infrastructure
       outputRefs:
