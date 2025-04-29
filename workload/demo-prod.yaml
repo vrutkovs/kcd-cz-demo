@@ -13,16 +13,16 @@ spec:
         requeueAfterSeconds: 180
   template:
     metadata:
-      name: 'demo-prod-{{name}}'
+      name: "demo-prod-{{name}}"
     spec:
       destination:
         namespace: ai-prompt
-        server: '{{server}}'
+        server: "{{server}}"
       project: default
       source:
-        path: 'manifests/'
+        path: "manifests/"
         repoURL: https://github.com/vrutkovs/openshift-ai-prompt
-        targetRevision: 86422eb
+        targetRevision: 357d047
       syncPolicy:
         automated:
           prune: true
@@ -37,8 +37,8 @@ spec:
             factor: 2
             maxDuration: 1h
       ignoreDifferences:
-      - group: apps
-        kind: Deployment
-        jsonPointers:
-        - /spec/template/spec/containers/0/image
-        - /spec/template/spec/containers/1/image
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/template/spec/containers/0/image
+            - /spec/template/spec/containers/1/image
