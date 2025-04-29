@@ -1,48 +1,48 @@
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: ingress-scaler
-  namespace: openshift-ingress-operator
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  scaleTargetRef:
-    apiVersion: operator.openshift.io/v1
-    kind: IngressController
-    name: default
-    envSourceContainerName: ingress-operator
-  minReplicaCount: 2
-  maxReplicaCount: 5
-  cooldownPeriod: 300
-  pollingInterval: 30
-  fallback:
-    failureThreshold: 3
-    replicas: 4
-  advanced:
-    restoreToOriginalReplicaCount: true
-    horizontalPodAutoscalerConfig:
-      behavior:
-        scaleDown:
-          stabilizationWindowSeconds: 120
-          policies:
-          - type: Percent
-            value: 100
-            periodSeconds: 60
-        scaleUp:
-          stabilizationWindowSeconds: 120
-          policies:
-          - type: Percent
-            value: 100
-            periodSeconds: 60
-  triggers:
-  - type: prometheus
-    metricType: AverageValue
-    metadata:
-      serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
-      threshold: "1"
-      metricName: 'kube-node-role'
-      query: 'sum(rate(haproxy_frontend_connections_total[5m]))'
-      authModes: "bearer"
-    authenticationRef:
-      name: keda-trigger-auth-prometheus
+# apiVersion: keda.sh/v1alpha1
+# kind: ScaledObject
+# metadata:
+#   name: ingress-scaler
+#   namespace: openshift-ingress-operator
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "4"
+#     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+# spec:
+#   scaleTargetRef:
+#     apiVersion: operator.openshift.io/v1
+#     kind: IngressController
+#     name: default
+#     envSourceContainerName: ingress-operator
+#   minReplicaCount: 2
+#   maxReplicaCount: 5
+#   cooldownPeriod: 300
+#   pollingInterval: 30
+#   fallback:
+#     failureThreshold: 3
+#     replicas: 4
+#   advanced:
+#     restoreToOriginalReplicaCount: true
+#     horizontalPodAutoscalerConfig:
+#       behavior:
+#         scaleDown:
+#           stabilizationWindowSeconds: 120
+#           policies:
+#           - type: Percent
+#             value: 100
+#             periodSeconds: 60
+#         scaleUp:
+#           stabilizationWindowSeconds: 120
+#           policies:
+#           - type: Percent
+#             value: 100
+#             periodSeconds: 60
+#   triggers:
+#   - type: prometheus
+#     metricType: AverageValue
+#     metadata:
+#       serverAddress: https://thanos-querier.openshift-monitoring.svc.cluster.local:9091
+#       threshold: "1"
+#       metricName: 'kube-node-role'
+#       query: 'sum(rate(haproxy_frontend_connections_total[5m]))'
+#       authModes: "bearer"
+#     authenticationRef:
+#       name: keda-trigger-auth-prometheus
