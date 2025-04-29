@@ -51,7 +51,6 @@ spec:
     networkType: OVNKubernetes
     serviceNetwork:
       - cidr: 172.31.0.0/16
-  clusterID: 4918b4b7-bc83-4cb6-bd9a-15c61fdfd848
   pullSecret:
     name: vrutkovs-prod-eu-pull-secret
   issuerURL: "https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-prod-eu"

@@ -54,7 +54,6 @@ spec:
     networkType: OVNKubernetes
     serviceNetwork:
       - cidr: 172.31.0.0/16
-  clusterID: bac770e1-02bd-420a-9434-6e16509bb378
   pullSecret:
     name: vrutkovs-stage-pull-secret
   issuerURL: "https://vrutkovs-hypershift-demo.s3.us-east-1.amazonaws.com/vrutkovs-stage"
