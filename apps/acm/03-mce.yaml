@@ -24,9 +24,6 @@ spec:
         name: insights
       - configOverrides: {}
         enabled: true
-        name: networking-console-plugin
-      - configOverrides: {}
-        enabled: true
         name: gitops-plugin
       - configOverrides: {}
         enabled: true
