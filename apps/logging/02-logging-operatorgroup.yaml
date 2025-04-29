@@ -20,3 +20,13 @@ metadata:
   namespace: openshift-operators-redhat
 spec:
   upgradeStrategy: Default
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: openshift-cluster-observability-operator
+  namespace: openshift-cluster-observability-operator
+spec:
+  upgradeStrategy: Default

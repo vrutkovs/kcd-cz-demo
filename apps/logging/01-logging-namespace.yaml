@@ -12,3 +12,10 @@ metadata:
   name: openshift-operators-redhat
   annotations:
     argocd.argoproj.io/sync-wave: "1"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-cluster-observability-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
