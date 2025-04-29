@@ -65,13 +65,16 @@ spec:
     - service: APIServer
       servicePublishingStrategy:
         type: LoadBalancer
-    - service: Ignition
+    - service: OAuthServer
       servicePublishingStrategy:
         type: Route
     - service: Konnectivity
       servicePublishingStrategy:
         type: Route
-    - service: OAuthServer
+    - service: Ignition
+      servicePublishingStrategy:
+        type: Route
+    - service: OVNSbDb
       servicePublishingStrategy:
         type: Route
 ---
