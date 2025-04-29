@@ -15,7 +15,7 @@ spec:
     upgradeType: InPlace
   nodeDrainTimeout: 0s
   release:
-    image: quay.io/okd/scos-release:4.19.0-okd-scos.ec.9
+    image: quay.io/okd/scos-release:4.18.0-okd-scos.9
   replicas: 1
   platform:
     kubevirt:
