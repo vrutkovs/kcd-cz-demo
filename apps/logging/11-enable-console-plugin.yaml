@@ -10,3 +10,4 @@ spec:
     - logging-view-plugin
     - kubevirt-plugin
     - gitops-plugin
+    - flightctl-plugin
