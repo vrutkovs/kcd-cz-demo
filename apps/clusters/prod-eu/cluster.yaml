@@ -43,6 +43,19 @@ spec:
       activeKey:
         name: vrutkovs-prod-eu-etcd-encryption-key
     type: aescbc
+  services:
+    - service: APIServer
+      servicePublishingStrategy:
+        type: LoadBalancer
+    - service: Ignition
+      servicePublishingStrategy:
+        type: Route
+    - service: Konnectivity
+      servicePublishingStrategy:
+        type: Route
+    - service: OAuthServer
+      servicePublishingStrategy:
+        type: Route
   networking:
     clusterNetwork:
       - cidr: 10.132.0.0/14
