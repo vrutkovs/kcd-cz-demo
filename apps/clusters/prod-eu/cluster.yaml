@@ -58,16 +58,3 @@ spec:
     name: vrutkovs-prod-eu-ssh-key
   autoscaling: {}
   olmCatalogPlacement: management
-  services:
-    - service: APIServer
-      servicePublishingStrategy:
-        type: LoadBalancer
-    - service: Ignition
-      servicePublishingStrategy:
-        type: Route
-    - service: Konnectivity
-      servicePublishingStrategy:
-        type: Route
-    - service: OAuthServer
-      servicePublishingStrategy:
-        type: Route
