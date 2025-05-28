@@ -22,7 +22,7 @@ spec:
       source:
         path: "kcd-demo-manifests"
         repoURL: https://github.com/vrutkovs/muchanizer
-        targetRevision: b3d1dee
+        targetRevision: 743e348
         directory:
           recurse: true
       syncPolicy:
