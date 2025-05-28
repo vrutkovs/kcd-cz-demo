@@ -20,9 +20,9 @@ spec:
         server: "{{server}}"
       project: default
       source:
-        path: "manifests/"
+        path: "kcd-demo-manifests"
         repoURL: https://github.com/vrutkovs/muchanizer
-        targetRevision: 93a82e9
+        targetRevision: 19d6701
         directory:
           recurse: true
       syncPolicy:
