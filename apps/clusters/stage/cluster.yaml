@@ -163,7 +163,7 @@ spec:
     kubevirt:
       compute:
         cores: 4
-        memory: 16Gi
+        memory: 20Gi
       rootVolume:
         persistent:
           size: 50Gi
