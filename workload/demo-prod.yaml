@@ -21,8 +21,8 @@ spec:
       project: default
       source:
         path: "manifests/"
-        repoURL: https://github.com/vrutkovs/openshift-ai-prompt
-        targetRevision: 357d047
+        repoURL: https://github.com/vrutkovs/muchanizer
+        targetRevision: 93a82e9
       syncPolicy:
         automated:
           prune: true

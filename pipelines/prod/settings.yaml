@@ -4,10 +4,7 @@ metadata:
   name: server-settings
 type: Opaque
 stringData:
-  AWS_ACCESS_KEY: <path:secret/data/aws-creds#aws_access_key_id>
-  AWS_ACCESS_SECRET: <path:secret/data/aws-creds#aws_secret_access_key>
-  GENERATE_DEVICE: "cuda"
-  GENERATE_IMAGE: "image-registry.openshift-image-registry.svc:5000/ai-prompt/openshift-ai-prompt:openjourney"
-  GENERATE_STEPS: "50"
-  GENERATE_TIMEOUT: "600"
-  S3_BUCKET_NAME: "vrutkovs-demo"
+  MODEL_TOKEN: ""
+  MODEL_ENDPOINT: "https://muchanizer-predictor-muchanizer.apps.vrutkovs.devcluster.openshift.com/v1/models/model:predict"
+  TELEGRAM_TOKEN: "<path:secret/data/muchanizer#telegram-token>"
+  HF_TOKEN: "<path:secret/data/muchanizer#hf-token>"

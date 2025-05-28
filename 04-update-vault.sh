@@ -71,4 +71,7 @@ vault kv put secret/oauth-dev id="4d7b2c37541942c402a6" secret=@/tmp/oauth-dev
 vault kv put secret/oauth-stage id="ffcf97a3b3342cf4e019" secret=@/tmp/oauth-stage
 vault kv put secret/oauth-prod-eu id="8aa91dd0426c1dbb71fa" secret=@/tmp/oauth-prod-eu
 vault kv put secret/oauth-prod-us id="da1f688da70855392c68" secret=@/tmp/oauth-prod-us
+
+vault kv put secret/muchanizer telegram-token=@/tmp/telegram-token
+vault kv put secret/muchanizer hf-token=@/tmp/hf-token
 EOF
