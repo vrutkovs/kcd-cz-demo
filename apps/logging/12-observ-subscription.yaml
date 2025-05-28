@@ -5,6 +5,8 @@ metadata:
     operators.coreos.com/cluster-observability-operator.openshift-cluster-observability: ""
   name: cluster-observability-operator
   namespace: openshift-cluster-observability-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   channel: stable
   installPlanApproval: Automatic
