@@ -9,23 +9,31 @@ spec:
   components:
     codeflare:
       managementState: Removed
-    dashboard:
-      managementState: Managed
-    datasciencepipelines:
-      managementState: Removed
     kserve:
-      managementState: Removed
+      defaultDeploymentMode: Serverless
+      managementState: Managed
       serving:
         ingressGateway:
           certificate:
-            type: SelfSigned
+            type: OpenshiftDefaultIngress
         managementState: Managed
         name: knative-serving
-    modelmeshserving:
+    modelregistry:
+      managementState: Managed
+      registriesNamespace: rhoai-model-registries
+    trustyai:
       managementState: Removed
     ray:
       managementState: Removed
-    trustyai:
-      managementState: Removed
+    kueue:
+      managementState: Managed
     workbenches:
       managementState: Managed
+    dashboard:
+      managementState: Managed
+    modelmeshserving:
+      managementState: Managed
+    datasciencepipelines:
+      managementState: Removed
+    trainingoperator:
+      managementState: Removed
