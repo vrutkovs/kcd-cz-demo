@@ -8,8 +8,6 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   operand:
-    image: >-
-      registry.redhat.io/openshift4/ose-node-feature-discovery@sha256:7f797d0eb3c073e141144a84a2f2edfe18fc721d69d1d64ad53d5096487ffc03
     servicePort: 12000
   prunerOnDelete: false
   topologyUpdater: false
