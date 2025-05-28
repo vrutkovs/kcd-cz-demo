@@ -73,5 +73,5 @@ vault kv put secret/oauth-prod-eu id="8aa91dd0426c1dbb71fa" secret=@/tmp/oauth-p
 vault kv put secret/oauth-prod-us id="da1f688da70855392c68" secret=@/tmp/oauth-prod-us
 
 vault kv put secret/muchanizer telegram-token=@/tmp/telegram-token
-vault kv put secret/muchanizer hf-token=@/tmp/hf-token
+vault kv patch secret/muchanizer hf-token=@/tmp/hf-token
 EOF
