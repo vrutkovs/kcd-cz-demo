@@ -16,13 +16,15 @@ spec:
       name: "demo-prod-{{name}}"
     spec:
       destination:
-        namespace: ai-prompt
+        namespace: muchanizer
         server: "{{server}}"
       project: default
       source:
         path: "manifests/"
         repoURL: https://github.com/vrutkovs/muchanizer
         targetRevision: 93a82e9
+        directory:
+          recurse: true
       syncPolicy:
         automated:
           prune: true
@@ -36,9 +38,3 @@ spec:
             duration: 5s
             factor: 2
             maxDuration: 1h
-      ignoreDifferences:
-        - group: apps
-          kind: Deployment
-          jsonPointers:
-            - /spec/template/spec/containers/0/image
-            - /spec/template/spec/containers/1/image
