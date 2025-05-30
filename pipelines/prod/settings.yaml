@@ -5,7 +5,7 @@ metadata:
 type: Opaque
 stringData:
   .env: |
-    TELEGRAM_TOKEN = "<path:secret/data/muchanizer#telegram-token>"
+    TELEGRAM_TOKEN = <path:secret/data/muchanizer#telegram-token>
     MODEL_TOKEN = ""
     MODEL_ENDPOINT = "https://muchanizer-predictor-muchanizer.apps.vrutkovs.devcluster.openshift.com/v1/models/model:predict"
     STRENGTH = 0.66
