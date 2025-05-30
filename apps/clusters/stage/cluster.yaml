@@ -26,7 +26,7 @@ spec:
               name: github-oauth-secret-stage
   fips: false
   release:
-    image: "quay.io/openshift-release-dev/ocp-release:4.18.11-x86_64"
+    image: "quay.io/openshift-release-dev/ocp-release:4.18.16-x86_64"
   controllerAvailabilityPolicy: SingleReplica
   infraID: vrutkovs-stage
   etcd:
@@ -157,7 +157,7 @@ spec:
     upgradeType: InPlace
   nodeDrainTimeout: 0s
   release:
-    image: quay.io/openshift-release-dev/ocp-release:4.18.11-x86_64
+    image: quay.io/openshift-release-dev/ocp-release:4.18.16-x86_64
   replicas: 2
   platform:
     kubevirt:
