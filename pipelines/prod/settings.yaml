@@ -7,7 +7,7 @@ stringData:
   .env: |
     TELEGRAM_TOKEN = <path:secret/data/muchanizer#telegram-token>
     MODEL_TOKEN = ""
-    MODEL_ENDPOINT = "https://muchanizer-predictor-muchanizer.apps.vrutkovs.devcluster.openshift.com/v1/models/model:predict"
+    MODEL_ENDPOINT = "https://muchanizer-predictor-muchanizer.apps.vrutkovs-prod-eu.devcluster.openshift.com/v1/models/model:predict"
     STRENGTH = 0.66
     GUIDANCE_SCALE = 4.0
   HF_TOKEN: "<path:secret/data/muchanizer#hf-token>"
