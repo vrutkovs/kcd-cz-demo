@@ -13,7 +13,7 @@ spec:
   operatorLogLevel: Normal
   profiles:
     - AffinityAndTaints
-    - LifecycleAndUtilization
+    - CompactAndScale
   managementState: "Managed"
   profileCustomizations:
     devEnableEvictionsInBackground: true
