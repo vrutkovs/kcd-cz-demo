@@ -61,9 +61,9 @@ gcp-updatehashes:
 	make copy-machineset INDEX=0 LETTER=a ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=1 LETTER=b ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=2 LETTER=c ROLE=infra HASH=${HASH} MACHINE_TYPE=n2-standard-8
-	make copy-machineset INDEX=0 LETTER=a ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
-	make copy-machineset INDEX=1 LETTER=b ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
-	make copy-machineset INDEX=2 LETTER=c ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-8
+	make copy-machineset INDEX=0 LETTER=a ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-16
+	make copy-machineset INDEX=1 LETTER=b ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-16
+	make copy-machineset INDEX=2 LETTER=c ROLE=virtualization HASH=${HASH} MACHINE_TYPE=n2-highmem-16
 	make copy-machineset INDEX=0 LETTER=a ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=1 LETTER=b ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8
 	make copy-machineset INDEX=2 LETTER=c ROLE=worker HASH=${HASH} MACHINE_TYPE=n2-standard-8

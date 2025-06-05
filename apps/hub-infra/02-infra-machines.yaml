@@ -98,7 +98,7 @@ spec:
           node-role.kubernetes.io/virtualization: ""
       providerSpec:
         value:
-          machineType: n2-highmem-8
+          machineType: n2-highmem-16
           preemptible: true
       taints:
         - key: node-role.kubernetes.io/virtualization
@@ -123,7 +123,7 @@ spec:
           node-role.kubernetes.io/virtualization: ""
       providerSpec:
         value:
-          machineType: n2-highmem-8
+          machineType: n2-highmem-16
           preemptible: true
       taints:
         - key: node-role.kubernetes.io/virtualization
@@ -148,7 +148,7 @@ spec:
           node-role.kubernetes.io/virtualization: ""
       providerSpec:
         value:
-          machineType: n2-highmem-8
+          machineType: n2-highmem-16
           preemptible: true
       taints:
         - key: node-role.kubernetes.io/virtualization
