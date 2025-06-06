@@ -1,4 +1,4 @@
-# KCD CZ 2023 booth demo
+# KCD CZ booth demo
 
 * [x] Install ACM
 * [x] Install Hypershift
